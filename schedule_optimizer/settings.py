@@ -67,7 +67,7 @@ ROOT_URLCONF = 'schedule_optimizer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR / 'web_app/templates']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -161,7 +161,7 @@ AUTHENTICATION_BACKENDS = {
 }
 
 LOGIN_URL = '/login/auth0'
-LOGIN_REDIRECT_URL = '/dashboard'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/auth0'
 
 # Default primary key field type

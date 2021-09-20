@@ -2,7 +2,3 @@ django superuser:
 username: stackforceadmin
 email: stackforce.sdp@gmail.com
 passwd: Xedilanofre1eia
-
-
-
-
