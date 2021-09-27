@@ -32,7 +32,11 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:8000'
 ]
 
-REST_FRAMEWORK = {}
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 
 
 # Application definition
@@ -45,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web_app.apps.WebAppConfig',
+    'web_app_api.apps.WebAppApiConfig',
     'social_django',
     'rest_framework',
     'corsheaders',
