@@ -13,6 +13,8 @@ class Employee(models.Model):
             return super().get_queryset() .filter(status='active')
 
     name = models.CharField(max_length=100)
+
+    # Number indicating
     shift = models.IntegerField()
 
     # Fraction of hours this employee works compared to a full-time employee
