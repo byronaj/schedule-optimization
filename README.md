@@ -15,7 +15,7 @@ path to \schedule_optimization\web_app_vue
 ```
 then run
 ```bash
-npm install web_app_vue
+npm install
 ```
 
 ### Working with the project
