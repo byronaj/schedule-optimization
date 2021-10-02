@@ -18,7 +18,7 @@ then run
 npm install
 ```
 
-### Working with the project
+### Working with the project:
 ___
 **To run the app in Django:**
 ```bash
@@ -30,7 +30,30 @@ With the Django server running:
 
 **In Vue.js:**
 ```bash
-...\web_app_vue> npm run serve
+...\schedule-optimization\web_app_vue> npm run serve
 ```
+
+### Checking for gaps in testing:
+___
+**Using the python tool, coverage:**
+```bash
+# The location of your virtual environment directory may vary.
+> coverage run --omit='*/.virtualenvs/*' manage.py test
+> coverage html
+```
+You will see a directory called `htmlcov` in the project root.
+
+Open index.html to see which files don't have 100% coverage.
+
+### Running tests:
+___
+```bash
+> py manage.py test
+```
+
+## Push small commits frequently.
+No large, dirty commits plzkthx.
+
+Keep your local repository up to date with the `main` repository.
 
 
