@@ -1,30 +1,37 @@
-### Installing project dependencies:
+### Installing project dependencies:  
 ___
-Update to Python 3.9 if you haven't already
 
-Run the following in the project root directory:
-```bash
-schedule_optimization> pip install -r requirements.txt
-```
+1. Update to Python 3.9 if you haven't already
 
-Install the current version (16.x) of [Node.js](https://nodejs.org/en/download/current/)
 
-On the command line, change the working directory to
-```bash
-path to \schedule_optimization\web_app_vue
-```
-then run
-```bash
-npm install
-```
+2. Run the following in the project root directory:  
+    ```bash
+    ...\schedule_optimization> pip install -r requirements.txt
+    ```
+
+3. Install the current version (16.x) of [Node.js](https://nodejs.org/en/download/current/)
+
+
+4. Change the working directory to  
+
+    ```bash
+    ...\schedule_optimization\web_app_vue
+    ```
+    then run
+    ```bash
+    ...\web_app_vue> npm install
+    ```
 
 ### Working with the project:
 ___
+
 **To run the app in Django:**
+
 ```bash
-...\schedule-optimization> python manage.py runserver
+...\schedule-optimization> py manage.py runserver
 ```
-With the Django server running:
+
+With the Django development server running:
 - Access the Django admin GUI by navigating to http://127.0.0.1:8000/admin
 - Access the Django REST Framework GUI by navigating to http://127.0.0.1:8000/api
 
@@ -35,6 +42,7 @@ With the Django server running:
 
 ### Checking for gaps in testing:
 ___
+
 **Using the python tool, coverage:**
 ```bash
 # The location of your virtual environment directory may vary.
@@ -48,7 +56,7 @@ Open index.html to see which files don't have 100% coverage.
 ### Running tests:
 ___
 ```bash
-> py manage.py test
+...\schedule-optimization> py manage.py test
 ```
 
 ## Push small commits frequently.
