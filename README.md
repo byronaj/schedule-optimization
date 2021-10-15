@@ -1,3 +1,12 @@
+### Project tools documentation:  
+___
+
+[Bulma](https://bulma.io/documentation/)  
+[django]()  
+[DRF]()  
+[Vue.js]()  
+
+
 ### Installing project dependencies:  
 ___
 

@@ -14,7 +14,8 @@ class Employee(models.Model):
 
     name = models.CharField(max_length=100)
 
-    # Number indicating
+    # Number indicating which shift (if any) an employee should be scheduled on
+    # 0 = any, 1 = day shift, 2 = night shift
     shift = models.IntegerField()
 
     # Fraction of hours this employee works compared to a full-time employee
