@@ -2,22 +2,18 @@
 
 <template>
     <div class="home">
-        <div class="hero is-info is-medium">
-            <div class="hero-body has-text-centered">
-                <h1 class="title">Welcome to Schedule Optimizer</h1>
-
-                <h2 class="subtitle">An automatic shift scheduler</h2>
-            </div>
-        </div>
+        <Calendar />
     </div>
 </template>
 
 <script>
+import Calendar from '../components/layout/Calendar.vue'
 
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
+  components: { Calendar },
     name: 'Dashboard'
 }
 </script>

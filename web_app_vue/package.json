@@ -8,6 +8,11 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.18.0",
+    "@fullcalendar/core": "^5.10.0",
+    "@fullcalendar/daygrid": "^5.10.0",
+    "@fullcalendar/interaction": "^5.10.0",
+    "@fullcalendar/resource-timeline": "^5.10.0",
+    "@fullcalendar/vue3": "^5.10.0",
     "axios": "^0.21.4",
     "bulma": "^0.9.3",
     "bulma-toast": "^2.4.1",
