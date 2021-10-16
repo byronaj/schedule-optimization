@@ -13,9 +13,42 @@ export default {
     return {
       calendarOptions: {
         plugins: [ resourceTimelinePlugin, dayGridPlugin, interactionPlugin ],
-        initialView: 'dayGridMonth',
-        schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives'
+        initialView: 'resourceTimelineDay',
+        schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+        dateClick: this.handleDateClick,
+        titleFormat: { // will produce something like "Tuesday, September 18, 2018"
+          month: 'long',
+          year: 'numeric',
+          day: 'numeric',
+          weekday: 'long'
+        },
+        resources:
+        [
+          {
+            id: 'a',
+            title: 'Employee Name'
+          }
+        ],
+        events: [
+          {
+            id: '1',
+            resourceId: 'a',
+            title: 'Day Shift',
+            start: this.currentDate() + 'T10:30:00',
+            end: this.currentDate() + 'T20:30:00',
+          }
+        ]
       }
+    }
+  },
+  methods: {
+    currentDate() {
+      const current = new Date();
+      var d = current.getFullYear() + '-' + (current.getMonth()+1) + '-' + current.getDate();
+      return d;
+    },
+    handleDateClick: function(arg) {
+      console.log('date click! ' + arg.dateStr  )
     }
   }
 }
