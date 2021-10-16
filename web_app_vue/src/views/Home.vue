@@ -33,8 +33,7 @@ export default {
     },
     data() {
         return {
-            loggedIn: true,
-            isAdmin: true
+            loggedIn: true
         }
     }
 }
