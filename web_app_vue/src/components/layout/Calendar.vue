@@ -4,6 +4,7 @@ import FullCalendar from '@fullcalendar/vue3'
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import adaptivePlugin from '@fullcalendar/adaptive'
 
 export default {
   components: {
@@ -12,7 +13,7 @@ export default {
   data() {
     return {
       calendarOptions: {
-        plugins: [ resourceTimelinePlugin, dayGridPlugin, interactionPlugin ],
+        plugins: [ resourceTimelinePlugin, dayGridPlugin, interactionPlugin, adaptivePlugin ],
         initialView: 'resourceTimelineDay',
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         dateClick: this.handleDateClick,
@@ -22,6 +23,8 @@ export default {
           day: 'numeric',
           weekday: 'long'
         },
+        editable: true,
+        //resourceGroupField: 'groupId',
         resources:
         [
           {
@@ -37,7 +40,14 @@ export default {
             start: this.currentDate() + 'T10:30:00',
             end: this.currentDate() + 'T20:30:00',
           }
-        ]
+        ],
+        eventResize: function(info) {
+          alert(info.event.title + " end is now " + info.event.end.toISOString());
+
+          if (!confirm("is this okay?")) {
+            info.revert();
+          }
+        }
       }
     }
   },
