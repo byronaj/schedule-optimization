@@ -96,7 +96,7 @@ export default {
 
               localStorage.setItem('token', token)
 
-              this.$router.push('/home')
+              this.$router.push('/')
             })
             .catch(error => {
               if (error.response) {
