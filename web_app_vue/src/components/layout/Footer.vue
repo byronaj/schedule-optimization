@@ -1,9 +1,11 @@
 <template>
-  <footer class="footer">
-    <div class="hero-foot">
-      <p class="has-text-centered">🦶🦶</p>
+
+  <div class="hero-foot">
+    <div class="container">
+      <p class="has-text-centered">CSCI-540 Stack Force SDP 2021</p>
     </div>
-  </footer>
+  </div>
+
 </template>
 
 <script>

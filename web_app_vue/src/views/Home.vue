@@ -1,6 +1,17 @@
 <template>
-  <div v-if="!$store.state.user.isAuthenticated" class="home">
-    <section class="section hero is-medium is-primary is-bold">
+
+  <template v-if="$store.state.user.isAuthenticated">
+    <section class="section hero is-fullheight">
+      <div class="hero-body">
+        <div class="container is-fluid">
+          <Dashboard/>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template v-else>
+    <section class="section hero is-fullheight is-primary is-bold">
       <div class="hero-body">
         <div class="container has-text-centered">
           <p class="title">
@@ -12,10 +23,8 @@
         </div>
       </div>
     </section>
-  </div>
-  <div v-else-if="$store.state.user.isAuthenticated">
-    <Dashboard />
-  </div>
+  </template>
+
 </template>
 
 <script>
@@ -42,7 +51,5 @@ export default {
 </script>
 
 <style>
-.home {
-  width: 100%;
-}
+
 </style>
