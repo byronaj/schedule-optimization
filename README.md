@@ -77,7 +77,7 @@ Keep your local repository up to date with the `main` repository.
 ### PyCharm IDE
 ___
 Set this up so PyCharm knows where to find everything and to use the manage.py utility.
-![PyCharm Screenshot](https://github.com/CSCI-540-SDP/schedule-optimization-web-app-stack-force/images/pycharm_django_support.png)
+![PyCharm Screenshot](https://github.com/CSCI-540-SDP/schedule-optimization-web-app-stack-force/blob/main/images/pycharm_django_support.png)
 
 **Now, to run a task with code completion and hints:**
 1. On the main menu, choose **Tools | Run manage.py task**, or press `Ctrl+Alt+R`.
