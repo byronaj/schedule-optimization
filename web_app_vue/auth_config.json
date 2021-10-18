@@ -1,6 +1,0 @@
-{
-  "domain": "dev-xgks508s.us.auth0.com",
-  "clientId": "A54Yln6msQuUmkvZJsPExsz99bAbJ6iz",
-  "redirect_uri": "http://localhost:8080/callback",
-  "audience": "<audience>"
-}

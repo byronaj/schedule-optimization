@@ -25,8 +25,7 @@ export default {
         },
         editable: true,
         //resourceGroupField: 'groupId',
-        resources:
-        [
+        resources: [
           {
             id: 'a',
             title: 'Employee Name'

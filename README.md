@@ -1,10 +1,10 @@
 ### Project tools documentation:  
 ___
 
-[Bulma](https://bulma.io/documentation/)  
-[django]()  
-[DRF]()  
-[Vue.js]()  
+[Django 3.2 Web Framework](https://docs.djangoproject.com/en/3.2/contents/)  
+[Django REST Framework](https://www.django-rest-framework.org/)  
+[Vue.js (v3) JavaScript Framework](https://v3.vuejs.org/)  
+[Bulma CSS framework](https://bulma.io/documentation/)  
 
 
 ### Installing project dependencies:  
@@ -14,20 +14,20 @@ ___
 
 
 2. Run the following in the project root directory:  
-    ```bash
+   ```bash
     ...\schedule_optimization> pip install -r requirements.txt
     ```
 
 3. Install the current version (16.x) of [Node.js](https://nodejs.org/en/download/current/)
 
 
-4. Change the working directory to  
+4. Change the working directory to
 
-    ```bash
+   ```bash
     ...\schedule_optimization\web_app_vue
     ```
-    then run
-    ```bash
+   then run
+   ```bash
     ...\web_app_vue> npm install
     ```
 
@@ -37,12 +37,12 @@ ___
 **To run the app in Django:**
 
 ```bash
-...\schedule-optimization> py manage.py runserver
+...\schedule-optimization\web_app_django> py manage.py runserver
 ```
 
 With the Django development server running:
 - Access the Django admin GUI by navigating to http://127.0.0.1:8000/admin
-- Access the Django REST Framework GUI by navigating to http://127.0.0.1:8000/api
+- Access the Django REST Framework GUI by navigating to http://127.0.0.1:8000/api/v1
 
 **In Vue.js:**
 ```bash
@@ -65,12 +65,23 @@ Open index.html to see which files don't have 100% coverage.
 ### Running tests:
 ___
 ```bash
-...\schedule-optimization> py manage.py test
+...\schedule-optimization/web_app_django> py manage.py test
 ```
 
 ## Push small commits frequently.
+___
 No large, dirty commits plzkthx.
 
 Keep your local repository up to date with the `main` repository.
 
+### PyCharm IDE
+___
+Set this up so PyCharm knows where to find everything and to use the manage.py utility.
+![PyCharm Screenshot](https://github.com/CSCI-540-SDP/schedule-optimization-web-app-stack-force/images/pycharm_django_support.png)
+
+**Now, to run a task with code completion and hints:**
+1. On the main menu, choose **Tools | Run manage.py task**, or press `Ctrl+Alt+R`.
+The **manage.py** utility starts in its own console.
+
+2. Type the name of the desired task.
 

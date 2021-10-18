@@ -1,25 +1,36 @@
 <template>
-    <div>
-        <Header />
+  <div>
+    <Nav/>
 
-        <router-view />
+    <router-view/>
 
-        <Footer />
-    </div>
+    <Footer/>
+  </div>
 </template>
 
 <script>
-import Header from '@/components/layout/Header'
-import Nav from '@/components/layout/Nav'
+import axios from "axios";
+
+import Nav from "@/components/layout/Nav";
 import Footer from '@/components/layout/Footer'
 
 export default {
-    name: 'App',
-    components:{
-        Header,
-        Nav,
-        Footer
+  name: 'App',
+  components: {
+    Nav,
+    Footer
+  },
+  beforeCreate() {
+    this.$store.commit('initializeStore')
+
+    const token = this.$store.state.user.token
+
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = "Token " + token
+    } else {
+      axios.defaults.headers.common['Authorization'] = ""
     }
+  }
 }
 </script>
 

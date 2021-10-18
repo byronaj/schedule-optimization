@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from web_app.models import Employee
+from .models import Employee
 
 
 class EmployeeSerializer(serializers.ModelSerializer):

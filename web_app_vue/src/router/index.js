@@ -26,6 +26,16 @@ const routes = [
     name: 'LogIn',
     component: () => import('../views/LogIn.vue')
   },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard.vue'),
+    // TODO: create auth navigation guard
+    beforeEnter: (to, from, next) => {
+      // reject the navigation
+      return false
+    }
+  },
   // {
   //   path: '/dashboard',
   //   name: 'Dashboard',
