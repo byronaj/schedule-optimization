@@ -3,6 +3,7 @@ from django.contrib.auth import logout as django_logout
 from django.conf import settings
 from django.shortcuts import render, redirect
 
+from rest_framework import permissions
 from rest_framework import serializers
 from rest_framework import generics
 from rest_framework.response import Response
@@ -15,11 +16,13 @@ from .serializers import EmployeeSerializer
 class EmployeeList(generics.ListCreateAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class EmployeeDetail(generics.RetrieveDestroyAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 # def index(request):

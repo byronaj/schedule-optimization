@@ -4,7 +4,7 @@
     <section class="section hero is-fullheight">
       <div class="hero-body">
         <div class="container is-fluid">
-          <Dashboard/>
+          <Dashboard />
         </div>
       </div>
     </section>

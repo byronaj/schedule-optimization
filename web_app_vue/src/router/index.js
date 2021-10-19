@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+
+import store from '../store'
 // import { authenticationGuard } from "@/auth/authentication-guard";
 
 const routes = [
@@ -30,23 +32,25 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
-    // TODO: create auth navigation guard
-    beforeEnter: (to, from, next) => {
-      // reject the navigation
-      return false
+    meta: {
+      requireLogin: true
     }
-  },
-  // {
-  //   path: '/dashboard',
-  //   name: 'Dashboard',
-  //   component: () => import('../views/Dashboard.vue'),
-  //   beforeEnter: authenticationGuard
-  // }
+  }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requireLogin) && !store.state.isAuthenticated) {
+    next('/log-in')
+  } else {
+    next()
+  }
+})
+
+
 
 export default router

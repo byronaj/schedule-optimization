@@ -21,6 +21,7 @@ urlpatterns = [
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.authtoken')),
     path('api/v1/web_app/', include('web_app.urls')),
+    path('api/v1/auth/', include('rest_framework.urls')),
     # path('', include('social_django.urls')),
     # path('api/', include('web_app_api.urls', namespace='web_app_api'))
 ]

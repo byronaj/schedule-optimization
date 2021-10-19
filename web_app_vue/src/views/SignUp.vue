@@ -79,13 +79,13 @@ export default {
       this.errors = []
 
       if (this.username === '') {
-        this.errors.push('The username is missing!')
+        this.errors.push('missing username')
       }
       if (this.password === '') {
-        this.errors.push('The password is missing!')
+        this.errors.push('missing password')
       }
       if (this.password !== this.password2) {
-        this.errors.push('The passwords are not matching!')
+        this.errors.push('passwords do not match')
       }
       if (!this.errors.length) {
         const formData = {

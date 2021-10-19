@@ -10,7 +10,9 @@
       <div class="container">
         <div class="columns">
           <div class="column is-4 is-offset-4">
+
             <form v-on:submit.prevent="submitForm">
+
               <div class="field">
                 <label>Email</label>
                 <div class="control">

@@ -2,13 +2,14 @@
   <div class="hero-head">
     <nav class="navbar is-dark has-shadow" role="navigation" aria-label="main navigation" style="min-height: 4rem;">
       <div class="container">
+
         <div class="navbar-brand">
-          <a class="navbar-item">
-            <img src="@/assets/calendar_128px.png" alt="calendar logo">
-          </a>
+
           <a class="navbar-item is-size-4" href="/">
+            <img src="@/assets/calendar_128px.png" alt="calendar logo">
             Schedule Optimizer
           </a>
+
           <span class="navbar-burger">
             <span></span>
             <span></span>
@@ -19,18 +20,63 @@
         <div id="navbar" class="navbar-menu">
 
           <div class="navbar-start">
-            <a href="/" class="navbar-item">Home</a>
-            <a href="/about" class="navbar-item">About</a>
+            <template v-if="$store.state.user.isAuthenticated">
+              <a class="navbar-item" v-on:click="showModal = true">
+                Add Employee
+              </a>
+              <modal v-if="showModal" v-on:close="showModal = false">
+
+                <header class="modal-card-head">
+                  <p class="modal-card-title">
+                    Add Employee
+                  </p>
+                  <button class="delete" aria-label="close" v-on:click="showModal = false"></button>
+                </header>
+
+                <section class="modal-card-body">
+                  <div class="field">
+                    <label class="label">
+                      First Name
+                    </label>
+                    <div class="control">
+                      <input class="input" type="text">
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="label">
+                      Last Name
+                    </label>
+                    <div class="control">
+                      <input class="input" type="text">
+                    </div>
+                  </div>
+                </section>
+
+                <footer class="modal-card-foot">
+                  <button class="button is-success">
+                    Save changes
+                  </button>
+                  <button class="button" aria-label="close" v-on:click="showModal = false">
+                    Cancel
+                  </button>
+                </footer>
+
+              </modal>
+            </template>
           </div>
 
           <div class="navbar-end">
+            <a href="/about" class="navbar-item">About</a>
             <div class="navbar-item is-active">
               <div class="buttons">
+
                 <template v-if="$store.state.user.isAuthenticated">
-                  <router-link to="/home" class="button is-danger is-inverted" @click="logout()">
+                  <router-link to="/home" class="button is-danger is-outlined" @click="logout()">
                     <strong>Log out</strong>
                   </router-link>
                 </template>
+
                 <template v-else>
                   <router-link to="/sign-up" class="button is-info is-inverted">
                     Sign up
@@ -39,6 +85,7 @@
                     <strong>Log in</strong>
                   </router-link>
                 </template>
+
               </div>
             </div>
           </div>
@@ -51,6 +98,7 @@
 
 <script>
 import axios from "axios";
+import Modal from "@/components/Modal.vue";
 
 export default {
   beforeCreate() {
@@ -73,8 +121,20 @@ export default {
       this.$store.commit('removeToken')
 
       this.$router.push('/')
-    }
+    },
   },
-  name: 'Nav'
+  name: 'Nav',
+  components: {
+    Modal,
+  },
+  data() {
+    return {
+      showModal: false,
+    }
+  }
 }
 </script>
+
+<style scoped>
+
+</style>
