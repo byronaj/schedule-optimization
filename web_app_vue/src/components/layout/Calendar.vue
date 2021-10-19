@@ -24,11 +24,17 @@ export default {
           weekday: 'long'
         },
         editable: true,
-        //resourceGroupField: 'groupId',
+        resourceAreaColumns:
+        [
+          {
+            field: 'name',
+            headerContent: 'Employees'
+          }
+        ],
         resources: [
           {
             id: 'a',
-            title: 'Employee Name'
+            name: 'Employee Name'
           }
         ],
         events: [

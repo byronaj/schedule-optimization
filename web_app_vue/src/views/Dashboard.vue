@@ -3,7 +3,7 @@
 <template>
   <div class="columns">
     <div class="column is-one-fifth">
-      Mini Calendar
+      <MiniCal/>
     </div>
     <div class="column">
       <Calendar/>
@@ -14,9 +14,10 @@
 <script>
 // @ is an alias to /src
 import Calendar from '@/components/layout/Calendar.vue'
+import MiniCal from '@/components/layout/MiniCal.vue'
 
 export default {
-  components: {Calendar},
+  components: {Calendar, MiniCal},
   name: 'Dashboard'
 }
 </script>
