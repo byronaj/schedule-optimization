@@ -24,17 +24,24 @@ export default {
           weekday: 'long'
         },
         editable: true,
+        headerToolbar: {
+          left: 'title',
+          right: '',
+        },
         resourceAreaColumns:
         [
           {
             field: 'name',
-            headerContent: 'Employees'
+            headerContent: 'Employees',
           }
         ],
+        resourceAreaWidth: '20%',
         resources: [
           {
             id: 'a',
-            name: 'Employee Name'
+            name: 'Employee Name',
+            eventColor: '#511b1b',
+            
           }
         ],
         events: [
@@ -64,10 +71,14 @@ export default {
     },
     handleDateClick: function(arg) {
       console.log('date click! ' + arg.dateStr  )
+    },
+    changeDate(date) {
+      let cal = this.$refs.FC.getApi()
+      cal.gotoDate(date)
     }
   }
 }
 </script>
 <template>
-  <FullCalendar :options="calendarOptions" />
+  <FullCalendar :options="calendarOptions" ref="FC"/>
 </template>

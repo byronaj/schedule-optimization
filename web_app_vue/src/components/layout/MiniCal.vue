@@ -3,18 +3,27 @@
 </template>
 
 <script>
-import Calendar from "color-calendar";
+import MiniCal from "color-calendar";
 import "color-calendar/dist/css/theme-glass.css";
 
 export default {
   name: "ColorCalendar",
   mounted() {
-    new Calendar({
+    new MiniCal({
       id: "#myCal",
       calendarSize: "small",
       /*disableDayClick: "true",*/
-      theme: "glass"
+      theme: "glass",
+      primaryColor: '#511b1b',
+      dateChanged: this.dateChanged,
     });
+  },
+  methods: {
+      dateChanged(date)
+      {
+        try {this.$parent.$refs.FullCalendar.changeDate(date)}
+        catch {}
+      },
   }
 };
 </script>

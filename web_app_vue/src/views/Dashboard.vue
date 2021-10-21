@@ -6,7 +6,7 @@
       <MiniCal/>
     </div>
     <div class="column">
-      <Calendar/>
+      <Calendar ref="FullCalendar"/>
     </div>
   </div>
 </template>
