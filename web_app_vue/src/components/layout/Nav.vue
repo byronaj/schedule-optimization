@@ -64,6 +64,12 @@
 
               </modal>
             </template>
+            <a class="navbar-item" @click="toggleEditConstraints">
+                Edit Constraints
+            </a>
+            <div v-if="showEditConstraints">
+              <EditConstraints />
+            </div>
           </div>
 
           <div class="navbar-end">
@@ -99,6 +105,7 @@
 <script>
 import axios from "axios";
 import Modal from "@/components/Modal.vue";
+import EditConstraints from "@/components/layout/EditConstraints.vue"
 
 export default {
   beforeCreate() {
@@ -122,14 +129,18 @@ export default {
 
       this.$router.push('/')
     },
+    toggleEditConstraints() {
+      this.showEditConstraints = !this.showEditConstraints
+    }
   },
   name: 'Nav',
   components: {
-    Modal,
+    Modal, EditConstraints
   },
   data() {
     return {
       showModal: false,
+      showEditConstraints: false,
     }
   }
 }
