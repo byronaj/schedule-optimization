@@ -1,5 +1,5 @@
 <template>
-  <modal @close="toggleShowModal">
+  <Modal @close="toggleShowModal">
     <header class="modal-card-head">
         <p class="modal-card-title">
         Edit Constraints
@@ -10,21 +10,21 @@
     <section class="modal-card-body" style="color:black;">
         <div class="field">
         <label class="checkbox">
-            <input type="checkbox">
-            Shifts no more than 8 hours
+            <input type="checkbox" ref="shift12hours">
+            Shifts no more than 12 hours
         </label>
         </div>
 
         <div class="field">
         <label class="checkbox">
-            <input type="checkbox">
+            <input type="checkbox" ref="back2back">
             Allow back-to-back shifts
         </label>
         </div>
     </section>
 
     <footer class="modal-card-foot">
-        <button class="button is-success">
+        <button class="button is-success" @click="saveConstraints">
         Save changes
         </button>
         <button class="button" aria-label="close" @click="toggleShowModal">
@@ -32,7 +32,7 @@
         </button>
     </footer>
 
-    </modal>
+    </Modal>
 </template>
 
 <script>
@@ -49,6 +49,11 @@ export default {
   methods: {
       toggleShowModal() {
           this.$parent.toggleEditConstraints()
+      },
+      saveConstraints() {
+        let shift12hours = this.$refs.shift12hours.checked
+        let back2back = this.$refs.back2back.checked
+        //save constraints
       }
   }
 }

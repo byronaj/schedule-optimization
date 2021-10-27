@@ -24,7 +24,7 @@
               <a class="navbar-item" v-on:click="showModal = true">
                 Add Employee
               </a>
-              <modal v-if="showModal" v-on:close="showModal = false">
+              <Modal v-if="showModal" v-on:close="showModal = false">
 
                 <header class="modal-card-head">
                   <p class="modal-card-title">
@@ -39,7 +39,7 @@
                       First Name
                     </label>
                     <div class="control">
-                      <input class="input" type="text">
+                      <input class="input" type="text" ref="fName">
                     </div>
                   </div>
 
@@ -48,13 +48,13 @@
                       Last Name
                     </label>
                     <div class="control">
-                      <input class="input" type="text">
+                      <input class="input" type="text" ref="lName">
                     </div>
                   </div>
                 </section>
 
                 <footer class="modal-card-foot">
-                  <button class="button is-success">
+                  <button class="button is-success" @click="saveNewEmployee">
                     Save changes
                   </button>
                   <button class="button" aria-label="close" v-on:click="showModal = false">
@@ -62,9 +62,9 @@
                   </button>
                 </footer>
 
-              </modal>
+              </Modal>
             </template>
-            <a class="navbar-item" @click="toggleEditConstraints">
+            <a class="navbar-item" @click="toggleEditConstraints" v-if="userType==0">
                 Edit Constraints
             </a>
             <div v-if="showEditConstraints">
@@ -131,6 +131,11 @@ export default {
     },
     toggleEditConstraints() {
       this.showEditConstraints = !this.showEditConstraints
+    },
+    saveNewEmployee() {
+      let fName = this.$refs.fName.value
+      let lName = this.$refs.lName.value
+      //saveNewEmployee
     }
   },
   name: 'Nav',
@@ -141,6 +146,7 @@ export default {
     return {
       showModal: false,
       showEditConstraints: false,
+      userType: localStorage.getItem("userType")
     }
   }
 }

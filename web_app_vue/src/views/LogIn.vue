@@ -90,13 +90,16 @@ export default {
         axios
             .post('/api/v1/token/login/', formData)
             .then(response => {
+              console.log(response)
               const token = response.data.auth_token
+              //const userType = response.data.userType
 
               this.$store.commit('setToken', token)
 
               axios.defaults.headers.common['Authorization'] = "Token " + token
 
               localStorage.setItem('token', token)
+              localStorage.setItem('userType', 0) //for testing
 
               this.$router.push('/')
             })
