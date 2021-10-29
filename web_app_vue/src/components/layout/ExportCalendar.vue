@@ -31,14 +31,6 @@ export default {
           day: 'numeric',
           weekday: 'long'
         },
-        resources: [
-          {
-            id: 'a',
-            name: 'Employee Name',
-            eventColor: '#511b1b',
-            
-          }
-        ],
         events: [
           {
             id: '1',
@@ -68,21 +60,21 @@ export default {
 }
 </script>
 <template>
+<div id="export">
   <Modal @close="toggleShowExport">
-    <section class="modal-card-body" style="color:black;">
+    <section class="modal-card-body export" style="color:black;">
       <FullCalendar :options="calendarOptions" ref="FC"/>
       <button class="button is-hidden-print" aria-label="close" @click="toggleShowExport">
         Close
       </button>
     </section>
   </Modal>
+</div>>
 </template>
 
 <style>
-.modal-card, .modal-card-body {
+#export .modal-card {
   width: 100%;
-  /*max-height: 90vh;*/
-  /*height: 100%;*/
 }
 @media print {
   .is-hidden-print {
