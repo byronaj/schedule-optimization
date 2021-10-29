@@ -17,6 +17,7 @@ export default {
         initialView: 'resourceTimelineDay',
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         dateClick: this.handleDateClick,
+        height: '88vh',
         titleFormat: { // will produce something like "Tuesday, September 18, 2018"
           month: 'long',
           year: 'numeric',

@@ -6,10 +6,9 @@
       <MiniCal/>
     </div>
     <div class="column">
-      <div class="is-one-fifth buttons-calendar"><img src="@/assets/export.svg" @click="exportCalendar" />
-        <!--<ExportCalendar v-if="showExport" />-->
-      </div>
-      <Calendar ref="FullCalendar"/>
+      <button class="button buttons-calendar"><span class="icon is-small"><img src="@/assets/export.svg" @click="exportCalendar" /></span></button>
+        <ExportCalendar v-if="showExport" ref="EXC" />
+      <Calendar v-if="!showExport" ref="FullCalendar"/>
     </div>
   </div>
 </template>
@@ -26,6 +25,7 @@ export default {
   methods: {
     exportCalendar() {
       this.showExport = !this.showExport
+      //window.print()
     }
   },
   data() {
@@ -59,18 +59,8 @@ export default {
 }
 
 .buttons-calendar {
-  width: 50px;
-  height: 50px;
   cursor: pointer;
   position: absolute;
-  right: 20px;
-  border-radius: 26px;
-  border: #000 solid 1px;
-  text-align: center;
-  padding: 5px 0px 0px 5px;
-}
-.buttons-calendar img {
-  height: 35px;
-  width: 35px;
+  right: 33px;
 }
 </style>

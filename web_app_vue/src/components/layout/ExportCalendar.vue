@@ -1,8 +1,9 @@
 <script>
 import '@fullcalendar/core/vdom' // solves problem with Vite
 import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
+//import dayGridPlugin from '@fullcalendar/daygrid'
 import adaptivePlugin from '@fullcalendar/adaptive'
+import timeGridPlugin from '@fullcalendar/timegrid';
 
 import Modal from "@/components/Modal.vue";
 
@@ -14,12 +15,21 @@ export default {
   data() {
     return {
       calendarOptions: {
-        plugins: [ dayGridPlugin, adaptivePlugin ],
-        initialView: 'dayGridMonth',
+        plugins: [ timeGridPlugin, adaptivePlugin ],
+        initialView: 'timeGridWeek',
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+        allDaySlot: false,
+        slotDuration: '01:00:00',
+        height: '73vh',
         headerToolbar: {
-          left: '',
+          left: 'title',
           right: '',
+        },
+        titleFormat: { // will produce something like "Tuesday, September 18, 2018"
+          month: 'long',
+          year: 'numeric',
+          day: 'numeric',
+          weekday: 'long'
         },
         resources: [
           {
@@ -33,7 +43,7 @@ export default {
           {
             id: '1',
             resourceId: 'a',
-            title: 'Day Shift',
+            title: 'Employee Name',
             start: this.currentDate() + 'T10:30:00',
             end: this.currentDate() + 'T20:30:00',
           }
@@ -42,23 +52,26 @@ export default {
       showModal: false,
     }
   },
+  mounted() {
+    window.print()
+  },
   methods: {
-      toggleShowExport() {
-          this.$parent.exportCalendar()
-      },
-      currentDate() {
-        const current = new Date();
-        var d = current.getFullYear() + '-' + (current.getMonth()+1) + '-' + current.getDate();
-        return d;
+    toggleShowExport() {
+        this.$parent.exportCalendar()
+    },
+    currentDate() {
+      const current = new Date();
+      var d = current.getFullYear() + '-' + (current.getMonth()+1) + '-' + current.getDate();
+      return d;
     },
   }
 }
 </script>
 <template>
   <Modal @close="toggleShowExport">
-    <section class="modal-card-body" style="color:black; padding: 10px 50px;">
+    <section class="modal-card-body" style="color:black;">
       <FullCalendar :options="calendarOptions" ref="FC"/>
-      <button class="button" aria-label="close" @click="toggleShowExport">
+      <button class="button is-hidden-print" aria-label="close" @click="toggleShowExport">
         Close
       </button>
     </section>
@@ -66,9 +79,14 @@ export default {
 </template>
 
 <style>
-.modal-card {
+.modal-card, .modal-card-body {
   width: 100%;
-  max-height: 90vh;
+  /*max-height: 90vh;*/
   /*height: 100%;*/
+}
+@media print {
+  .is-hidden-print {
+    display: none !important;
+  }
 }
 </style>

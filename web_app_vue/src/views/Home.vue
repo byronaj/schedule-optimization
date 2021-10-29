@@ -1,7 +1,7 @@
 <template>
 
   <template v-if="$store.state.user.isAuthenticated">
-    <section class="section hero is-fullheight" style="padding: 0px">
+    <section class="section hero is-fullheight" style="padding: 0px; min-height:1px;">
       <div class="hero-body" style="padding: 10px 0px;">
         <div class="container is-fluid">
           <Dashboard />
