@@ -11,7 +11,7 @@
 <script>
 import axios from "axios";
 
-import Nav from "@/components/layout/Nav";
+import Nav from '@/components/layout/Nav';
 import Footer from '@/components/layout/Footer'
 
 export default {

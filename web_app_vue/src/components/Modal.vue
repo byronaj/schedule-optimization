@@ -1,10 +1,10 @@
 <template>
   <div class="modal is-active" tabindex="-1" role="dialog">
-    <div class="modal-background" v-on:click="close"></div>
+    <div class="modal-background" @click="close"></div>
     <div class="modal-card">
       <slot></slot>
     </div>
-    <button class="modal-close is-large" aria-label="close" v-on:click="close"></button>
+    <button class="modal-close is-large" aria-label="close" @click="close"></button>
   </div>
 </template>
 

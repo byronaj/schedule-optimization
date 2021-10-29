@@ -4,6 +4,10 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
+
 axios.defaults.baseUrl = 'http://127.0.0.1:8000'
 
-createApp(App).use(store).use(router, axios).mount('#app')
+createApp(App)
+  .use(store)
+  .use(router, axios)
+  .mount('#app')

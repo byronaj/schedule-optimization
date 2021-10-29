@@ -3,10 +3,14 @@
 <template>
   <div class="columns">
     <div class="column is-one-fifth">
-      <MiniCal/>
+      <MiniCal />
     </div>
     <div class="column">
-      <button class="button buttons-calendar"><span class="icon is-small"><img src="@/assets/export.svg" @click="exportCalendar" /></span></button>
+      <button class="button buttons-calendar">
+        <span class="icon is-small">
+          <img src="@/assets/export.svg" @click="exportCalendar" />
+        </span>
+      </button>
         <ExportCalendar v-if="showExport" ref="EXC" />
       <Calendar v-if="!showExport" ref="FullCalendar"/>
     </div>
@@ -37,27 +41,6 @@ export default {
 </script>
 
 <style scoped>
-.left {
-  display: inline-block;
-  width: 300px;
-}
-
-.right {
-  display: inline-block;
-  width: 100%;
-}
-
-.minical {
-  width: 300px;
-  height: 300px;
-  display: inline-block;
-}
-
-.top {
-  height: 150px;
-  display: inline-block;
-}
-
 .buttons-calendar {
   cursor: pointer;
   position: absolute;

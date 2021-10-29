@@ -1,22 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '@/views/Home.vue'
+import store from '@/store'
 
-import store from '../store'
-// import { authenticationGuard } from "@/auth/authentication-guard";
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import('../views/About.vue')
   },
   {
     path: '/sign-up',
@@ -40,8 +31,15 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 })
+
+// Probably not going to do multiple user types (or perhaps just do it half-assed)
+// router.beforeEach(async (to, from) => {
+//   // canUserAccess() returns `true` or `false`
+//   const canAccess = await canUserAccess(to)
+//   if (!canAccess) return '/login'
+// })
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requireLogin) && !store.state.isAuthenticated) {
@@ -50,7 +48,5 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-
-
 
 export default router
