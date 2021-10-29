@@ -51,7 +51,6 @@ With the Django development server running:
 
 ### Checking for gaps in testing:
 ___
-
 **Using the python tool, coverage:**
 ```bash
 # The location of your virtual environment directory may vary.
