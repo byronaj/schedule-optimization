@@ -25,15 +25,15 @@
                   Employee Maintenance
                 </a>
                 <div class="navbar-dropdown">
-                  <a class="navbar-item" @click="toggleAddEmployee">
+                  <div class="navbar-item" @click="toggleAddEmployee">
                     Add Employee
-                  </a>
-                  <a v-if="showAddEmployee">
+                  </div>
+                  <div v-if="showAddEmployee">
                     <AddEmployee />
-                  </a>
-                  <a class="navbar-item">
+                  </div>
+                  <div class="navbar-item">
                     View/Modify Employees
-                  </a>
+                  </div>
                 </div>
               </div>
 
