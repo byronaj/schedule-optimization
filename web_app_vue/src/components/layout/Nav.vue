@@ -28,13 +28,13 @@
                   <div class="navbar-item" @click="toggleAddEmployee">
                     Add Employee
                   </div>
-                  <div v-if="showAddEmployee">
-                    <AddEmployee />
-                  </div>
                   <div class="navbar-item">
                     View/Modify Employees
                   </div>
                 </div>
+                <div v-if="showAddEmployee">
+                    <AddEmployee />
+                  </div>
               </div>
 
               <a class="navbar-item" @click="toggleEditConstraints" v-if="userType==0">
