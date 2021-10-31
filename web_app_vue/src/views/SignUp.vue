@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="signup">
     <div class="hero is-primary is-bold">
       <div class="hero-body has-text-centered">
         <h1 class="title">Sign Up</h1>
@@ -32,9 +32,7 @@
               </div>
 
               <div class="notification is-danger" v-if="errors.length">
-                <p v-for="error in errors" v-bind:key="error">
-                  {{ error }}
-                </p>
+                <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
               </div>
 
               <div class="field">
@@ -60,6 +58,8 @@
 <script>
 import axios from 'axios'
 
+import { toast } from 'bulma-toast'
+
 export default {
   data() {
     return {
@@ -70,42 +70,37 @@ export default {
     }
   },
   methods: {
-    submitForm() {
-      console.log('submitForm')
-      this.errors = []
-
-      if (this.username === '') {
-        this.errors.push('missing username')
-      }
-      if (this.password === '') {
-        this.errors.push('missing password')
-      }
-      if (this.password !== this.password2) {
-        this.errors.push('passwords do not match')
-      }
-      if (!this.errors.length) {
-        const formData = {
-          username: this.username,
-          password: this.password
+    submitForm(e) {
+      const formData = {
+        username: this.username,
+        password: this.password
+    }
+    axios
+      .post('/api/v1/users/', formData)
+      .then(response => {
+        console.log(response)
+        toast({
+          message: 'Account was created successfully. Please log in.',
+          type: 'is-success',
+          dismissible: true,
+          pauseOnHover: true,
+          duration: 2000,
+          position: 'bottom-right',
+        })
+        this.$router.push('/log-in')
+      })
+      .catch(error => {
+        if (error.response) {
+          for (const property in error.response.data) {
+            this.errors.push(`${property}: ${error.response.data[property]}`)
+          }
+          console.log(JSON.stringify(error.response.data))
+        } else if (error.message) {
+          console.log(JSON.stringify(error.message))
+        } else {
+          console.log(JSON.stringify(error))
         }
-
-        axios
-            .post('/api/v1/users/', formData)
-            .then(response => {
-              this.$router.push('/log-in')
-            })
-            .catch(error => {
-              if (error.response) {
-                for (const property in error.response.data) {
-                  this.errors.push(`${property}: ${error.response.data[property]}`)
-                }
-                console.log(JSON.stringify(error.response.data))
-              } else if (error.message) {
-                this.errors.push('Something went wrong. Please try again')
-                console.log(JSON.stringify(error))
-              }
-            })
-      }
+      })
     }
   }
 }

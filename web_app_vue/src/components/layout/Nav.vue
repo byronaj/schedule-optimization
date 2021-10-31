@@ -5,7 +5,7 @@
 
         <div class="navbar-brand">
           <img class="is-static" src="@/assets/icon.png" alt="calendar logo" href="#">
-          <a class="navbar-item is-size-5" href="/">
+          <a class="navbar-item is-size-5 has-text-grey-light" href="/">
             Schedule Optimizer
           </a>
 
@@ -20,21 +20,22 @@
           <div class="navbar-start">
 
             <template v-if="$store.state.user.isAuthenticated">
+
               <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
                   Employee Maintenance
                 </a>
                 <div class="navbar-dropdown">
-                  <div class="navbar-item" @click="toggleAddEmployee">
+                  <a class="navbar-item has-text-primary-dark" @click="toggleAddEmployee">
                     Add Employee
-                  </div>
-                  <div class="navbar-item">
-                    View/Modify Employees
-                  </div>
-                </div>
-                <div v-if="showAddEmployee">
+                  </a>
+                  <a v-if="showAddEmployee">
                     <AddEmployee />
-                  </div>
+                  </a>
+                  <a class="navbar-item has-text-info-dark">
+                    View/Modify Employees
+                  </a>
+                </div>
               </div>
 
               <a class="navbar-item" @click="toggleEditConstraints" v-if="userType==0">
@@ -52,15 +53,15 @@
 
               <div class="buttons">
                 <template v-if="$store.state.user.isAuthenticated">
-                  <router-link to="/home" class="button is-danger is-outlined" @click="logout()">
+                  <router-link to="/" class="button is-danger is-outlined" @click="logout()">
                     <strong>Log out</strong>
                   </router-link>
                 </template>
                 <template v-else>
-                  <router-link to="/sign-up" class="button is-info is-inverted">
-                    Sign up
+                  <router-link to="/sign-up" class="button is-info is-outlined">
+                    <strong>Sign up</strong>
                   </router-link>
-                  <router-link to="/log-in" class="button is-primary is-inverted">
+                  <router-link to="/log-in" class="button is-primary is-outlined">
                     <strong>Log in</strong>
                   </router-link>
                 </template>
@@ -77,41 +78,16 @@
 
 <script>
 import axios from "axios";
+
 import Modal from "@/components/Modal.vue";
 import EditConstraints from "@/components/layout/EditConstraints.vue"
-import AddEmployee from "@/components/layout/AddEmployee";
+import AddEmployee from "@/components/layout/AddEmployee.vue";
+import Employees from "@/views/Employees.vue";
 
 export default {
-  beforeCreate() {
-    this.$store.commit('initializeStore')
-    const token = this.$store.state.token
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = "Token " + token
-    } else {
-      axios.defaults.headers.common['Authorization'] = ""
-    }
-  },
-  methods: {
-    logout() {
-      console.log('logout')
-
-      axios.defaults.headers.common['Authorization'] = ""
-
-      localStorage.removeItem('token')
-
-      this.$store.commit('removeToken')
-
-      this.$router.push('/')
-    },
-    toggleAddEmployee() {
-      this.showAddEmployee = !this.showAddEmployee
-    },
-    toggleEditConstraints() {
-      this.showEditConstraints = !this.showEditConstraints
-    },
-  },
   name: 'Nav',
   components: {
+    Employees,
     Modal,
     AddEmployee,
     EditConstraints,
@@ -122,7 +98,22 @@ export default {
       showAddEmployee: false,
       userType: localStorage.getItem("userType")
     }
-  }
+  },
+  methods: {
+    logout() {
+      console.log('logout')
+      axios.defaults.headers.common['Authorization'] = ""
+      localStorage.removeItem('token')
+      this.$store.commit('removeToken')
+      this.$router.push('/')
+    },
+    toggleAddEmployee() {
+      this.showAddEmployee = !this.showAddEmployee
+    },
+    toggleEditConstraints() {
+      this.showEditConstraints = !this.showEditConstraints
+    },
+  },
 }
 </script>
 

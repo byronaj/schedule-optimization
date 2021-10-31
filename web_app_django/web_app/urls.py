@@ -1,12 +1,13 @@
-from django.urls import path
+from django.urls import path, include
 
-from .views import EmployeeList, EmployeeDetail
-# from web_app import views
+from rest_framework.routers import DefaultRouter
 
+from .views import EmployeeViewSet
+
+
+router = DefaultRouter()
+router.register('employees', EmployeeViewSet, basename='employees')
 
 urlpatterns = [
-    # path('', views.index, name='index'),
-    # path('logout/', views.logout, name='logout'),
-    path('<int:pk>/', EmployeeDetail.as_view(), name='detailcreate'),
-    path('', EmployeeList.as_view(), name='listcreate'),
+    path('', include(router.urls)),
 ]

@@ -49,6 +49,11 @@ With the Django development server running:
 ...\schedule-optimization\web_app_vue> npm run serve
 ```
 
+### Django database updates:
+___
+1. `...\schedule-optimization\web_app_django> py manage.py makemigrations`
+2. `...\schedule-optimization\web_app_django> py manage.py migrate`
+
 ### Checking for gaps in testing:
 ___
 **Using the python tool, coverage:**

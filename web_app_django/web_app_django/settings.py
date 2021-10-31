@@ -28,8 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8080',
-    'http://127.0.0.1:8080'
+    "http://localhost:8080",
+    "http://localhost:8081",
+    "http://127.0.0.1:8080",
+    "http://127.0.0.1:8081"
 ]
 
 REST_FRAMEWORK = {
@@ -49,13 +51,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'web_app',
-    # 'social_django',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
     'djoser',
-    'django_extensions'
+    'web_app',
 ]
 
 MIDDLEWARE = [
@@ -75,7 +75,7 @@ ROOT_URLCONF = 'web_app_django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'web_app/templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -137,42 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# AUTH_USER_MODEL = 'web_app.User'
-
-# # Auth0 Settings
-# AUTH_USER_MODEL = 'web_app.User'
-# SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
-# SOCIAL_AUTH_AUTH0_DOMAIN = 'dev-xgks508s.us.auth0.com'
-# SOCIAL_AUTH_AUTH0_KEY = 'PQOT0DvQNaL3MNQ560anqDasP4CKmbtk'
-# SOCIAL_AUTH_AUTH0_SECRET = 'BqbJ_2JQst4fcpu-Uo2MH1ouXPo5IlSA3oB7K-MbmkQEXUInPiWeR1SyYv5hB3i8'
-# SOCIAL_AUTH_AUTH0_SCOPE = [
-#     'openid',
-#     'profile',
-#     'email'
-# ]
-#
-# AUTHENTICATION_BACKENDS = {
-#     'social_core.backends.auth0.Auth0OAuth2',
-#     'django.contrib.auth.backends.ModelBackend',
-#     'django.contrib.auth.backends.RemoteUserBackend',
-# }
-#
-# LOGIN_URL = '/login/auth0'
-# LOGIN_REDIRECT_URL = '/'
-# LOGOUT_REDIRECT_URL = '/login/auth0'
-
-
-# GRAPH_MODELS = {
-#     'all_applications': True,
-#     'group_models': True,
-# }

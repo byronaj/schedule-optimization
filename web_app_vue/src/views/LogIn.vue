@@ -28,12 +28,7 @@
               </div>
 
               <div class="notification is-danger" v-if="errors.length">
-                <p
-                    v-for="error in errors"
-                    v-bind:key="error"
-                >
-                  {{ error }}
-                </p>
+                <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
               </div>
 
               <div class="field">
@@ -45,7 +40,9 @@
 
             <hr>
 
-            Or <router-link to="/sign-up">click here</router-link> to sign up
+            Or
+            <router-link to="/sign-up">click here</router-link>
+            to sign up
           </div>
         </div>
       </div>
@@ -57,6 +54,7 @@
 import axios from 'axios'
 
 export default {
+  name: 'LogIn',
   data() {
     return {
       username: '',
@@ -65,57 +63,55 @@ export default {
     }
   },
   methods: {
-    submitForm() {
-      console.log('submitForm')
-
+    async submitForm(e) {
       axios.defaults.headers.common['Authorization'] = ""
 
       localStorage.removeItem('token')
 
-      this.errors = []
-
-      if (this.username === '') {
-        this.errors.push('missing username')
-      }
-      if (this.password === '') {
-        this.errors.push('missing password')
+      const formData = {
+        username: this.username,
+        password: this.password
       }
 
-      if (!this.errors.length) {
-        const formData = {
-          username: this.username,
-          password: this.password
-        }
+      await axios
+          .post('/api/v1/token/login/', formData)
 
-        axios
-            .post('/api/v1/token/login/', formData)
-            .then(response => {
-              console.log(response)
-              const token = response.data.auth_token
-              //const userType = response.data.userType
+          .then(response => {
+            const token = response.data.auth_token
+            //const userType = response.data.userType
+            this.$store.commit('setToken', token)
+            axios.defaults.headers.common['Authorization'] = "Token " + token
+            localStorage.setItem('token', token)
+            // localStorage.setItem('userType', 0) //for testing
+          })
 
-              this.$store.commit('setToken', token)
-
-              axios.defaults.headers.common['Authorization'] = "Token " + token
-
-              localStorage.setItem('token', token)
-              localStorage.setItem('userType', 0) //for testing
-
-              this.$router.push('/')
-            })
-            .catch(error => {
-              if (error.response) {
-                for (const property in error.response.data) {
-                  this.errors.push(`${property}: ${error.response.data[property]}`)
-                }
-                console.log(JSON.stringify(error.response.data))
-              } else if (error.message) {
-                this.errors.push('Something went wrong. Please try again')
-
-                console.log(JSON.stringify(error))
+          .catch(error => {
+            if (error.response) {
+              for (const property in error.response.data) {
+                this.errors.push(`${property}: ${error.response.data[property]}`)
               }
-            })
-      }
+              console.log(JSON.stringify(error.response.data))
+            } else if (error.message) {
+              this.errors.push(JSON.stringify(error.message))
+            } else {
+              console.log(JSON.stringify(error))
+            }
+          })
+
+      axios
+          .get('/api/v1/users/me')
+
+          .then(response => {
+            this.$store.commit('setUser', {'username': response.data.username, 'id': response.data.id})
+            localStorage.setItem('username', response.data.username)
+            localStorage.setItem('userid', response.data.id)
+            this.$router.push('/')
+          })
+
+          .catch(error => {
+            console.log(JSON.stringify(error))
+          })
+
     }
   }
 }

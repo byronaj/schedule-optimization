@@ -28,21 +28,11 @@
 </template>
 
 <script>
-
-// @ is an alias to /src
-import Dashboard from '@/views/Dashboard'
 import axios from "axios";
 
+import Dashboard from '@/views/Dashboard'
+
 export default {
-  beforeCreate() {
-    this.$store.commit('initializeStore')
-    const token = this.$store.state.token
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = "Token " + token
-    } else {
-      axios.defaults.headers.common['Authorization'] = ""
-    }
-  },
   name: 'Home',
   components: {
     Dashboard

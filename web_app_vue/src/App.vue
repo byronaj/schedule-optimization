@@ -1,10 +1,10 @@
 <template>
   <div>
-    <Nav/>
 
-    <router-view/>
+    <Nav />
 
-    <Footer/>
+    <router-view />
+
   </div>
 </template>
 
@@ -12,13 +12,11 @@
 import axios from "axios";
 
 import Nav from '@/components/layout/Nav';
-import Footer from '@/components/layout/Footer'
 
 export default {
   name: 'App',
   components: {
     Nav,
-    Footer
   },
   beforeCreate() {
     this.$store.commit('initializeStore')

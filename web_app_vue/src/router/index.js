@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
+
 import store from '@/store'
 
 
@@ -26,6 +27,18 @@ const routes = [
     meta: {
       requireLogin: true
     }
+  },
+  { // DELETE after API testing is done and code is finished being used to assist in implementing production version
+    path: '/employees',
+    name: 'Employees',
+    component: () => import('../views/Employees.vue'),
+
+  },
+  { /// DELETE after API testing is done and code is finished being used to assist in implementing production version
+    path: '/add',
+    name: 'Add',
+    component: () => import('../views/Add.vue'),
+
   }
 ]
 

@@ -39,7 +39,7 @@
 import Modal from "@/components/Modal.vue";
 
 export default {
-  components: {Modal},
+  components: { Modal },
   name: 'EditConstraints',
   data() {
     return {

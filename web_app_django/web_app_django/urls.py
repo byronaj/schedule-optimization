@@ -16,12 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.authtoken')),
-    path('api/v1/web_app/', include('web_app.urls')),
-    path('api/v1/auth/', include('rest_framework.urls')),
-    # path('', include('social_django.urls')),
-    # path('api/', include('web_app_api.urls', namespace='web_app_api'))
+    path('api/v1/', include('web_app.urls')),
 ]
