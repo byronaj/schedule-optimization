@@ -29,13 +29,13 @@
                   <a class="navbar-item has-text-primary-dark" @click="toggleAddEmployee">
                     Add Employee
                   </a>
-                  <a v-if="showAddEmployee">
-                    <AddEmployee />
-                  </a>
                   <a class="navbar-item has-text-info-dark">
                     View/Modify Employees
                   </a>
                 </div>
+              </div>
+              <div v-if="showAddEmployee">
+                    <AddEmployee />
               </div>
 
               <a class="navbar-item" @click="toggleEditConstraints" v-if="userType==0">
