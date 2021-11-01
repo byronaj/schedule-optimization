@@ -104,7 +104,7 @@ export default {
     },
     submitForm() {
       axios
-        .post('/api/v1/employees/', this.employee)
+        .post(`/api/v1/employees/`, this.employee)
 
         .then(response => {
           toast({
