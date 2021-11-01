@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
 
     <Nav />
 
@@ -17,6 +17,9 @@ export default {
   name: 'App',
   components: {
     Nav,
+  },
+  mounted() {
+    document.title = "Schedule Optimizer"
   },
   beforeCreate() {
     this.$store.commit('initializeStore')
