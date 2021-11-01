@@ -8,9 +8,8 @@
     <header>
       <p>Add Employee</p>
     </header>
-    <template v-if="$store.state.user.isAuthenticated">
-    <form>
 
+    <form>
       <div class="field is-horizontal">
         <div class="field-label is-normal">
           <label class="label">Name</label>
@@ -101,16 +100,12 @@
             <div class="control">
               <button class="button is-primary is-outlined" @click="submitForm">Save changes</button>
             </div>
-<!--            <div class="control">-->
-<!--              <button class="button is-danger is-outlined" aria-label="close">Cancel</button>-->
-<!--            </div>-->
           </div>
 
         </div>
       </div>
 
     </form>
-    </template>
 
   </div>
 </template>
@@ -129,7 +124,7 @@ export default {
   methods: {
     submitForm() {
       axios
-        .post('/api/v1/employees/', this.employee)
+        .post(`/api/v1/employees/`, this.employee)
 
         .then(response => {
           toast({
@@ -140,7 +135,7 @@ export default {
             duration: 2000,
             position: 'bottom-right',
           })
-        this.$router.push('/')
+        this.$router.push('/employees')
         })
 
       .catch(error => {

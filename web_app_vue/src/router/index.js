@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
+import Dashboard from '@/views/Dashboard.vue'
+import SignUp from '@/views/SignUp.vue'
+import LogIn from '@/views/LogIn.vue'
 
 import store from '@/store'
 
@@ -13,28 +16,33 @@ const routes = [
   {
     path: '/sign-up',
     name: 'SignUp',
-    component: () => import('../views/SignUp.vue')
+    component: SignUp
   },
   {
     path: '/log-in',
     name: 'LogIn',
-    component: () => import('../views/LogIn.vue')
+    component: LogIn
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue'),
+    component: Dashboard,
     meta: {
       requireLogin: true
     }
   },
-  { // DELETE after API testing is done and code is finished being used to assist in implementing production version
+  {  // DELETE after API testing is done and code is finished being used to assist in implementing production version
     path: '/employees',
     name: 'Employees',
     component: () => import('../views/Employees.vue'),
 
   },
-  { /// DELETE after API testing is done and code is finished being used to assist in implementing production version
+  {  // DELETE after API testing is done and code is finished being used to assist in implementing production version
+    path: '/edit-employee',
+    name: 'EditEmployee',
+    component: () => import('../views/EditEmployee.vue'),
+  },
+  {  // DELETE after API testing is done and code is finished being used to assist in implementing production version
     path: '/add',
     name: 'Add',
     component: () => import('../views/Add.vue'),

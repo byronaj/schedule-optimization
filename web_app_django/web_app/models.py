@@ -9,7 +9,7 @@ class Employee(models.Model):
 
     # Fraction of hours this employee works compared to a full-time employee
     # E.g., 1.0 FTE = 1.0 * 40 = 40 hrs/week, 0.9 FTE = 40 * 0.9 = 36 hrs/week
-    fte = models.FloatField()
+    fte = models.DecimalField(max_digits=2, decimal_places=1)
 
     # Number indicating which shift (if any) an employee should be scheduled on
     # 0 = any, 1 = day shift, 2 = night shift
@@ -20,6 +20,9 @@ class Employee(models.Model):
     # created_by = models.ForeignKey(User, related_name='employees', on_delete=models.CASCADE)
     # created_at = models.DateTimeField(auto_now_add=True)
     # modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.first_name + " " + self.last_name
 
 
 # class GlobalConstraints(models.Model):
