@@ -52,9 +52,8 @@ export default {
         this.$parent.exportCalendar()
     },
     currentDate() {
-      const current = new Date();
-      var d = current.getFullYear() + '-' + (current.getMonth()+1) + '-' + current.getDate();
-      return d;
+      let current = new Date().toISOString().substr(0, 10);
+      return current;
     },
   }
 }

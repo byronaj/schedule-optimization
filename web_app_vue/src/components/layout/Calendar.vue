@@ -66,9 +66,8 @@ export default {
   },
   methods: {
     currentDate() {
-      const current = new Date();
-      var d = current.getFullYear() + '-' + (current.getMonth()+1) + '-' + current.getDate();
-      return d;
+      let current = new Date().toISOString().substr(0, 10);
+      return current;
     },
     handleDateClick: function(arg) {
       console.log('date click! ' + arg.dateStr  )
