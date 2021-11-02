@@ -60,27 +60,29 @@
       </div>
 
         <div class="column is-6">
-        <div class="field">
-        <label class="label">
-          Active
-        </label>
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox"  v-model="employee.is_active">
-          </label>
-        </div>
-      </div>
-      </div>
-
-        <div class="column is-12">
           <div class="field">
+            <label class="label">
+              Active
+            </label>
             <div class="control">
-              <button class="button is-success" @click="submitForm">Save changes</button>
+              <label class="checkbox">
+                <input type="checkbox"  v-model="employee.is_active">
+              </label>
             </div>
           </div>
         </div>
+      </div>
     </div>
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-primary is-outlined" @click="submitForm">Save changes</button>
+      </div>
+      <div>
+        <button class="button is-danger is-outlined" @click="cancelForm">Cancel</button>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -123,11 +125,14 @@ export default {
               duration: 2000,
               position: 'bottom-right',
             })
-              this.$router.push('/employees')
+            this.$router.push('/employees')
           })
           .catch(error => {
-              console.log(JSON.stringify(error))
+            console.log(JSON.stringify(error))
           })
+    },
+    cancelForm() {
+      this.$router.push('/employees')
     }
   }
 }

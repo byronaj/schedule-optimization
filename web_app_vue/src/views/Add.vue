@@ -90,21 +90,14 @@
         </div>
       </div>
 
-      <div class="field is-horizontal">
-        <div class="field-label">
-          <!-- Left empty for spacing -->
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-primary is-outlined" @click="submitForm">Save changes</button>
         </div>
-        <div class="field-body">
-
-          <div class="field is-grouped">
-            <div class="control">
-              <button class="button is-primary is-outlined" @click="submitForm">Save changes</button>
-            </div>
-          </div>
-
+        <div>
+          <button class="button is-danger is-outlined" @click="cancelForm">Cancel</button>
         </div>
       </div>
-
     </form>
 
   </div>
@@ -141,6 +134,9 @@ export default {
       .catch(error => {
         console.log(JSON.stringify(error))
       })
+    },
+    cancelForm() {
+      this.$router.push('/employees')
     }
   }
 }

@@ -12,29 +12,29 @@
 
       <hr>
 
-    <div class="column is-12">
+    <div class="column is-boxed">
       <table class="table is-fullwidth">
         <thead>
         <tr>
-          <th></th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>FTE</th>
           <th>Shift</th>
           <th>Active</th>
+          <th></th>
         </tr>
         </thead>
 
         <tbody>
         <tr v-for="employee in employees" v-bind:key="employee.id">
-          <td>
-            <router-link :to="{ name: 'EditEmployee', params: { id: employee.id }}" class="button is-info">Edit</router-link>
-          </td>
           <td>{{ employee.first_name }}</td>
           <td>{{ employee.last_name }}</td>
           <td>{{ employee.fte }}</td>
           <td>{{ employee.shift_block }}</td>
           <td>{{ employee.is_active }}</td>
+          <td>
+            <router-link :to="{ name: 'EditEmployee', params: { id: employee.id }}" class="button is-info">Edit</router-link>
+          </td>
         </tr>
         </tbody>
       </table>
