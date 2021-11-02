@@ -21,6 +21,12 @@
 
             <template v-if="$store.state.user.isAuthenticated">
 
+              <!-- temporary view/edit employees access -->
+              <div class="navbar-item">
+                <router-link to="/employees" class="button is-warning is-outlined">View Employees (temporary)</router-link>
+              </div>
+
+              <!-- employee maintenance dropdown menu -->
               <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
                   Employee Maintenance
@@ -38,12 +44,14 @@
                     <AddEmployee />
               </div>
 
-              <a class="navbar-item" @click="toggleEditConstraints" v-if="userType==0">
+              <!-- edit global constraints -->
+              <a class="navbar-item" @click="toggleEditConstraints">
                 Edit Constraints
               </a>
               <div v-if="showEditConstraints">
                 <EditConstraints />
               </div>
+
             </template>
 
           </div>
