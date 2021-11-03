@@ -83,7 +83,7 @@ export default {
     getTestTime(shift, fte) {
       let time = ["", ""]
       if (shift == 0) {
-        shift = Math.floor(Math.random() * 4) + 1
+        shift = Math.floor(Math.random() * 3) + 1
       }
       switch (shift) {
         case 1:
@@ -114,6 +114,13 @@ export default {
       axios
           .get(`/api/v1/employees/`)
           .then(response => {
+            //refresh resources resources
+            let cal = this.$refs.FC.getApi()
+            let tr = cal.getResources()
+            for (let i = 0; i < tr.length; i++) {
+              let res = cal.getResourceById(tr[i].id)
+              res.remove()
+            }
             for (let i = 0; i < response.data.length; i++) {
               //create resource object
               let evCol = ["#511b51", "#511b1b", "#1b511b", "#1b5151"]
@@ -133,13 +140,12 @@ export default {
               }
               console.log(ev)
               //add object to calendar
-              let cal = this.$refs.FC.getApi()
               cal.addResource(res)
               cal.addEvent(ev)
             }
           })
           .catch(error => {
-            console.log(JSON.stringify(error))
+            console.log(error)
           })
     }
   }
