@@ -35,19 +35,42 @@ ___
 ___
 
 **To run the app in Django:**
-
 ```bash
 ...\schedule-optimization\web_app_django> py manage.py runserver
 ```
 
 With the Django development server running:
 - Access the Django admin GUI by navigating to http://127.0.0.1:8000/admin
-- Access the Django REST Framework GUI by navigating to http://127.0.0.1:8000/api/v1
 
 **In Vue.js:**
 ```bash
 ...\schedule-optimization\web_app_vue> npm run serve
 ```
+
+### Django REST Framework Browsable API
+___
+**Log in:**  
+`http://127.0.0.1:8000/api/v1/token/login`
+
+**Log out:**  
+`http://127.0.0.1:8000/api/v1/token/logout`
+
+**Users:**  
+`http://127.0.0.1:8000/api/v1/users`
+
+**Current User:**  
+`http://127.0.0.1:8000/api/v1/users/me`
+
+**Employees:**  
+`http://127.0.0.1:8000/employees`
+
+**Specific Employee:** (access by id)  
+`http://127.0.0.1:8000/employees/1`
+
+**Global Constraints:**  
+`http://127.0.0.1:8000/globalconstraints`
+
+...and so on
 
 ### Django database updates:
 ___
