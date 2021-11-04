@@ -29,7 +29,6 @@ export default {
   methods: {
     exportCalendar() {
       this.showExport = !this.showExport
-      //window.print()
     }
   },
   data() {

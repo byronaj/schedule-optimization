@@ -115,7 +115,6 @@ export default {
             duration: 2000,
             position: 'bottom-right',
           })
-        // this.$router.push('/')
         this.$parent.toggleAddEmployee()
         })
 
