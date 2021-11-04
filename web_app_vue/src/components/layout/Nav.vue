@@ -35,13 +35,16 @@
                   <a class="navbar-item has-text-primary-dark" @click="toggleAddEmployee">
                     Add Employee
                   </a>
-                  <a class="navbar-item has-text-info-dark">
+                  <a class="navbar-item has-text-info-dark" @click="toggleViewEmployees">
                     View/Modify Employees
                   </a>
                 </div>
               </div>
               <div v-if="showAddEmployee">
-                    <AddEmployee />
+                <AddEmployee />
+              </div>
+              <div v-if="showViewEmployees">
+                <ViewEmployees />
               </div>
 
               <!-- edit global constraints -->
@@ -91,6 +94,7 @@ import Modal from "@/components/Modal.vue";
 import EditConstraints from "@/components/layout/EditConstraints.vue"
 import AddEmployee from "@/components/layout/AddEmployee.vue";
 import Employees from "@/views/Employees.vue";
+import ViewEmployees from "@/components/layout/ViewEmployees.vue"
 
 export default {
   name: 'Nav',
@@ -99,11 +103,13 @@ export default {
     Modal,
     AddEmployee,
     EditConstraints,
+    ViewEmployees
   },
   data() {
     return {
       showEditConstraints: false,
       showAddEmployee: false,
+      showViewEmployees: false,
       userType: localStorage.getItem("userType")
     }
   },
@@ -120,6 +126,9 @@ export default {
     },
     toggleEditConstraints() {
       this.showEditConstraints = !this.showEditConstraints
+    },
+    toggleViewEmployees() {
+      this.showViewEmployees = !this.showViewEmployees
     },
   },
 }
