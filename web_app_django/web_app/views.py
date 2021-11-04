@@ -1,30 +1,21 @@
-from django.shortcuts import render
+from django.contrib.auth.models import User
 
 from rest_framework import viewsets
 
-from .serializers import EmployeeSerializer
-from .models import Employee
+from .serializers import EmployeeSerializer, GlobalConstraintsSerializer
+# from .serializers import UserSerializer
+
+from .models import Employee, GlobalConstraints
 
 
-# class UserDetail(APIView):
-#     def get_object(self, pk):
-#         try:
-#             return User.objects.get(pk=pk)
-#         except User.DoesNotExist:
-#             raise Http404
+# class UserList(generics.ListAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 #
-#     def get(self, request, pk, format=None):
-#         user = self.get_object(pk)
-#         serializer = UserSerializer(user)
-#         return Response(serializer.data)
 #
-#     def put(self, request, pk, format=None):
-#         user = self.get_object(pk)
-#         serializer = UserSerializer(user, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class UserDetail(generics.RetrieveAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
@@ -33,6 +24,17 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save()
+
+    def get_queryset(self):
+        return self.queryset.filter()
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+
+class GlobalConstraintsViewSet(viewsets.ModelViewSet):
+    serializer_class = GlobalConstraintsSerializer
+    queryset = GlobalConstraints.objects.all()
 
     def get_queryset(self):
         return self.queryset.filter()

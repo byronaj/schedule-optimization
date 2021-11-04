@@ -62,13 +62,13 @@ ___
 `http://127.0.0.1:8000/api/v1/users/me`
 
 **Employees:**  
-`http://127.0.0.1:8000/employees`
+`http://127.0.0.1:8000/api/v1/employees`
 
 **Specific Employee:** (access by id)  
-`http://127.0.0.1:8000/employees/1`
+`http://127.0.0.1:8000/api/v1/employees/1`
 
 **Global Constraints:**  
-`http://127.0.0.1:8000/globalconstraints`
+`http://127.0.0.1:8000/api/v1/globalconstraints`
 
 ...and so on
 
