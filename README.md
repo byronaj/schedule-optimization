@@ -13,9 +13,9 @@ ___
 1. Update to Python 3.9 if you haven't already
 
 
-2. Run the following in the project root directory:  
+2. Run the following in the web_app_django directory (just below the project root):  
    ```bash
-    ...\schedule_optimization> pip install -r requirements.txt
+    ...\schedule_optimization/web_app_django> pip install -r requirements.txt
     ```
 
 3. Install the current version (16.x) of [Node.js](https://nodejs.org/en/download/current/)
