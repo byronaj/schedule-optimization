@@ -6,6 +6,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import adaptivePlugin from '@fullcalendar/adaptive'
 
+import axios from 'axios'
+
 export default {
   components: {
     FullCalendar // make the <FullCalendar> tag available
@@ -42,7 +44,6 @@ export default {
             id: 'a',
             name: 'Employee Name',
             eventColor: '#511b1b',
-            
           }
         ],
         events: [
@@ -64,6 +65,9 @@ export default {
       }
     }
   },
+  mounted() {
+    this.getEmployees()
+  },
   methods: {
     currentDate() {
       let current = new Date().toISOString().substr(0, 10);
@@ -75,6 +79,74 @@ export default {
     changeDate(date) {
       let cal = this.$refs.FC.getApi()
       cal.gotoDate(date)
+    },
+    getTestTime(shift, fte) {
+      let time = ["", ""]
+      if (shift == 0) {
+        shift = Math.floor(Math.random() * 3) + 1
+      }
+      switch (shift) {
+        case 1:
+          let st = Math.floor(Math.random() * 9) + 1
+          let en = Math.round(st + (8*parseFloat(fte)))
+          time[0] = st + ":00:00"
+          time[1] = en + ":00:00"
+          if (st < 10) {time[0] = '0' + time[0];}
+          if (en < 10) {time[1] = '0' + time[1];}
+          break;
+        case 2:
+          st = Math.floor(Math.random() * 6) + 9
+          en = Math.round(st + (8*parseFloat(fte)))
+          time[0] = st + ":00:00"
+          time[1] = en + ":00:00"
+          if (st < 10) {time[0] = '0' + time[0];}
+          break;
+        case 3:
+          st = Math.floor(Math.random() * 4) + 16
+          en = Math.round(st + (8*parseFloat(fte)))
+          time[0] = st + ":00:00"
+          time[1] = "23:59:00"
+          break;
+      }
+      return time
+    },
+    getEmployees() {
+      axios
+          .get(`/api/v1/employees/`)
+          .then(response => {
+            //refresh resources resources
+            let cal = this.$refs.FC.getApi()
+            let tr = cal.getResources()
+            for (let i = 0; i < tr.length; i++) {
+              let res = cal.getResourceById(tr[i].id)
+              res.remove()
+            }
+            for (let i = 0; i < response.data.length; i++) {
+              //create resource object
+              let evCol = ["#511b51", "#511b1b", "#1b511b", "#1b5151"]
+              let evTit = ["Variable", "First", "Second", "Third"]
+              let res = {
+                id: response.data[i].id.toString(),
+                name: response.data[i].first_name + " " + response.data[i].first_name,
+                eventColor: evCol[response.data[i].shift_block],
+              }
+              let ttime = this.getTestTime(response.data[i].shift_block, response.data[i].fte)
+              let ev = {
+                id: response.data[i].id.toString(),
+                resourceId: response.data[i].id.toString(),
+                title: evTit[response.data[i].shift_block] + ' Shift',
+                start: this.currentDate() + 'T' + ttime[0],
+                end: this.currentDate() + 'T' + ttime[1],
+              }
+              console.log(ev)
+              //add object to calendar
+              cal.addResource(res)
+              cal.addEvent(ev)
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
     }
   }
 }
