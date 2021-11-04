@@ -41,11 +41,6 @@ import Modal from "@/components/Modal.vue";
 export default {
   components: { Modal },
   name: 'EditConstraints',
-  data() {
-    return {
-      showModal: false,
-    }
-  },
   methods: {
       toggleShowModal() {
           this.$parent.toggleEditConstraints()

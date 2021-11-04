@@ -123,7 +123,7 @@ export default {
             }
             for (let i = 0; i < response.data.length; i++) {
               //create resource object
-              let evCol = ["#511b51", "#511b1b", "#1b511b", "#1b5151"]
+              let evCol = ["#04406f", "#740008", "#705000", "#6a4405"]
               let evTit = ["Variable", "First", "Second", "Third"]
               let res = {
                 id: response.data[i].id.toString(),
@@ -137,6 +137,7 @@ export default {
                 title: evTit[response.data[i].shift_block] + ' Shift',
                 start: this.currentDate() + 'T' + ttime[0],
                 end: this.currentDate() + 'T' + ttime[1],
+                borderColor: '#000',
               }
               console.log(ev)
               //add object to calendar
