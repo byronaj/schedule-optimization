@@ -15,7 +15,7 @@ ___
 
 2. Run the following in the web_app_django directory (just below the project root):  
    ```bash
-    ...\schedule_optimization/web_app_django> pip install -r requirements.txt
+    ...\schedule_optimization\web_app_django> pip install -r requirements.txt
     ```
 
 3. Install the current version (16.x) of [Node.js](https://nodejs.org/en/download/current/)
@@ -47,13 +47,15 @@ With the Django development server running:
 ...\schedule-optimization\web_app_vue> npm run serve
 ```
 
+A URL to the Vue.js app (http://localhost:8080) will be displayed in the terminal.
+
 ### Django REST Framework Browsable API
 ___
 **Log in:**  
-`http://127.0.0.1:8000/api/v1/token/login`
+`http://127.0.0.1:8000/api/v1/token/login`  
 
-**Log out:**  
-`http://127.0.0.1:8000/api/v1/token/logout`
+There will be a login link in the upper-right area of the page.  
+Use the superuser login credentials created with `> py manage.py createsuperuser` to log in.
 
 **Users:**  
 `http://127.0.0.1:8000/api/v1/users`
