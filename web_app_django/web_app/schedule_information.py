@@ -1,6 +1,13 @@
 class ScheduleInformation:
-    def __init__(self, num_employees, num_weeks, shifts, shift_constraints, weekly_sum_constraints,
-                 penalized_transitions):
+    def __init__(
+            self,
+            num_employees,
+            num_weeks,
+            shifts,
+            shift_constraints,
+            weekly_sum_constraints,
+            penalized_transitions
+    ):
         self.__num_employees = int(num_employees)
         self.__num_weeks = int(num_weeks)
         self.__shifts = shifts

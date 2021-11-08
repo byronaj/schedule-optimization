@@ -18,7 +18,7 @@ from absl import flags
 
 from ortools.sat.python import cp_model
 from google.protobuf import text_format
-from ScheduleInformation import *
+from schedule_information import *
 
 FLAGS = flags.FLAGS
 
@@ -27,10 +27,14 @@ flags.DEFINE_string('output_proto', '',
 flags.DEFINE_string('params', 'max_time_in_seconds:10.0',
                     'Sat solver parameters.')
 
-SI = ScheduleInformation(8, 1, ['O', 'M', 'A', 'N'],
-                         [(0, 1, 1, 0, 2, 2, 0), (3, 1, 2, 20, 3, 4, 5)],
-                         [(0, 1, 2, 7, 2, 3, 4), (3, 0, 1, 3, 4, 4, 0)],
-                         [(2, 3, 4), (3, 1, 0)])
+SI = ScheduleInformation(
+    8,
+    1,
+    ['O', 'M', 'A', 'N'],
+    [(0, 1, 1, 0, 2, 2, 0), (3, 1, 2, 20, 3, 4, 5)],
+    [(0, 1, 2, 7, 2, 3, 4), (3, 0, 1, 3, 4, 4, 0)],
+    [(2, 3, 4), (3, 1, 0)]
+)
 
 
 def negated_bounded_span(workers, start, length):

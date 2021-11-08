@@ -13,8 +13,6 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
-# from rest_framework.authtoken import views
-# from web_app.views import UserList, UserDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),

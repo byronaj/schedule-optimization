@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Employee, GlobalConstraints
+from .models import Employee, ContinuousSequenceConstraint, WeeklySumConstraint, PenalizedTransitionsConstraint
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -21,27 +21,61 @@ class EmployeeSerializer(serializers.ModelSerializer):
         )
 
 
-class GlobalConstraintsSerializer(serializers.ModelSerializer):
+class EmployeeShiftsSerializer(serializers.Serializer):
+    # add fields to create an instance of an employee's schedule
+    # this should result in one dict of all the shifts for an employee
+    pass
+
+
+class EmployeeScheduleSerializer(serializers.Serializer):
+    employee = EmployeeShiftsSerializer(many=True)
+
+    schedule_start_date = serializers.DateField()
+    schedule_end_date = serializers.DateField()
+
+
+class ContinuousSequenceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = GlobalConstraints
+        model = ContinuousSequenceConstraint
 
         fields = (
             'id',
-            'shift',
-            'shift_hard_min',
-            'shift_soft_min',
-            'shift_min_penalty',
-            'shift_soft_max',
-            'shift_hard_max',
-            'shift_max_penalty',
-            'weekly_sum_shift',
-            'weekly_sum_hard_min',
-            'weekly_sum_soft_min',
-            'weekly_sum_min_penalty',
-            'weekly_sum_soft_max',
-            'weekly_sum_hard_max',
-            'weekly_sum_max_penalty',
+            'shift_id',
+            'hard_min',
+            'soft_min',
+            'min_penalty',
+            'soft_max',
+            'hard_max',
+            'max_penalty',
+        )
+
+
+class WeeklySumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WeeklySumConstraint
+
+        fields = (
+            'id',
+            'shift_id',
+            'hard_min',
+            'soft_min',
+            'min_penalty',
+            'soft_max',
+            'hard_max',
+            'max_penalty',
+        )
+
+
+class PenalizedTransitionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PenalizedTransitionsConstraint
+
+        fields = (
+            'id',
             'previous_shift',
             'next_shift',
             'penalty',
-        )
+            )
+
+
+# TODO: serialize daily coverage
