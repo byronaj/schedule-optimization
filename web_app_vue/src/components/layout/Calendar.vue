@@ -123,7 +123,7 @@ export default {
             }
             for (let i = 0; i < response.data.length; i++) {
               //create resource object
-              let evCol = ["#04406f", "#740008", "#705000", "#6a4405"]
+              let evCol = ["#04406f", "#740008", "#705000", "#023e1c"]
               let evTit = ["Variable", "First", "Second", "Third"]
               let res = {
                 id: response.data[i].id.toString(),
