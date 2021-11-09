@@ -6,14 +6,14 @@ class Employee(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-
+    
     # Fraction of hours this employee works compared to a full-time employee
     # E.g., 1.0 FTE = 1.0 * 40 = 40 hrs/week, 0.9 FTE = 40 * 0.9 = 36 hrs/week
-    fte = models.DecimalField(max_digits=2, decimal_places=1)
+    fte = models.DecimalField(max_digits=2, decimal_places=1, default=1.0)
 
     # Number indicating which shift (if any) an employee should be scheduled on
     # 0 = any, 1 = day shift, 2 = second shift, 3 = third shift
-    shift_block = models.IntegerField()
+    shift_block = models.IntegerField(default=0)
 
     # To support the option of excluding certain employees from the schedule
     is_active = models.BooleanField(default=True)
