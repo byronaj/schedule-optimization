@@ -27,7 +27,6 @@
 
         <tbody>
         <tr v-for="employee in employees" v-bind:key="employee.id">
-          <td>{{ employee.id }}</td>
           <td>{{ employee.first_name }}</td>
           <td>{{ employee.last_name }}</td>
           <td>{{ employee.fte }}</td>

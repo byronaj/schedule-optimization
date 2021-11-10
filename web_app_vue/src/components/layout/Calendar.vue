@@ -70,7 +70,13 @@ export default {
   },
   methods: {
     currentDate() {
-      let current = new Date().toISOString().substr(0, 10);
+      let date_ob = new Date();
+      let date = ("0" + date_ob.getDate()).slice(-2);
+      let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+      let year = date_ob.getFullYear();
+      let current = year + "-" + month + "-" + date;
+      //was using 'let current = new Date().toISOString().split('T')[0]'
+      //but this was causing some issue with last 4 hours showing as next day
       return current;
     },
     handleDateClick: function(arg) {
