@@ -1,6 +1,11 @@
 from rest_framework import serializers
 
-from .models import Employee, ContinuousSequenceConstraint, WeeklySumConstraint, PenalizedTransitionsConstraint
+from .models import (
+    Employee,
+    ContinuousSequence,
+    WeeklySum,
+    PenalizedTransitions,
+)
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -36,7 +41,7 @@ class EmployeeScheduleSerializer(serializers.Serializer):
 
 class ContinuousSequenceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ContinuousSequenceConstraint
+        model = ContinuousSequence
 
         fields = (
             'id',
@@ -52,7 +57,7 @@ class ContinuousSequenceSerializer(serializers.ModelSerializer):
 
 class WeeklySumSerializer(serializers.ModelSerializer):
     class Meta:
-        model = WeeklySumConstraint
+        model = WeeklySum
 
         fields = (
             'id',
@@ -68,7 +73,7 @@ class WeeklySumSerializer(serializers.ModelSerializer):
 
 class PenalizedTransitionsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PenalizedTransitionsConstraint
+        model = PenalizedTransitions
 
         fields = (
             'id',

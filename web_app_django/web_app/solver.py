@@ -13,12 +13,11 @@
 # limitations under the License.
 """Creates a shift scheduling problem and solves it."""
 
-from absl import app
 from absl import flags
 
 from ortools.sat.python import cp_model
-from google.protobuf import text_format
-from schedule_information import *
+# from schedule_information import *
+
 
 FLAGS = flags.FLAGS
 
@@ -27,19 +26,19 @@ flags.DEFINE_string('output_proto', '',
 flags.DEFINE_string('params', 'max_time_in_seconds:10.0',
                     'Sat solver parameters.')
 
-SI = ScheduleInformation(
-    8,
-    1,
-    ['O', 'M', 'A', 'N'],
-    [(0, 1, 1, 0, 2, 2, 0), (3, 1, 2, 20, 3, 4, 5)],
-    [(0, 1, 2, 7, 2, 3, 4), (3, 0, 1, 3, 4, 4, 0)],
-    [(2, 3, 4), (3, 1, 0)]
-)
+# SI = ScheduleInformation(
+#     8,
+#     1,
+#     ['O', 'M', 'A', 'N'],
+#     [(0, 1, 1, 0, 2, 2, 0), (3, 1, 2, 20, 3, 4, 5)],
+#     [(0, 1, 2, 7, 2, 3, 4), (3, 0, 1, 3, 4, 4, 0)],
+#     [(2, 3, 4), (3, 1, 0)]
+# )
 
 
 def negated_bounded_span(workers, start, length):
     # this blocks multiple shifts in a day
-    # https://tinyurl.com/ykvk74h7 explination
+    # https://tinyurl.com/ykvk74h7 explanation
     sequence = []
     # Left border (start of workers, or workers[start - 1])
     if start > 0:
@@ -106,7 +105,7 @@ def add_soft_sum_constraint(model, workers, hard_min, soft_min, min_cost,
     model.Add(sum_var == sum(workers))
 
     # Penalize sums below the soft_min target.
-    # delta is distance to soft min if it is negitive min has been exceeded and penalty is 0
+    # delta is distance to soft min if it is negative min has been exceeded and penalty is 0
     # excess is distance from soft min used to remove delta, this is multiplied by min_cost
     if soft_min > hard_min and min_cost > 0:
         delta = model.NewIntVar(-len(workers), len(workers), '')
@@ -128,27 +127,34 @@ def add_soft_sum_constraint(model, workers, hard_min, soft_min, min_cost,
     return cost_variables, cost_coefficients
 
 
-def solve_shift_scheduling(params, output_proto):
+def solve_shift_scheduling(
+        num_employees,
+        num_weeks,
+        shifts,
+        shift_constraints,
+        weekly_sum_constraints,
+        penalized_transitions
+):
     """Solves the shift scheduling problem."""
-    # Data
-    num_employees = SI.employees()
-    num_weeks = SI.weeks()
-    # shifts off,morning,afternoon,night
-    shifts = SI.shifts()
-
-    # Shift constraints on continuous sequence :
-    #     (shift, hard_min, soft_min, min_penalty,
-    #             soft_max, hard_max, max_penalty)
-    shift_constraints = SI.shift_constraints()
-
-    # Weekly sum constraints on shifts days:
-    #     (shift, hard_min, soft_min, min_penalty,
-    #             soft_max, hard_max, max_penalty)
-    weekly_sum_constraints = SI.weekly_constraints()
-
-    # Penalized transitions:
-    #     (previous_shift, next_shift, penalty (0 means forbidden))
-    penalized_transitions = SI.penalized_transitions()
+    # # Data
+    # num_employees = SI.employees()
+    # num_weeks = SI.weeks()
+    # # shifts off,morning,afternoon,night
+    # shifts = SI.shifts()
+    #
+    # # Shift constraints on continuous sequence :
+    # #     (shift, hard_min, soft_min, min_penalty,
+    # #             soft_max, hard_max, max_penalty)
+    # shift_constraints = SI.shift_constraints()
+    #
+    # # Weekly sum constraints on shifts days:
+    # #     (shift, hard_min, soft_min, min_penalty,
+    # #             soft_max, hard_max, max_penalty)
+    # weekly_sum_constraints = SI.weekly_constraints()
+    #
+    # # Penalized transitions:
+    # #     (previous_shift, next_shift, penalty (0 means forbidden))
+    # penalized_transitions = SI.penalized_transitions()
 
     # daily demands for work shifts (morning, afternoon, night) for each day
     # of the week starting on Monday.
@@ -258,15 +264,8 @@ def solve_shift_scheduling(params, output_proto):
         sum(obj_int_vars[i] * obj_int_coeffs[i]
             for i in range(len(obj_int_vars))))
 
-    if output_proto:
-        print('Writing proto to %s' % output_proto)
-        with open(output_proto, 'w') as text_file:
-            text_file.write(str(model))
-
     # Solve the model.
     solver = cp_model.CpSolver()
-    if params:
-        text_format.Parse(params, solver.parameters)
     solution_printer = cp_model.ObjectiveSolutionPrinter()
     status = solver.Solve(model, solution_printer)
 
@@ -311,9 +310,16 @@ def solve_shift_scheduling(params, output_proto):
     print('  - wall time       : %f s' % solver.WallTime())
 
 
-def main(_):
-    solve_shift_scheduling(FLAGS.params, FLAGS.output_proto)
+def main():
+    solve_shift_scheduling(
+        8,
+        1,
+        ['O', 'M', 'A', 'N'],
+        [(0, 1, 1, 0, 2, 2, 0), (3, 1, 2, 20, 3, 4, 5)],
+        [(0, 1, 2, 7, 2, 3, 4), (3, 0, 1, 3, 4, 4, 0)],
+        [(2, 3, 4), (3, 1, 0)]
+    )
 
 
 if __name__ == '__main__':
-    app.run(main)
+    main()

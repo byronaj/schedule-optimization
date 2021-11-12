@@ -42,7 +42,7 @@ class EmployeeShiftPreference(models.Model):
     # weight = repeat -2 for every day in the schedule
 
 
-class ContinuousSequenceConstraint(models.Model):
+class ContinuousSequence(models.Model):
     """Shift constraints on a continuous sequence.
     E.g., (One or two consecutive days of rest), (Between 2 and 3 consecutive days of night shifts)
     shift_constraints = [(shift, hard_min, soft_min, min_penalty, soft_max, hard_max, max_penalty), (...)]
@@ -63,7 +63,7 @@ class ContinuousSequenceConstraint(models.Model):
     max_penalty = models.IntegerField(default=0)
 
 
-class WeeklySumConstraint(models.Model):
+class WeeklySum(models.Model):
     """Weekly sum constraints on shifts days:
     E.g., (Constraints on rests per week), (At least 1 night shift per week (penalized). At most 4 (hard))
     weekly_sum_constraints = [(shift, day, hard_min, soft_min, min_penalty, soft_max, hard_max, max_penalty), (...)]
@@ -84,7 +84,7 @@ class WeeklySumConstraint(models.Model):
     max_penalty = models.IntegerField(default=0)
 
 
-class PenalizedTransitionsConstraint(models.Model):
+class PenalizedTransitions(models.Model):
     """Penalized transitions (0 means forbidden):
     E.g., (Afternoon to night has a penalty of 4), (Night to morning is forbidden)
     penalized_transitions = [(previous_shift, next_shift, penalty), (...)]

@@ -25,6 +25,4 @@ urlpatterns += [
     path('api-token-auth/', include('rest_framework.urls')),
     url(r'^api/v1/', include('djoser.urls')),
     url(r'^api/v1/', include('djoser.urls.authtoken')),
-    # path('users/', UserList.as_view()),
-    # path('users/<int:pk>/', UserDetail.as_view()),
 ]
