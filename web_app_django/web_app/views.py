@@ -10,13 +10,14 @@ from .serializers import (
     WeeklySumSerializer,
     PenalizedTransitionsSerializer,
     EmployeeShiftsSerializer,
+    WeeklyCoverSerializer,
 )
 from .models import (
     Employee,
     ContinuousSequence,
     WeeklySum,
     PenalizedTransitions,
-    WeeklyCoverDemands,
+    WeeklyCoverDemand,
 )
 
 from . import solver
@@ -41,10 +42,11 @@ class ReportView(APIView):
 
         def serializer_to_tuple_list(serializer_object):
             """
-            Converts a serializer object to a list of dictionaries, then converts that to a list of tuples.
+            Converts a serializer object to a list of dictionaries, then converts that to a sequence of iterables.
+            Trims off index 0 of each iterable, which is the id field.
             """
             constraints = serializer_object.data
-            return [tuple(constraint.values()) for constraint in constraints]
+            return [tuple(tuple(constraint.values())[1:]) for constraint in constraints]
 
         num_employees = Employee.objects.count()
         num_weeks = 3  # TODO: address this later
@@ -83,6 +85,26 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     #     serializer = self.get_serializer(instance)
     #
     #     return Response(serializer.data)
+
+
+class ContinuousSequenceViewSet(viewsets.ModelViewSet):
+    serializer_class = ContinuousSequenceSerializer
+    queryset = ContinuousSequence.objects.all()
+
+
+class WeeklySumViewSet(viewsets.ModelViewSet):
+    serializer_class = WeeklySumSerializer
+    queryset = WeeklySum.objects.all()
+
+
+class PenalizedTransitionsViewSet(viewsets.ModelViewSet):
+    serializer_class = PenalizedTransitionsSerializer
+    queryset = PenalizedTransitions.objects.all()
+
+
+class WeeklyCoverViewSet(viewsets.ModelViewSet):
+    serializer_class = WeeklyCoverSerializer
+    queryset = WeeklyCoverDemand.objects.all()
 
 
 # A fine work of art courtesy of GitHub Copilot

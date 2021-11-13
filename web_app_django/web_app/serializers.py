@@ -5,6 +5,7 @@ from .models import (
     ContinuousSequence,
     WeeklySum,
     PenalizedTransitions,
+    WeeklyCoverDemand,
 )
 
 
@@ -42,45 +43,22 @@ class EmployeeScheduleSerializer(serializers.Serializer):
 class ContinuousSequenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContinuousSequence
-
-        fields = (
-            'id',
-            'shift_id',
-            'hard_min',
-            'soft_min',
-            'min_penalty',
-            'soft_max',
-            'hard_max',
-            'max_penalty',
-        )
+        fields = '__all__'
 
 
 class WeeklySumSerializer(serializers.ModelSerializer):
     class Meta:
         model = WeeklySum
-
-        fields = (
-            'id',
-            'shift_id',
-            'hard_min',
-            'soft_min',
-            'min_penalty',
-            'soft_max',
-            'hard_max',
-            'max_penalty',
-        )
+        fields = '__all__'
 
 
 class PenalizedTransitionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PenalizedTransitions
-
-        fields = (
-            'id',
-            'previous_shift',
-            'next_shift',
-            'penalty',
-            )
+        fields = '__all__'
 
 
-# TODO: serialize daily coverage
+class WeeklyCoverSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WeeklyCoverDemand
+        fields = '__all__'

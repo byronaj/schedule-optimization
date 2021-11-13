@@ -29,15 +29,14 @@ class EmployeeShiftPreference(models.Model):
     Will need to auto-populate the 'requests' parameter of the scheduler with these values for every day in the schedule
     For employees with shift preference (Employee.shift_block != 0), the scheduler will use the shift preference
     """
-    SHIFTS = (
-        (0, 'Off'),
-        (1, 'Day'),
-        (2, 'Second'),
-        (3, 'Third'),
-    )
+    class Shifts(models.IntegerChoices):
+        OFF = 0
+        DAY = 1
+        SECOND = 2
+        NIGHT = 3
 
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    preferred_shift = models.IntegerField(choices=SHIFTS)
+    preferred_shift = models.IntegerField(choices=Shifts.choices)
     # day = all the days in the schedule
     # weight = repeat -2 for every day in the schedule
 
@@ -47,14 +46,14 @@ class ContinuousSequence(models.Model):
     E.g., (One or two consecutive days of rest), (Between 2 and 3 consecutive days of night shifts)
     shift_constraints = [(shift, hard_min, soft_min, min_penalty, soft_max, hard_max, max_penalty), (...)]
     """
-    SHIFTS = (
-        (0, 'Off'),
-        (1, 'Day'),
-        (2, 'Second'),
-        (3, 'Third'),
-    )
 
-    shift_id = models.IntegerField(choices=SHIFTS, default=0)
+    class Shifts(models.IntegerChoices):
+        OFF = 0
+        DAY = 1
+        SECOND = 2
+        NIGHT = 3
+
+    shift_id = models.IntegerField(choices=Shifts.choices, default=Shifts.OFF)
     hard_min = models.IntegerField(default=0)
     soft_min = models.IntegerField(default=0)
     min_penalty = models.IntegerField(default=0)
@@ -68,14 +67,13 @@ class WeeklySum(models.Model):
     E.g., (Constraints on rests per week), (At least 1 night shift per week (penalized). At most 4 (hard))
     weekly_sum_constraints = [(shift, day, hard_min, soft_min, min_penalty, soft_max, hard_max, max_penalty), (...)]
     """
-    SHIFTS = (
-        (0, 'Off'),
-        (1, 'Day'),
-        (2, 'Second'),
-        (3, 'Third'),
-    )
+    class Shifts(models.IntegerChoices):
+        OFF = 0
+        DAY = 1
+        SECOND = 2
+        NIGHT = 3
 
-    shift_id = models.IntegerField(choices=SHIFTS, default=0)
+    shift_id = models.IntegerField(choices=Shifts.choices, default=Shifts.OFF)
     hard_min = models.IntegerField(default=0)
     soft_min = models.IntegerField(default=0)
     min_penalty = models.IntegerField(default=0)
@@ -89,35 +87,42 @@ class PenalizedTransitions(models.Model):
     E.g., (Afternoon to night has a penalty of 4), (Night to morning is forbidden)
     penalized_transitions = [(previous_shift, next_shift, penalty), (...)]
     """
-    SHIFTS = (
-        (0, 'Off'),
-        (1, 'Day'),
-        (2, 'Second'),
-        (3, 'Third'),
-    )
+    class Shifts(models.IntegerChoices):
+        OFF = 0
+        DAY = 1
+        SECOND = 2
+        NIGHT = 3
 
-    previous_shift = models.IntegerField(choices=SHIFTS, default=0)
-    next_shift = models.IntegerField(choices=SHIFTS, default=0)
+    previous_shift = models.IntegerField(choices=Shifts.choices, default=Shifts.OFF)
+    next_shift = models.IntegerField(choices=Shifts.choices, default=Shifts.OFF)
     penalty = models.IntegerField(default=0)
 
 
-class DailyCoverDemands(models.Model):
-    num_shift_1 = models.IntegerField(default=0)
-    num_shift_2 = models.IntegerField(default=0)
-    num_shift_3 = models.IntegerField(default=0)
-
-
-class WeeklyCoverDemands(models.Model):
+class WeeklyCoverDemand(models.Model):
     """Daily demands for work shifts (morning, afternoon, night) for each day of the week, starting on Monday
-    weekly_cover_demands = [mon: (morning, afternoon, night), tue: (morning, afternoon, night), etc.]
+    weekly_cover_demands = [mon: (morning, afternoon, night), tue: (morning, afternoon, night), ]
     """
-    day_0 = models.ForeignKey(DailyCoverDemands, on_delete=models.CASCADE, related_name='monday')
-    day_1 = models.ForeignKey(DailyCoverDemands, on_delete=models.CASCADE, related_name='tuesday')
-    day_2 = models.ForeignKey(DailyCoverDemands, on_delete=models.CASCADE, related_name='wednesday')
-    day_3 = models.ForeignKey(DailyCoverDemands, on_delete=models.CASCADE, related_name='thursday')
-    day_4 = models.ForeignKey(DailyCoverDemands, on_delete=models.CASCADE, related_name='friday')
-    day_5 = models.ForeignKey(DailyCoverDemands, on_delete=models.CASCADE, related_name='saturday')
-    day_6 = models.ForeignKey(DailyCoverDemands, on_delete=models.CASCADE, related_name='sunday')
+    mon_shift1 = models.IntegerField(default=1)
+    mon_shift2 = models.IntegerField(default=1)
+    mon_shift3 = models.IntegerField(default=1)
+    tue_shift1 = models.IntegerField(default=1)
+    tue_shift2 = models.IntegerField(default=1)
+    tue_shift3 = models.IntegerField(default=1)
+    wed_shift1 = models.IntegerField(default=1)
+    wed_shift2 = models.IntegerField(default=1)
+    wed_shift3 = models.IntegerField(default=1)
+    thu_shift1 = models.IntegerField(default=1)
+    thu_shift2 = models.IntegerField(default=1)
+    thu_shift3 = models.IntegerField(default=1)
+    fri_shift1 = models.IntegerField(default=1)
+    fri_shift2 = models.IntegerField(default=1)
+    fri_shift3 = models.IntegerField(default=1)
+    sat_shift1 = models.IntegerField(default=1)
+    sat_shift2 = models.IntegerField(default=1)
+    sat_shift3 = models.IntegerField(default=1)
+    sun_shift1 = models.IntegerField(default=1)
+    sun_shift2 = models.IntegerField(default=1)
+    sun_shift3 = models.IntegerField(default=1)
 
 
 # class Schedule(models.Model):
