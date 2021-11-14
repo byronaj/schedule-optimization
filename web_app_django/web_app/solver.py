@@ -124,7 +124,8 @@ def solve_shift_scheduling(
         shifts,
         shift_constraints,
         weekly_sum_constraints,
-        penalized_transitions
+        penalized_transitions,
+        weekly_cover_demands
 ):
     """Solves the shift scheduling problem."""
     # # Data
@@ -147,17 +148,17 @@ def solve_shift_scheduling(
     # #     (previous_shift, next_shift, penalty (0 means forbidden))
     # penalized_transitions = SI.penalized_transitions()
 
-    # daily demands for work shifts (morning, afternoon, night) for each day
-    # of the week starting on Monday.
-    weekly_cover_demands = [
-        (2, 3, 1),  # Monday
-        (2, 3, 1),  # Tuesday
-        (2, 2, 2),  # Wednesday
-        (2, 3, 1),  # Thursday
-        (2, 2, 2),  # Friday
-        (1, 2, 3),  # Saturday
-        (1, 3, 1),  # Sunday
-    ]
+    # # daily demands for work shifts (morning, afternoon, night) for each day
+    # # of the week starting on Monday.
+    # weekly_cover_demands = [
+    #     (2, 3, 1),  # Monday
+    #     (2, 3, 1),  # Tuesday
+    #     (2, 2, 2),  # Wednesday
+    #     (2, 3, 1),  # Thursday
+    #     (2, 2, 2),  # Friday
+    #     (1, 2, 3),  # Saturday
+    #     (1, 3, 1),  # Sunday
+    # ]
 
     # Penalty for exceeding the cover constraint per shift type.
     # all set to forbidden

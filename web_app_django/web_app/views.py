@@ -61,6 +61,15 @@ class ReportView(APIView):
         pt_constraint_serializer = PenalizedTransitionsSerializer(PenalizedTransitions.objects.all(), many=True)
         pt_constraint_list = serializer_to_tuple_list(pt_constraint_serializer)
 
+        coverage_serializer = WeeklyCoverSerializer(WeeklyCoverDemand.objects.all(), many=True)
+
+        # returns one dict of coverage demands for three shifts per day, from Monday to Sunday
+        coverage = coverage_serializer.data
+
+        # convert to a list of tuples of shifts for each day
+        coverage_tuple = tuple(coverage.values())[1:]
+        weekly_cover_demands = [tuple(coverage_tuple[i:i + 3]) for i in range(0, len(coverage_tuple), 3)]
+
         result = solver.solve_shift_scheduling(
             num_employees,
             num_weeks,
@@ -68,6 +77,7 @@ class ReportView(APIView):
             cs_constraint_list,
             ws_constraint_list,
             pt_constraint_list,
+            weekly_cover_demands
         )
 
         # Have the generated schedule formatted to be sent back as a response
