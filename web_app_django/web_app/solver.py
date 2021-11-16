@@ -1,19 +1,6 @@
-#!/usr/bin/env python3
-# Copyright 2010-2021 Google LLC
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-"""Creates a shift scheduling problem and solves it."""
-
 from ortools.sat.python import cp_model
+
+
 # from schedule_information import *
 
 
@@ -42,8 +29,7 @@ def negated_bounded_span(workers, start, length):
     return sequence
 
 
-def add_soft_sequence_constraint(model, workers, hard_min, soft_min, min_cost,
-                                 soft_max, hard_max, max_cost, prefix):
+def add_soft_sequence_constraint(model, workers, hard_min, soft_min, min_cost, soft_max, hard_max, max_cost, prefix):
     # see OR documentation if questions arise
     cost_literals = []
     cost_coefficients = []
@@ -82,13 +68,12 @@ def add_soft_sequence_constraint(model, workers, hard_min, soft_min, min_cost,
 
     # Just forbid any sequence of true variables with length hard_max + 1
     for start in range(len(workers) - hard_max):
-        model.AddBoolOr(
-            [workers[i].Not() for i in range(start, start + hard_max + 1)])
+        model.AddBoolOr([workers[i].Not() for i in range(start, start + hard_max + 1)])
+
     return cost_literals, cost_coefficients
 
 
-def add_soft_sum_constraint(model, workers, hard_min, soft_min, min_cost,
-                            soft_max, hard_max, max_cost, prefix):
+def add_soft_sum_constraint(model, workers, hard_min, soft_min, min_cost, soft_max, hard_max, max_cost, prefix):
     cost_variables = []
     cost_coefficients = []
     sum_var = model.NewIntVar(hard_min, hard_max, '')
@@ -114,6 +99,7 @@ def add_soft_sum_constraint(model, workers, hard_min, soft_min, min_cost,
         model.AddMaxEquality(excess, [delta, 0])
         cost_variables.append(excess)
         cost_coefficients.append(max_cost)
+
     # see https://tinyurl.com/2rawh9nw for explanation
     return cost_variables, cost_coefficients
 
@@ -189,42 +175,60 @@ def solve_shift_scheduling(
     # Shift constraints
     for ct in shift_constraints:
         shift, hard_min, soft_min, min_cost, soft_max, hard_max, max_cost = ct
+
         for e in range(num_employees):
             workers = [work[e, shift, d] for d in range(num_days)]
+
             variables, coeffs = add_soft_sequence_constraint(
-                model, workers, hard_min, soft_min, min_cost, soft_max, hard_max,
+                model,
+                workers,
+                hard_min,
+                soft_min,
+                min_cost,
+                soft_max,
+                hard_max,
                 max_cost,
-                'shift_constraint(employee %i, shift %i)' % (e, shift))
+                'shift_constraint(employee %i, shift %i)' % (e, shift)
+            )
+
             obj_bool_vars.extend(variables)
             obj_bool_coeffs.extend(coeffs)
 
     # Weekly sum constraints
     for ct in weekly_sum_constraints:
         shift, hard_min, soft_min, min_cost, soft_max, hard_max, max_cost = ct
+
         for e in range(num_employees):
+
             for w in range(num_weeks):
                 workers = [work[e, shift, d + w * 7] for d in range(7)]
+
                 variables, coeffs = add_soft_sum_constraint(
-                    model, workers, hard_min, soft_min, min_cost, soft_max,
-                    hard_max, max_cost,
-                    'weekly_sum_constraint(employee %i, shift %i, week %i)' %
-                    (e, shift, w))
+                    model,
+                    workers,
+                    hard_min,
+                    soft_min,
+                    min_cost,
+                    soft_max,
+                    hard_max,
+                    max_cost,
+                    'weekly_sum_constraint(employee %i, shift %i, week %i)' % (e, shift, w)
+                )
+
                 obj_int_vars.extend(variables)
                 obj_int_coeffs.extend(coeffs)
 
     # Penalized transitions
     for previous_shift, next_shift, cost in penalized_transitions:
         for e in range(num_employees):
+
             for d in range(num_days - 1):
-                transition = [
-                    work[e, previous_shift, d].Not(), work[e, next_shift,
-                                                           d + 1].Not()
-                ]
+                transition = [work[e, previous_shift, d].Not(), work[e, next_shift, d + 1].Not()]
+
                 if cost == 0:
                     model.AddBoolOr(transition)
                 else:
-                    trans_var = model.NewBoolVar(
-                        'transition (employee=%i, day=%i)' % (e, d))
+                    trans_var = model.NewBoolVar('transition (employee=%i, day=%i)' % (e, d))
                     transition.append(trans_var)
                     model.AddBoolOr(transition)
                     obj_bool_vars.append(trans_var)
@@ -235,26 +239,25 @@ def solve_shift_scheduling(
         for w in range(num_weeks):
             for d in range(7):
                 workers = [work[e, s, w * 7 + d] for e in range(num_employees)]
+
                 # Ignore Off shift.
                 min_demand = weekly_cover_demands[d][s - 1]
                 worked = model.NewIntVar(min_demand, num_employees, '')
                 model.Add(worked == sum(workers))
                 over_penalty = excess_cover_penalties[s - 1]
+
                 if over_penalty > 0:
-                    name = 'excess_demand(shift=%i, week=%i, day=%i)' % (s, w,
-                                                                         d)
-                    excess = model.NewIntVar(0, num_employees - min_demand,
-                                             name)
+                    name = 'excess_demand(shift=%i, week=%i, day=%i)' % (s, w, d)
+                    excess = model.NewIntVar(0, num_employees - min_demand, name)
                     model.Add(excess == worked - min_demand)
                     obj_int_vars.append(excess)
                     obj_int_coeffs.append(over_penalty)
 
     # Objective
     model.Minimize(
-        sum(obj_bool_vars[i] * obj_bool_coeffs[i]
-            for i in range(len(obj_bool_vars))) +
-        sum(obj_int_vars[i] * obj_int_coeffs[i]
-            for i in range(len(obj_int_vars))))
+        sum(obj_bool_vars[i] * obj_bool_coeffs[i] for i in range(len(obj_bool_vars)))
+        + sum(obj_int_vars[i] * obj_int_coeffs[i] for i in range(len(obj_int_vars)))
+    )
 
     # Solve the model.
     solver = cp_model.CpSolver()
@@ -267,19 +270,32 @@ def solve_shift_scheduling(
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
         print()
         header = '          '
+
         for w in range(num_weeks):
             header += 'M  T  W  Th F  Sa Su '
+
         print(header)
-        schedule2d = [['V' for i in range(num_days)] for j in range(num_employees)]
+
+        schedule2d = [['V' for _ in range(num_days)] for _ in range(num_employees)]
+
+        # Convert to dict: key = employee id, value = list of shift assignments
+        schedule2d = {e: schedule2d[e] for (e, _) in enumerate(schedule2d)}
+
         for e in range(num_employees):
             schedule = ''
+
             for d in range(num_days):
                 for s in range(num_shifts):
                     if solver.BooleanValue(work[e, s, d]):
                         schedule += shifts[s] + '  '
                         schedule2d[e][d] = shifts[s]
+
             print('worker %i: %s' % (e, schedule))
+
         print()
+        print(schedule2d)
+        print()
+
         print('Penalties:')
         for i, var in enumerate(obj_bool_vars):
             if solver.BooleanValue(var):
@@ -291,8 +307,7 @@ def solve_shift_scheduling(
 
         for i, var in enumerate(obj_int_vars):
             if solver.Value(var) > 0:
-                print('  %s violated by %i, linear penalty=%i' %
-                      (var.Name(), solver.Value(var), obj_int_coeffs[i]))
+                print('  %s violated by %i, linear penalty=%i' % (var.Name(), solver.Value(var), obj_int_coeffs[i]))
 
     print()
     print('Statistics')
@@ -301,15 +316,26 @@ def solve_shift_scheduling(
     print('  - branches        : %i' % solver.NumBranches())
     print('  - wall time       : %f s' % solver.WallTime())
 
+    return schedule2d
+
 
 def main():
     solve_shift_scheduling(
         8,
-        1,
+        3,
         ['O', 'M', 'A', 'N'],
         [(0, 1, 1, 0, 2, 2, 0), (3, 1, 2, 20, 3, 4, 5)],
         [(0, 1, 2, 7, 2, 3, 4), (3, 0, 1, 3, 4, 4, 0)],
-        [(2, 3, 4), (3, 1, 0)]
+        [(2, 3, 4), (3, 1, 0)],
+        [
+            (2, 3, 1),  # Monday
+            (2, 3, 1),  # Tuesday
+            (2, 2, 2),  # Wednesday
+            (2, 3, 1),  # Thursday
+            (2, 2, 2),  # Friday
+            (1, 2, 3),  # Saturday
+            (1, 3, 1),  # Sunday
+        ]
     )
 
 
