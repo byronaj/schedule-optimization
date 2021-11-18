@@ -1,139 +1,123 @@
 <template>
-  <div class="hero-head">
-    <nav class="navbar is-dark has-shadow" role="navigation" aria-label="main navigation" style="min-height: 4rem;">
-      <div class="container">
+	<div class="hero-head">
+		<nav class="navbar is-dark has-shadow" role="navigation" aria-label="main navigation" style="min-height: 4rem">
+			<div class="container">
+				<div class="navbar-brand">
+					<img class="is-static" src="@/assets/icon.png" alt="calendar logo" href="#" />
+					<a class="navbar-item is-size-5 has-text-grey-light" href="/">Schedule Optimizer</a>
 
-        <div class="navbar-brand">
-          <img class="is-static" src="@/assets/icon.png" alt="calendar logo" href="#">
-          <a class="navbar-item is-size-5 has-text-grey-light" href="/">
-            Schedule Optimizer
-          </a>
+					<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+						<span aria-hidden="true"></span>
+						<span aria-hidden="true"></span>
+						<span aria-hidden="true"></span>
+					</a>
+				</div>
 
-          <a role="button" class="navbar-burger"  aria-label="menu" aria-expanded="false">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
+				<div id="navbar" class="navbar-menu">
+					<div class="navbar-start">
+						<template v-if="$store.state.user.isAuthenticated">
+							<!-- Temporary view/edit employees access -->
+							<div class="navbar-item">
+								<router-link to="/employees" class="button is-warning is-outlined">View Employees (temporary)</router-link>
+							</div>
 
-        <div id="navbar" class="navbar-menu">
-          <div class="navbar-start">
+							<!-- Employee Maintenance Dropdown Menu -->
+							<div class="navbar-item has-dropdown is-hoverable">
+								<a class="navbar-link">Employee Maintenance</a>
+								<div class="navbar-dropdown">
+									<a class="navbar-item has-text-primary-dark" @click="toggleAddEmployee">Add Employee</a>
+									<a class="navbar-item has-text-info-dark" @click="toggleViewEmployees">View/Modify Employees</a>
+								</div>
+							</div>
 
-            <template v-if="$store.state.user.isAuthenticated">
+							<div v-if="showAddEmployee">
+								<AddEmployee />
+							</div>
 
-              <!-- temporary view/edit employees access -->
-              <div class="navbar-item">
-                <router-link to="/employees" class="button is-warning is-outlined">View Employees (temporary)</router-link>
-              </div>
+							<div v-if="showViewEmployees">
+								<ViewEmployees />
+							</div>
 
-              <!-- employee maintenance dropdown menu -->
-              <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                  Employee Maintenance
-                </a>
-                <div class="navbar-dropdown">
-                  <a class="navbar-item has-text-primary-dark" @click="toggleAddEmployee">
-                    Add Employee
-                  </a>
-                  <a class="navbar-item has-text-info-dark" @click="toggleViewEmployees">
-                    View/Modify Employees
-                  </a>
-                </div>
-              </div>
-              <div v-if="showAddEmployee">
-                <AddEmployee />
-              </div>
-              <div v-if="showViewEmployees">
-                <ViewEmployees />
-              </div>
+							<!-- edit global constraints -->
+							<a class="navbar-item" @click="toggleEditConstraints">Edit Constraints</a>
+							<div v-if="showEditConstraints">
+								<EditConstraints />
+							</div>
+						</template>
+					</div>
 
-              <!-- edit global constraints -->
-              <a class="navbar-item" @click="toggleEditConstraints">
-                Edit Constraints
-              </a>
-              <div v-if="showEditConstraints">
-                <EditConstraints />
-              </div>
+					<div class="navbar-end">
+						<div class="navbar-item is-active">
+							<div class="buttons">
+								<template v-if="$store.state.user.isAuthenticated">
+									<router-link to="/" class="button is-danger is-outlined" @click="logout()">
+										<strong>Log out</strong>
+									</router-link>
+								</template>
 
-            </template>
+								<template v-else>
+									<router-link to="/sign-up" class="button is-info is-outlined">
+										<strong>Sign up</strong>
+									</router-link>
 
-          </div>
-
-          <div class="navbar-end">
-            <div class="navbar-item is-active">
-
-              <div class="buttons">
-                <template v-if="$store.state.user.isAuthenticated">
-                  <router-link to="/" class="button is-danger is-outlined" @click="logout()">
-                    <strong>Log out</strong>
-                  </router-link>
-                </template>
-                <template v-else>
-                  <router-link to="/sign-up" class="button is-info is-outlined">
-                    <strong>Sign up</strong>
-                  </router-link>
-                  <router-link to="/log-in" class="button is-primary is-outlined">
-                    <strong>Log in</strong>
-                  </router-link>
-                </template>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </div>
-
+									<router-link to="/log-in" class="button is-primary is-outlined">
+										<strong>Log in</strong>
+									</router-link>
+								</template>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
 </template>
 
 <script>
-import axios from "axios";
+	import axios from 'axios';
 
-import Modal from "@/components/Modal.vue";
-import EditConstraints from "@/components/layout/EditConstraints.vue"
-import AddEmployee from "@/components/layout/AddEmployee.vue";
-import Employees from "@/views/Employees.vue";
-import ViewEmployees from "@/components/layout/ViewEmployees.vue"
+	import Modal from '@/components/Modal.vue';
+	import EditConstraints from '@/components/layout/EditConstraints.vue';
+	import AddEmployee from '@/components/layout/AddEmployee.vue';
+	import Employees from '@/views/Employees.vue';
+	import ViewEmployees from '@/components/layout/ViewEmployees.vue';
 
-export default {
-  name: 'Nav',
-  components: {
-    Employees,
-    Modal,
-    AddEmployee,
-    EditConstraints,
-    ViewEmployees
-  },
-  data() {
-    return {
-      showEditConstraints: false,
-      showAddEmployee: false,
-      showViewEmployees: false,
-      userType: localStorage.getItem("userType")
-    }
-  },
-  methods: {
-    logout() {
-      console.log('logout')
-      axios.defaults.headers.common['Authorization'] = ""
-      localStorage.removeItem('token')
-      this.$store.commit('removeToken')
-      this.$router.push('/')
-    },
-    toggleAddEmployee() {
-      this.showAddEmployee = !this.showAddEmployee
-    },
-    toggleEditConstraints() {
-      this.showEditConstraints = !this.showEditConstraints
-    },
-    toggleViewEmployees() {
-      this.showViewEmployees = !this.showViewEmployees
-    },
-  },
-}
+	export default {
+		name: 'Nav',
+		components: {
+			Employees,
+			Modal,
+			AddEmployee,
+			EditConstraints,
+			ViewEmployees,
+		},
+		data() {
+			return {
+				showEditConstraints: false,
+				showAddEmployee: false,
+				showViewEmployees: false,
+				userType: localStorage.getItem('userType'),
+			};
+		},
+		methods: {
+			logout() {
+				console.log('logout');
+				axios.defaults.headers.common['Authorization'] = '';
+				localStorage.removeItem('token');
+				this.$store.commit('removeToken');
+				this.$router.push('/');
+			},
+			toggleAddEmployee() {
+				this.showAddEmployee = !this.showAddEmployee;
+			},
+			toggleEditConstraints() {
+				this.showEditConstraints = !this.showEditConstraints;
+			},
+			toggleViewEmployees() {
+				this.showViewEmployees = !this.showViewEmployees;
+			},
+		},
+	};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

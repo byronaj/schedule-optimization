@@ -8,6 +8,7 @@
 		<section class="modal-card-body">
 			<div class="field">
 				<label class="label">First Name</label>
+
 				<div class="control">
 					<input class="input is-info" type="text" v-model="employee.first_name" placeholder="First" />
 				</div>
@@ -15,6 +16,7 @@
 
 			<div class="field">
 				<label class="label">Last Name</label>
+
 				<div class="control">
 					<input class="input is-info" type="text" v-model="employee.last_name" placeholder="Last" />
 				</div>
@@ -22,6 +24,7 @@
 
 			<div class="field">
 				<label class="label">FTE Hours Allocated</label>
+
 				<div class="control">
 					<div class="select is-info">
 						<select v-model="employee.fte">
@@ -38,6 +41,7 @@
 
 			<div class="field">
 				<label class="label">Shift</label>
+
 				<div class="control">
 					<div class="select is-info">
 						<select v-model="employee.shift_block">
@@ -52,9 +56,10 @@
 
 			<div class="field">
 				<label class="label">Active</label>
+
 				<div class="control">
 					<label class="checkbox">
-						<input type="checkbox"  v-model="employee.is_active">
+						<input type="checkbox" v-model="employee.is_active" />
 					</label>
 				</div>
 			</div>
@@ -68,45 +73,45 @@
 </template>
 
 <script>
-import axios from "axios";
-import { toast } from "bulma-toast";
-import Modal from "@/components/Modal";
+	import axios from 'axios';
+	import { toast } from 'bulma-toast';
+	import Modal from '@/components/Modal';
 
-export default {
-	name: "AddEmployee",
-	components: { Modal },
-	data() {
-		return {
-			showModal: false,
-			employee: {},
-		};
-	},
-	methods: {
-		toggleShowModal() {
-			this.$parent.toggleAddEmployee();
+	export default {
+		name: 'AddEmployee',
+		components: { Modal },
+		data() {
+			return {
+				showModal: false,
+				employee: {},
+			};
 		},
-		submitForm() {
-			axios
-				.post(`/api/v1/employees/`, this.employee)
+		methods: {
+			toggleShowModal() {
+				this.$parent.toggleAddEmployee();
+			},
+			submitForm() {
+				axios
+					.post(`/api/v1/employees/`, this.employee)
 
-				.then((response) => {
-					toast({
-						message: "The employee was added.",
-						type: "is-success",
-						dismissible: true,
-						pauseOnHover: true,
-						duration: 2000,
-						position: "bottom-right",
+					.then((response) => {
+						toast({
+							message: 'The employee was added.',
+							type: 'is-success',
+							dismissible: true,
+							pauseOnHover: true,
+							duration: 2000,
+							position: 'bottom-right',
+						});
+						this.$parent.toggleAddEmployee();
+					})
+
+					.catch((error) => {
+						console.log(JSON.stringify(error));
 					});
-					this.$parent.toggleAddEmployee();
-				})
-
-				.catch((error) => {
-					console.log(JSON.stringify(error));
-				});
+			},
 		},
-	},
-};
+	};
 </script>
 
 <style scoped></style>
