@@ -8,6 +8,14 @@ export default createStore({
     },
     isAuthenticated: false,
     token: '',
+    globalconstraints: [
+      ["Max hour shifts", 8],
+      ["Max consecutive working days", 5],
+      ["Min consecutive working days", 2],
+      ["Min consecutive free days", 2],
+      ["Max consecutive weekends", 2],
+      ["Back-to-Back Shifts", false],
+    ],
   },
   mutations: {
     initializeStore(state) {

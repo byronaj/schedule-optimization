@@ -10,42 +10,42 @@
     <section class="modal-card-body" style="color:black;">
         <div class="field">
         <label class="checkbox">
-            <input type="number" style="width:45px;" max="12" min="1" value="8" ref="shifthours">
+            <input type="number" style="width:45px;" max="12" min="1" v-model="shifthours">
             Maximum hour shifts
         </label>
         </div>
         
         <div class="field">
         <label class="checkbox">
-            <input type="number" style="width:45px;" max="7" min="1" value="5" ref="maxwork">
+            <input type="number" style="width:45px;" max="7" min="1" v-model="maxwork">
             Maximum consecutive working days
         </label>
         </div>
         
         <div class="field">
         <label class="checkbox">
-            <input type="number" style="width:45px;" max="7" min="1" value="2" ref="minwork">
+            <input type="number" style="width:45px;" max="7" min="1" v-model="minwork">
             Minimum consecutive working days
         </label>
         </div>
         
         <div class="field">
         <label class="checkbox">
-            <input type="number" style="width:45px;" max="7" min="1" value="2" ref="minfree">
+            <input type="number" style="width:45px;" max="7" min="1" v-model="minfree">
             Minimum consecutive free days
         </label>
         </div>
         
         <div class="field">
         <label class="checkbox">
-            <input type="number" style="width:45px;" max="7" min="1" value="2" ref="maxweekend">
+            <input type="number" style="width:45px;" max="7" min="1" v-model="maxweekend">
             Maximum consecutive weekends
         </label>
         </div>
 
         <div class="field">
         <label class="checkbox">
-            <input type="checkbox" ref="back2back">
+            <input type="checkbox" v-model="back2back">
             Allow back-to-back shifts
         </label>
         </div>
@@ -63,31 +63,37 @@
 </template>
 
 <script>
+import axios from "axios";
+
 import Modal from "@/components/Modal.vue";
 
 export default {
   components: { Modal },
   name: 'EditConstraints',
   data() {
-		return {
-			constraints: []
-		};
-	},
+      return {
+            shifthours: 8,
+            maxwork: 5,
+            minwork: 2,
+            minfree: 2,
+            maxweekend: 2,
+            back2back: true,
+      }
+  },
   methods: {
       toggleShowModal() {
           this.$parent.toggleEditConstraints()
       },
       saveConstraints() {
-        this.constraints.push(["Max hour shifts", this.$refs.shifthours.value])
-        this.constraints.push(["Max consecutive working days", this.$refs.maxwork.value])
-        this.constraints.push(["Min consecutive working days", this.$refs.minwork.value])
-        this.constraints.push(["Min consecutive free days", this.$refs.minfree.value])
-        this.constraints.push(["Max consecutive weekends", this.$refs.maxweekend.value])
-        this.constraints.push(["Back-to-Back Shifts", this.$refs.back2back.checked])
+        this.$store.state.globalconstraints[0][1] = shifthours;
+        this.$store.state.globalconstraints[1][1] = maxwork;
+        this.$store.state.globalconstraints[2][1] = minwork;
+        this.$store.state.globalconstraints[3][1] = minfree;
+        this.$store.state.globalconstraints[4][1] = maxweekend;
+        this.$store.state.globalconstraints[5][1] = back2back;
+        console.log(this.$store.state.globalconstraints);
+        this.toggleShowModal()
         //save constraints
-      },
-      getConstraints() {
-          return this.constraints
       }
   }
 }
