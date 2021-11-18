@@ -1,12 +1,10 @@
 <template>
 	<div id="app">
-
 		<Nav />
 
 		<router-view />
 
 		<font-awesome-icon icon="user-secret" />
-
 	</div>
 </template>
 
