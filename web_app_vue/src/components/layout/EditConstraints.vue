@@ -85,16 +85,24 @@ export default {
           this.$parent.toggleEditConstraints()
       },
       saveConstraints() {
-        this.$store.state.globalconstraints[0][1] = shifthours;
-        this.$store.state.globalconstraints[1][1] = maxwork;
-        this.$store.state.globalconstraints[2][1] = minwork;
-        this.$store.state.globalconstraints[3][1] = minfree;
-        this.$store.state.globalconstraints[4][1] = maxweekend;
-        this.$store.state.globalconstraints[5][1] = back2back;
-        console.log(this.$store.state.globalconstraints);
+        this.$store.state.globalconstraints[0][1] = this.shifthours;
+        this.$store.state.globalconstraints[1][1] = this.maxwork;
+        this.$store.state.globalconstraints[2][1] = this.minwork;
+        this.$store.state.globalconstraints[3][1] = this.minfree;
+        this.$store.state.globalconstraints[4][1] = this.maxweekend;
+        this.$store.state.globalconstraints[5][1] = this.back2back;
         this.toggleShowModal()
         //save constraints
       }
+  },
+  mounted() {
+      //update constraints from storage
+      this.shifthours = this.$store.state.globalconstraints[0][1];
+      this.maxwork = this.$store.state.globalconstraints[1][1];
+      this.minwork = this.$store.state.globalconstraints[2][1];
+      this.minfree = this.$store.state.globalconstraints[3][1];
+      this.maxweekend = this.$store.state.globalconstraints[4][1];
+      this.back2back = this.$store.state.globalconstraints[5][1];
   }
 }
 </script>

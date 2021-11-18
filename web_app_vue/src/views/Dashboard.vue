@@ -4,6 +4,7 @@
   <div class="columns">
     <div class="column is-one-fifth">
       <MiniCal />
+      <DisplayConstraints />
     </div>
     <div class="column">
       <button class="button buttons-calendar">
@@ -22,9 +23,10 @@
 import Calendar from '@/components/layout/Calendar.vue'
 import MiniCal from '@/components/layout/MiniCal.vue'
 import ExportCalendar from '@/components/layout/ExportCalendar.vue'
+import DisplayConstraints from '@/components/layout/DisplayConstraints.vue'
 
 export default {
-  components: {Calendar, MiniCal, ExportCalendar},
+  components: {Calendar, MiniCal, ExportCalendar, DisplayConstraints},
   name: 'Dashboard',
   methods: {
     exportCalendar() {
