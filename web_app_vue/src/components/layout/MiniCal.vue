@@ -27,3 +27,9 @@
 		},
 	};
 </script>
+
+<style>
+#myCal {
+	text-align: center;
+}
+</style>
