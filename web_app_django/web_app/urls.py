@@ -2,17 +2,24 @@ from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
 
-from . import views
+from .views import (
+    EmployeeViewSet,
+    ContinuousSequenceViewSet,
+    WeeklySumViewSet,
+    PenalizedTransitionsViewSet,
+    WeeklyCoverViewSet,
+    ScheduleSolverAPIView,
+)
 
 
 router = DefaultRouter()
-router.register('employees', views.EmployeeViewSet, basename='employees')
-router.register('sequences', views.ContinuousSequenceViewSet, basename='sequences')
-router.register('weeklysums', views.WeeklySumViewSet, basename='weeklysums')
-router.register('transitions', views.PenalizedTransitionsViewSet, basename='transitions')
-router.register('coverages', views.WeeklyCoverViewSet, basename='coverages')
+router.register('employees', EmployeeViewSet, basename='employees')
+router.register('sequences', ContinuousSequenceViewSet, basename='sequences')
+router.register('weeklysums', WeeklySumViewSet, basename='weeklysums')
+router.register('transitions', PenalizedTransitionsViewSet, basename='transitions')
+router.register('coverages', WeeklyCoverViewSet, basename='coverages')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('report/', views.ReportView.as_view(), name='report'),
+    path('schedulesolver/', ScheduleSolverAPIView.as_view(), name='schedulesolver'),
 ]

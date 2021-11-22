@@ -27,17 +27,26 @@ class EmployeeSerializer(serializers.ModelSerializer):
         )
 
 
-class EmployeeShiftsSerializer(serializers.Serializer):
+# not currently implemented
+class ShiftAssignments:
+    def __init__(self, json_data):
+        # self.employee = employee
+        self.json_data = json_data
+
+
+# not currently implemented
+class ShiftAssignmentsSerializer(serializers.Serializer):
     # add fields to create an instance of an employee's schedule
     # this should result in one dict of all the shifts for an employee
-    pass
+    # employee = EmployeeSerializer(many=True)
+    shifts = serializers.ListField()
 
+    def create(self, validated_data):
+        return ShiftAssignments(**validated_data)
 
-class EmployeeScheduleSerializer(serializers.Serializer):
-    employee = EmployeeShiftsSerializer(many=True)
-
-    schedule_start_date = serializers.DateField()
-    schedule_end_date = serializers.DateField()
+    def update(self, instance, validated_data):
+        # instance.employee = validated_data.get('employee', instance.employee)
+        instance.shifts = validated_data.get('shifts', instance.shifts)
 
 
 class ContinuousSequenceSerializer(serializers.ModelSerializer):

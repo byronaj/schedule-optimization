@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,8 +9,8 @@ from .serializers import (
     ContinuousSequenceSerializer,
     WeeklySumSerializer,
     PenalizedTransitionsSerializer,
-    EmployeeShiftsSerializer,
     WeeklyCoverSerializer,
+    ShiftAssignmentsSerializer,
 )
 from .models import (
     Employee,
@@ -23,22 +23,12 @@ from .models import (
 from . import solver
 
 
-class ReportView(APIView):
+class ScheduleSolverAPIView(APIView):
     """
     API endpoint view for initializing the solver and sending a response that contains the resulting generated schedule.
     """
 
     def get(self, request, *args, **kwargs):
-
-        # Leaving this here for now, but it's not used.
-        # Serialize employee objects into a list of dictionaries
-        employee_serializer = EmployeeSerializer(Employee.objects.all(), many=True)
-        employee_list = employee_serializer.data
-        # [
-        #     {'id': 0, 'first_name': 'first0', 'last_name': 'last0', 'fte': 0.0, 'shift_block': 0, 'is_active': True},
-        #     {'id': 1, 'first_name': 'first1', 'last_name': 'last1', 'fte': 0.0, 'shift_block': 0, 'is_active': True},
-        #     {'id': 2, 'first_name': 'first2', 'last_name': 'last2', 'fte': 0.0, 'shift_block': 0, 'is_active': True}
-        # ]
 
         def serializer_to_tuple_list(serializer_object):
             """
@@ -50,7 +40,7 @@ class ReportView(APIView):
 
         num_employees = Employee.objects.count()
         num_weeks = 3  # TODO: address this later
-        shifts = ['O', 'M', 'A', 'N']  # TODO: this is 'tarded, but w/e, address later
+        shifts = ['0', '1', '2', '3']
 
         cs_constraint_serializer = ContinuousSequenceSerializer(ContinuousSequence.objects.all(), many=True)
         cs_constraint_list = serializer_to_tuple_list(cs_constraint_serializer)
@@ -66,8 +56,8 @@ class ReportView(APIView):
         # returns one dict of coverage demands for three shifts per day, from Monday to Sunday
         coverage = coverage_serializer.data
 
-        # convert to a list of tuples of shifts for each day
-        coverage_tuple = tuple(coverage.values())[1:]
+        # trim off pk and convert to a list of tuples of shifts for each day
+        coverage_tuple = tuple(coverage[0].values())[1:]
         weekly_cover_demands = [tuple(coverage_tuple[i:i + 3]) for i in range(0, len(coverage_tuple), 3)]
 
         result = solver.solve_shift_scheduling(
@@ -80,10 +70,15 @@ class ReportView(APIView):
             weekly_cover_demands
         )
 
-        # Have the generated schedule formatted to be sent back as a response
-        serializer = EmployeeShiftsSerializer(result, many=True)
+        # # Have the generated schedule formatted to be sent back as a response
+        # serializer = ShiftAssignmentsSerializer(data=result)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data)
+        # return Response(serializer.errors, status=400)
 
-        return Response(serializer.data)
+        response = Response(result, status=status.HTTP_200_OK)
+        return response
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):

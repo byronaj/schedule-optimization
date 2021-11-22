@@ -1,6 +1,5 @@
 from ortools.sat.python import cp_model
 
-
 # from schedule_information import *
 
 
@@ -18,14 +17,18 @@ def negated_bounded_span(workers, start, length):
     # this blocks multiple shifts in a day
     # https://tinyurl.com/ykvk74h7 explanation
     sequence = []
+
     # Left border (start of workers, or workers[start - 1])
     if start > 0:
         sequence.append(workers[start - 1])
+
     for i in range(length):
         sequence.append(workers[start + i].Not())
+
     # Right border (end of workers or workers[start + length])
     if start + length < len(workers):
         sequence.append(workers[start + length])
+
     return sequence
 
 
@@ -267,6 +270,7 @@ def solve_shift_scheduling(
     # Print solution.
     # schedule2d is the array to return employee schedule
     # format has employees as rows and days as columns
+    schedule2d = []
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
         print()
         header = '          '
@@ -278,9 +282,6 @@ def solve_shift_scheduling(
 
         schedule2d = [['V' for _ in range(num_days)] for _ in range(num_employees)]
 
-        # Convert to dict: key = employee id, value = list of shift assignments
-        schedule2d = {e: schedule2d[e] for (e, _) in enumerate(schedule2d)}
-
         for e in range(num_employees):
             schedule = ''
 
@@ -291,6 +292,10 @@ def solve_shift_scheduling(
                         schedule2d[e][d] = shifts[s]
 
             print('worker %i: %s' % (e, schedule))
+
+        # Convert to a dict pairing employee_id with the list of shift assignments
+        employee_ids = list(range(num_employees))
+        schedule2d = {e: s for e, s in zip(employee_ids, schedule2d)}
 
         print()
         print(schedule2d)
@@ -317,27 +322,3 @@ def solve_shift_scheduling(
     print('  - wall time       : %f s' % solver.WallTime())
 
     return schedule2d
-
-
-def main():
-    solve_shift_scheduling(
-        8,
-        3,
-        ['O', 'M', 'A', 'N'],
-        [(0, 1, 1, 0, 2, 2, 0), (3, 1, 2, 20, 3, 4, 5)],
-        [(0, 1, 2, 7, 2, 3, 4), (3, 0, 1, 3, 4, 4, 0)],
-        [(2, 3, 4), (3, 1, 0)],
-        [
-            (2, 3, 1),  # Monday
-            (2, 3, 1),  # Tuesday
-            (2, 2, 2),  # Wednesday
-            (2, 3, 1),  # Thursday
-            (2, 2, 2),  # Friday
-            (1, 2, 3),  # Saturday
-            (1, 3, 1),  # Sunday
-        ]
-    )
-
-
-if __name__ == '__main__':
-    main()

@@ -6,7 +6,7 @@ class Employee(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    
+
     # Fraction of hours this employee works compared to a full-time employee
     # E.g., 1.0 FTE = 1.0 * 40 = 40 hrs/week, 0.9 FTE = 40 * 0.9 = 36 hrs/week
     fte = models.DecimalField(max_digits=2, decimal_places=1, default=1.0)
@@ -46,7 +46,6 @@ class ContinuousSequence(models.Model):
     E.g., (One or two consecutive days of rest), (Between 2 and 3 consecutive days of night shifts)
     shift_constraints = [(shift, hard_min, soft_min, min_penalty, soft_max, hard_max, max_penalty), (...)]
     """
-
     class Shifts(models.IntegerChoices):
         OFF = 0
         DAY = 1
@@ -123,6 +122,13 @@ class WeeklyCoverDemand(models.Model):
     sun_shift1 = models.IntegerField(default=1)
     sun_shift2 = models.IntegerField(default=1)
     sun_shift3 = models.IntegerField(default=1)
+
+
+# not currently implemented
+class Schedule(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    employee = models.ForeignKey('web_app.Employee', on_delete=models.CASCADE)
+    # shift_assignments = models.JSONField()
 
 
 # class Schedule(models.Model):
