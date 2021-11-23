@@ -127,7 +127,7 @@ class WeeklyCoverDemand(models.Model):
 # not currently implemented
 class Schedule(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    employee = models.ForeignKey('web_app.Employee', on_delete=models.CASCADE)
+    # employee = models.ForeignKey('web_app.Employee', on_delete=models.CASCADE)
     # shift_assignments = models.JSONField()
 
 

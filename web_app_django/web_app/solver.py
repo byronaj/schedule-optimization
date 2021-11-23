@@ -1,16 +1,6 @@
+from datetime import date, timedelta
+
 from ortools.sat.python import cp_model
-
-# from schedule_information import *
-
-
-# SI = ScheduleInformation(
-#     8,
-#     1,
-#     ['O', 'M', 'A', 'N'],
-#     [(0, 1, 1, 0, 2, 2, 0), (3, 1, 2, 20, 3, 4, 5)],
-#     [(0, 1, 2, 7, 2, 3, 4), (3, 0, 1, 3, 4, 4, 0)],
-#     [(2, 3, 4), (3, 1, 0)]
-# )
 
 
 def negated_bounded_span(workers, start, length):
@@ -293,9 +283,22 @@ def solve_shift_scheduling(
 
             print('worker %i: %s' % (e, schedule))
 
+        # OUTPUT FORMATTING
+        # -----------------
+        # Get the nearest date (after current date) that is a Monday
+        next_monday = date.today() + timedelta(days=(0 - date.today().weekday() - 1) % 7 + 1)
+
+        # List of n dates starting from next Monday
+        schedule_dates = [next_monday + timedelta(days=i) for i in range(num_days)]
+
+        # Attach a date to every shift
+        with_dates = [[(dt, int(shift)) for dt, shift in zip(schedule_dates, shift_list)]
+                      for i, shift_list in enumerate(schedule2d)]
+
         # Convert to a dict pairing employee_id with the list of shift assignments
         employee_ids = list(range(num_employees))
-        schedule2d = {e: s for e, s in zip(employee_ids, schedule2d)}
+        schedule2d = {int(e): s for e, s in zip(employee_ids, with_dates)}
+        # -----------------
 
         print()
         print(schedule2d)
