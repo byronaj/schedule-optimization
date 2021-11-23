@@ -283,22 +283,28 @@ def solve_shift_scheduling(
 
             print('worker %i: %s' % (e, schedule))
 
-        # OUTPUT FORMATTING
-        # -----------------
+        # --------------------------------------------------------------------------------------------------------------
+        # Output Formatting
+        # --------------------------------------------------------------------------------------------------------------
         # Get the nearest date (after current date) that is a Monday
         next_monday = date.today() + timedelta(days=(0 - date.today().weekday() - 1) % 7 + 1)
 
         # List of n dates starting from next Monday
         schedule_dates = [next_monday + timedelta(days=i) for i in range(num_days)]
 
-        # Attach a date to every shift
-        with_dates = [[(dt, int(shift)) for dt, shift in zip(schedule_dates, shift_list)]
-                      for i, shift_list in enumerate(schedule2d)]
+        employee_ids = list(range(num_employees))  # TODO: get employee ids from database
 
-        # Convert to a dict pairing employee_id with the list of shift assignments
-        employee_ids = list(range(num_employees))
-        schedule2d = {int(e): s for e, s in zip(employee_ids, with_dates)}
-        # -----------------
+        # Attach dates and format for output
+        schedule2d = [
+            {
+                'employee': e,
+                'shift_assignments': [
+                    {'shift_date': d, 'assignment': int(s)} for d, s in zip(schedule_dates, shift_list)
+                ]
+            }
+            for e, shift_list in zip(employee_ids, schedule2d)
+        ]
+        # --------------------------------------------------------------------------------------------------------------
 
         print()
         print(schedule2d)
