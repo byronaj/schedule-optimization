@@ -27,7 +27,7 @@
 						day: 'numeric',
 						weekday: 'long',
 					},
-					editable: true,
+					editable: false,
 					headerToolbar: {
 						left: 'title',
 						right: '',
@@ -63,10 +63,12 @@
 						}
 					},
 				},
+				employee_fte: [],
 			};
 		},
 		mounted() {
 			this.getEmployees();
+			this.getSchedule();
 		},
 		methods: {
 			currentDate() {
@@ -93,8 +95,8 @@
 				}
 				switch (shift) {
 					case 1:
-						let st = Math.floor(Math.random() * 9) + 1;
-						let en = Math.round(st + 8 * parseFloat(fte));
+						let st = Math.floor(Math.random() * 9) + 1; //shift starts between 1 and 9am
+						let en = Math.round(st + 8 * parseFloat(fte)); //shift ends after 8*fte hours
 						time[0] = st + ':00:00';
 						time[1] = en + ':00:00';
 						if (st < 10) {
@@ -105,7 +107,7 @@
 						}
 						break;
 					case 2:
-						st = Math.floor(Math.random() * 6) + 9;
+						st = Math.floor(Math.random() * 6) + 9; //shift starts between 9am and 15 (3pm)
 						en = Math.round(st + 8 * parseFloat(fte));
 						time[0] = st + ':00:00';
 						time[1] = en + ':00:00';
@@ -114,10 +116,14 @@
 						}
 						break;
 					case 3:
-						st = Math.floor(Math.random() * 4) + 16;
+						st = Math.floor(Math.random() * 4) + 16; //shift starts between 16 (4pm) and 20 (8pm)
 						en = Math.round(st + 8 * parseFloat(fte));
+						if (en >= 24) {en -= 24} //if over 24 hours, subtract 24 to go into the next day
 						time[0] = st + ':00:00';
-						time[1] = '23:59:00';
+						time[1] = en + ':00:00';
+						if (en < 10) {
+							time[1] = '0' + time[1];
+						}
 						break;
 				}
 				return time;
@@ -135,26 +141,50 @@
 						}
 						for (let i = 0; i < response.data.length; i++) {
 							//create resource object
-							let evCol = ['#04406f', '#740008', '#705000', '#023e1c'];
-							let evTit = ['Variable', 'First', 'Second', 'Third'];
 							let res = {
 								id: response.data[i].id.toString(),
-								name: response.data[i].first_name + ' ' + response.data[i].first_name,
-								eventColor: evCol[response.data[i].shift_block],
+								name: response.data[i].first_name + ' ' + response.data[i].last_name,
 							};
-							let ttime = this.getTestTime(response.data[i].shift_block, response.data[i].fte);
-							let ev = {
-								id: response.data[i].id.toString(),
-								resourceId: response.data[i].id.toString(),
-								title: evTit[response.data[i].shift_block] + ' Shift',
-								start: this.currentDate() + 'T' + ttime[0],
-								end: this.currentDate() + 'T' + ttime[1],
-								borderColor: '#000',
-							};
-							console.log(ev);
-							//add object to calendar
+							this.employee_fte.push(response.data[i].fte)
 							cal.addResource(res);
-							cal.addEvent(ev);
+						}
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			},
+			getSchedule() {
+				axios
+					.get(`/api/v1/schedulesolver/`)
+					.then((response) => {
+						let cal = this.$refs.FC.getApi();
+						let evTit = ['', 'First', 'Second', 'Third'];
+						let evCol = ['', '#740008', '#705000', '#023e1c'];
+						for (let i = 0; i < response.data.length; i++) { //for each employee
+							for (let j = 0; j < response.data[i].shift_assignments.length; j++) { //for each shift assignment
+								if (response.data[i].shift_assignments[j].assignment != 0) //working (0 == off)
+								{
+									let ttime = this.getTestTime(response.data[i].shift_assignments[j].assignment, this.employee_fte[i]);
+									let end = response.data[i].shift_assignments[j].shift_date + 'T' + ttime[1]
+
+									if ((""+ttime[1])[0] == "0" && response.data[i].shift_assignments[j].assignment == 3) {
+										let d = new Date(response.data[i].shift_assignments[j].shift_date);
+										d.setDate(d.getDate() + 1);
+										end = d.toISOString().split('T')[0]  + 'T' + ttime[1];
+									}
+
+									let ev = {
+										id: i + "-" + j,
+										resourceId: i.toString(),
+										title: evTit[response.data[i].shift_assignments[j].assignment] + ' Shift',
+										start: response.data[i].shift_assignments[j].shift_date + 'T' + ttime[0],
+										end: end,
+										borderColor: '#000',
+										backgroundColor: evCol[response.data[i].shift_assignments[j].assignment],
+									};
+									cal.addEvent(ev);
+								}
+							}
 						}
 					})
 					.catch((error) => {

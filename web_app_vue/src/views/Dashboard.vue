@@ -3,7 +3,7 @@
 <template>
   <div class="columns">
     <div class="column is-one-fifth">
-      <MiniCal />
+      <MiniCal ref="MiniCal"/>
       <DisplayConstraints />
     </div>
     <div class="column">
@@ -31,6 +31,13 @@ export default {
   methods: {
     exportCalendar() {
       this.showExport = !this.showExport
+      setTimeout(() => { //because the FullCalendar doesn't open up fast enough
+        try {
+          let resDate = this.$refs.MiniCal.getDate();
+          this.$refs.FullCalendar.changeDate(resDate); //can be executed only when FullCalendar is showing, so this will execute only when hiding the Export view
+        }
+        catch { }
+      }, 100);
     }
   },
   data() {

@@ -8,6 +8,11 @@
 
 	export default {
 		name: 'ColorCalendar',
+		data() {
+			return {
+				newDate: null
+			}
+		},
 		mounted() {
 			new MiniCal({
 				id: '#myCal',
@@ -21,9 +26,13 @@
 		methods: {
 			dateChanged(date) {
 				try {
+					this.newDate = date;
 					this.$parent.$refs.FullCalendar.changeDate(date);
 				} catch {}
 			},
+			getDate() {
+				return this.newDate;
+			}
 		},
 	};
 </script>
