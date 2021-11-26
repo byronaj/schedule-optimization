@@ -22,8 +22,8 @@ class Employee(models.Model):
         return self.first_name + " " + self.last_name
 
 
-# Is this really even needed? The employee model already has the needed fields covered.
-# The only use this would have is to provide a way to store employee requests for/against specific shifts
+# TODO: The employee model already has the needed fields for a MVP covered. Finish this to provide a way to store
+#  employee requests for/against specific shifts
 class EmployeeShiftPreference(models.Model):
     """Preference: (employee, shift, day, weight)
     Will need to auto-populate the 'requests' parameter of the scheduler with these values for every day in the schedule
@@ -124,27 +124,20 @@ class WeeklyCoverDemand(models.Model):
     sun_shift3 = models.IntegerField(default=1)
 
 
-# not currently implemented
-class Schedule(models.Model):
+class EmployeeSchedule(models.Model):
     created = models.DateTimeField(auto_now_add=True)
+
+    # TODO: link to the employee model
     # employee = models.ForeignKey('web_app.Employee', on_delete=models.CASCADE)
-    # shift_assignments = models.JSONField()
+
+    employee = models.IntegerField(default=0)
 
 
-# class Schedule(models.Model):
-#     created = models.DateTimeField(auto_now_add=True)
-#     start_date = models.DateField()
-#     end_date = models.DateField()
-#     is_active = models.BooleanField(default=True)
-#
-#     # List of employees that are scheduled to work on this schedule
-#     employees = models.ManyToManyField(Employee)
-#
-#     # List of constraints that apply to this schedule
-#     constraints = models.ManyToManyField(EmployeeConstraints)
-#
-#     # List of shifts that apply to this schedule
-#     shifts = models.ManyToManyField('Shift')
-#
-#     def __str__(self):
-#         return "Schedule " + str(self.id) + ": " + str(self.start_date) + " - " + str(self.end_date)
+class ShiftAssignment(models.Model):
+    employee_schedule = models.ForeignKey(
+        'web_app.EmployeeSchedule',
+        related_name='shift_assignments',
+        on_delete=models.CASCADE
+    )
+    shift_date = models.DateField()
+    assignment = models.IntegerField(default=0)

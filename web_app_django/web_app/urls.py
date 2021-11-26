@@ -8,6 +8,8 @@ from .views import (
     WeeklySumViewSet,
     PenalizedTransitionsViewSet,
     WeeklyCoverViewSet,
+    EmployeeScheduleViewSet,
+    ShiftAssignmentViewSet,
     ScheduleSolverAPIView,
 )
 
@@ -18,6 +20,8 @@ router.register('sequences', ContinuousSequenceViewSet, basename='sequences')
 router.register('weeklysums', WeeklySumViewSet, basename='weeklysums')
 router.register('transitions', PenalizedTransitionsViewSet, basename='transitions')
 router.register('coverages', WeeklyCoverViewSet, basename='coverages')
+router.register('schedule', EmployeeScheduleViewSet, basename='schedule')
+router.register('shifts', ShiftAssignmentViewSet, basename='shifts')
 
 urlpatterns = [
     path('', include(router.urls)),

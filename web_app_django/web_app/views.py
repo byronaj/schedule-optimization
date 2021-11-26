@@ -10,7 +10,8 @@ from .serializers import (
     WeeklySumSerializer,
     PenalizedTransitionsSerializer,
     WeeklyCoverSerializer,
-    ShiftAssignmentsSerializer,
+    EmployeeScheduleSerializer,
+    ShiftAssignmentSerializer,
 )
 from .models import (
     Employee,
@@ -18,6 +19,8 @@ from .models import (
     WeeklySum,
     PenalizedTransitions,
     WeeklyCoverDemand,
+    EmployeeSchedule,
+    ShiftAssignment,
 )
 
 from . import solver
@@ -27,7 +30,6 @@ class ScheduleSolverAPIView(APIView):
     """
     API endpoint view for initializing the solver and sending a response that contains the resulting generated schedule.
     """
-
     def get(self, request, *args, **kwargs):
 
         def serializer_to_tuple_list(serializer_object):
@@ -70,15 +72,29 @@ class ScheduleSolverAPIView(APIView):
             weekly_cover_demands
         )
 
-        # # Have the generated schedule formatted to be sent back as a response
-        # serializer = ShiftAssignmentsSerializer(data=result)
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return Response(serializer.data)
-        # return Response(serializer.errors, status=400)
+        # TODO: this does work for saving the schedule, but it needs to do so only for employees without a pre-existing
+        #  schedule and simply update the records otherwise
+        # for employee_schedule in result:
+        #     try:
+        #         es_serializer = EmployeeScheduleSerializer(data=employee_schedule)
+        #         if es_serializer.is_valid():
+        #             es_serializer.save()
+        #             print('employee schedule validated and saved successfully')
+        #     except Exception as e:
+        #         print(e)
 
         response = Response(result, status=status.HTTP_200_OK)
         return response
+
+
+class EmployeeScheduleViewSet(viewsets.ModelViewSet):
+    serializer_class = EmployeeScheduleSerializer
+    queryset = EmployeeSchedule.objects.all()
+
+
+class ShiftAssignmentViewSet(viewsets.ModelViewSet):
+    serializer_class = ShiftAssignmentSerializer
+    queryset = ShiftAssignment.objects.all()
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
@@ -113,6 +129,7 @@ class WeeklyCoverViewSet(viewsets.ModelViewSet):
 
 
 # A fine work of art courtesy of GitHub Copilot
+# def get_garbage...
 def get_garbage_employees(request):
     """
     Returns a list of employees that are garbage.

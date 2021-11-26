@@ -6,6 +6,8 @@ from .models import (
     WeeklySum,
     PenalizedTransitions,
     WeeklyCoverDemand,
+    ShiftAssignment,
+    EmployeeSchedule,
 )
 
 
@@ -27,26 +29,41 @@ class EmployeeSerializer(serializers.ModelSerializer):
         )
 
 
-# not currently implemented
-class ShiftAssignments:
-    def __init__(self, json_data):
-        # self.employee = employee
-        self.json_data = json_data
+class ShiftAssignmentSerializer(serializers.ModelSerializer):
+
+    # TODO: Added to make shift assignments identifiable and therefore updatable
+    # id = serializers.IntegerField(required=False)
+
+    class Meta:
+        model = ShiftAssignment
+        fields = ['shift_date', 'assignment']
 
 
-# not currently implemented
-class ShiftAssignmentsSerializer(serializers.Serializer):
-    # add fields to create an instance of an employee's schedule
-    # this should result in one dict of all the shifts for an employee
-    # employee = EmployeeSerializer(many=True)
-    shifts = serializers.ListField()
+class EmployeeScheduleSerializer(serializers.ModelSerializer):
+    shift_assignments = ShiftAssignmentSerializer(many=True)
+
+    class Meta:
+        model = EmployeeSchedule
+        fields = ['employee', 'shift_assignments']
 
     def create(self, validated_data):
-        return ShiftAssignments(**validated_data)
+        shifts_data = validated_data.pop('shift_assignments')
+        employee_schedule = EmployeeSchedule.objects.create(**validated_data)
 
-    def update(self, instance, validated_data):
-        # instance.employee = validated_data.get('employee', instance.employee)
-        instance.shifts = validated_data.get('shifts', instance.shifts)
+        for shift_data in shifts_data:
+            ShiftAssignment.objects.create(employee_schedule=employee_schedule, **shift_data)
+
+        return employee_schedule
+
+    # TODO: Update is not fully implemented yet
+    # def update(self, instance, validated_data):
+    #     shifts_data = validated_data.pop('shift_assignments')
+    #     shifts_data = instance.shift_assignments
+    #     for shift_data in shifts_data:
+    #         shift_data.shift_date = shift_data.shift_date
+    #         shift_data.assignment = shift_data.assignment
+    #         shift_data.save()
+    #     return instance
 
 
 class ContinuousSequenceSerializer(serializers.ModelSerializer):

@@ -297,9 +297,13 @@ def solve_shift_scheduling(
         # Attach dates and format for output
         schedule2d = [
             {
-                'employee': e,
+                'employee': int(e),
                 'shift_assignments': [
-                    {'shift_date': d, 'assignment': int(s)} for d, s in zip(schedule_dates, shift_list)
+                    {
+                        'shift_date': d,
+                        'assignment': int(s)
+                    }
+                    for d, s in zip(schedule_dates, shift_list)
                 ]
             }
             for e, shift_list in zip(employee_ids, schedule2d)
