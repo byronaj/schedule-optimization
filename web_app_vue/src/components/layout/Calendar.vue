@@ -166,7 +166,7 @@
 										id: res[i].id + "-" + j,
 										resourceId: res[i].id,
 										title: evTit[response.data[i].shift_assignments[j].assignment] + ' Shift',
-										extendedProps: { name: cal.getResourceById((i + 1).toString().padStart(2, '0')).extendedProps.name }, //name of employee for export
+										extendedProps: { name: res[i].extendedProps.name }, //name of employee for export
 										start: response.data[i].shift_assignments[j].shift_date + 'T' + ttime[0],
 										end: end,
 										borderColor: '#000',
