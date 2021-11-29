@@ -55,7 +55,7 @@ const routes = [
   {
     path: '/coverage-req',
     name: 'ConstraintCoverageModify',
-    component: () => import('../views/ConstraintCoverageModify.vue')
+    component: () => import('../views/ConstraintsAddViewModify.vue')
   },
 ]
 
