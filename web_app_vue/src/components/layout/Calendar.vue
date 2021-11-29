@@ -72,6 +72,10 @@
 				let cal = this.$refs.FC.getApi();
 				cal.gotoDate(date);
 			},
+			getDate() {
+				let cal = this.$refs.FC.getApi();
+				return cal.getDate();
+			},
 			getTestTime(shift, fte) {
 				let time = ['', ''];
 				if (shift == 0) {
@@ -142,6 +146,7 @@
 					.get(`/api/v1/schedulesolver/`)
 					.then((response) => {
 						let cal = this.$refs.FC.getApi();
+						let res = cal.getResources()
 						let evTit = ['', 'First', 'Second', 'Third'];
 						let evCol = ['', '#740008', '#705000', '#023e1c'];
 						for (let i = 0; i < response.data.length; i++) { //for each employee
@@ -158,8 +163,8 @@
 									}
 
 									let ev = {
-										id: (i + 1) + "-" + j,
-										resourceId: (i + 1).toString().padStart(2, '0'),
+										id: res[i].id + "-" + j,
+										resourceId: res[i].id,
 										title: evTit[response.data[i].shift_assignments[j].assignment] + ' Shift',
 										extendedProps: { name: cal.getResourceById((i + 1).toString().padStart(2, '0')).extendedProps.name }, //name of employee for export
 										start: response.data[i].shift_assignments[j].shift_date + 'T' + ttime[0],

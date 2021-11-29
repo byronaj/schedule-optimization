@@ -31,8 +31,10 @@ export default {
   methods: {
     exportCalendar() {
       let ev = null
+      let current = null
       if (!this.showExport) { //pull events before FullCalendar is hidden
         ev = this.$refs.FullCalendar.getEvents()
+        current = this.$refs.FullCalendar.getDate();
       }
 
       this.showExport = !this.showExport
@@ -40,6 +42,7 @@ export default {
       if (this.showExport) {
         setTimeout(() => { //because the FullCalendar doesn't open up fast enough
           try {
+            this.$refs.EXC.setDate(current);
             this.$refs.EXC.setEvents(ev); //send events to Export View
           }
           catch { }
