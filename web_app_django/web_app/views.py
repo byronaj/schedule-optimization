@@ -62,7 +62,12 @@ class ScheduleSolverAPIView(APIView):
         coverage_tuple = tuple(coverage[0].values())[1:]
         weekly_cover_demands = [tuple(coverage_tuple[i:i + 3]) for i in range(0, len(coverage_tuple), 3)]
 
+        employee_serializer = EmployeeSerializer(Employee.objects.all(), many=True)
+        employees = employee_serializer.data
+        employee_id_list = [list(id_num.values())[0] for id_num in employees]
+
         result = solver.solve_shift_scheduling(
+            employee_id_list,
             num_employees,
             num_weeks,
             shifts,

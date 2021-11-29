@@ -98,6 +98,7 @@ def add_soft_sum_constraint(model, workers, hard_min, soft_min, min_cost, soft_m
 
 
 def solve_shift_scheduling(
+        emp_ids,
         num_employees,
         num_weeks,
         shifts,
@@ -140,8 +141,8 @@ def solve_shift_scheduling(
     # ]
 
     # Penalty for exceeding the cover constraint per shift type.
-    # all set to forbidden
-    excess_cover_penalties = (0, 0, 0)
+    excess_cover_penalties = (0, 0, 0)  # all set to forbidden
+    # excess_cover_penalties = (3, 3, 6)  # lower penalty for first and second, higher for third
 
     num_days = num_weeks * 7
     num_shifts = len(shifts)
@@ -292,8 +293,6 @@ def solve_shift_scheduling(
         # List of n dates starting from next Monday
         schedule_dates = [next_monday + timedelta(days=i) for i in range(num_days)]
 
-        employee_ids = list(range(num_employees))  # TODO: get employee ids from database
-
         # Attach dates and format for output
         schedule2d = [
             {
@@ -306,7 +305,7 @@ def solve_shift_scheduling(
                     for d, s in zip(schedule_dates, shift_list)
                 ]
             }
-            for e, shift_list in zip(employee_ids, schedule2d)
+            for e, shift_list in zip(emp_ids, schedule2d)
         ]
         # --------------------------------------------------------------------------------------------------------------
 
