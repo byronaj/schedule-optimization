@@ -30,7 +30,22 @@ export default {
   name: 'Dashboard',
   methods: {
     exportCalendar() {
+      let ev = null
+      if (!this.showExport) { //pull events before FullCalendar is hidden
+        ev = this.$refs.FullCalendar.getEvents()
+      }
+
       this.showExport = !this.showExport
+
+      if (this.showExport) { //pull events before FullCalendar is hidden
+        setTimeout(() => { //because the FullCalendar doesn't open up fast enough
+          try {
+            this.$refs.EXC.setEvents(ev);
+          }
+          catch { }
+        }, 100);
+      }
+      
       setTimeout(() => { //because the FullCalendar doesn't open up fast enough
         try {
           let resDate = this.$refs.MiniCal.getDate();

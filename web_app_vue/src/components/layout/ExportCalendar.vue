@@ -32,15 +32,6 @@
 						day: 'numeric',
 						weekday: 'long',
 					},
-					events: [
-						{
-							id: '1',
-							resourceId: 'a',
-							title: 'Employee Name',
-							start: this.currentDate() + 'T10:30:00',
-							end: this.currentDate() + 'T20:30:00',
-						},
-					],
 				},
 				showModal: false,
 			};
@@ -52,10 +43,19 @@
 			toggleShowExport() {
 				this.$parent.exportCalendar();
 			},
-			currentDate() {
-				let current = new Date().toISOString().substr(0, 10);
-				return current;
-			},
+			setEvents(ev) {
+				let cal = this.$refs.FC.getApi();
+				var cd = new Date();
+				cd.setDate(cd.getDate() + (((1 + 6 - cd.getDay()) % 7) || 7)); //next Sunday
+				for (let i = 0; i < ev.length; i++)
+				{
+					let d = new Date(ev[i].start)
+					if (d.getTime() < cd.getTime()) //to limit the time it takes to generate
+					{
+						cal.addEvent(ev[i])
+					}
+				}
+			}
 		},
 	};
 </script>
