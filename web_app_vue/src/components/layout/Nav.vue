@@ -17,13 +17,13 @@
                     <div class="navbar-start">
                         <template v-if="$store.state.user.isAuthenticated">
                             <!-- Temporary view/edit employees access -->
-                            <div class="navbar-item">
-                                <router-link class="button is-warning is-outlined" to="/employees">View Employees (temp) </router-link>
-                            </div>
+<!--                            <div class="navbar-item">-->
+<!--                                <router-link class="button is-warning is-outlined" to="/employees">View Employees</router-link>-->
+<!--                            </div>-->
 
                             <!-- Temporary constraints access -->
                             <div class="navbar-item">
-                                <router-link class="button is-warning is-outlined" to="/constraints-avm">Constraints (temp) </router-link>
+                                <router-link class="button is-warning is-outlined" to="/constraints-avm">Constraints</router-link>
                             </div>
 
                             <!-- Employee Maintenance Dropdown Menu -->
@@ -41,6 +41,19 @@
 
                             <div v-if="showViewEmployees">
                                 <ViewEmployees />
+                            </div>
+
+                            <!-- Constraint Maintenance Dropdown Menu -->
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link">Constraint Maintenance</a>
+                                <div class="navbar-dropdown has-background-light">
+                                    <a class="navbar-item has-text-primary-dark" @click="toggleShiftCov">Shift Coverage</a>
+                                    <a class="navbar-item has-text-info-dark" @click="">Shift Transitions</a>
+                                </div>
+                            </div>
+
+                            <div v-if="showShiftCov">
+                                <ShiftCoverage />
                             </div>
 
                             <!-- edit global constraints -->
@@ -86,6 +99,7 @@ import EditConstraints from '@/components/layout/EditConstraints.vue';
 import AddEmployee from '@/components/layout/AddEmployee.vue';
 import ViewEmployees from '@/components/layout/ViewEmployees.vue';
 import Employees from '@/views/Employees.vue';
+import ShiftCoverage from '@/components/layout/ShiftCoverage.vue';
 
 export default {
     name: 'Nav',
@@ -95,12 +109,14 @@ export default {
         AddEmployee,
         EditConstraints,
         ViewEmployees,
+        ShiftCoverage,
     },
     data() {
         return {
             showEditConstraints: false,
             showAddEmployee: false,
             showViewEmployees: false,
+            showShiftCov: false,
             userType: localStorage.getItem('userType'),
         };
     },
@@ -120,6 +136,9 @@ export default {
         },
         toggleViewEmployees() {
             this.showViewEmployees = !this.showViewEmployees;
+        },
+        toggleShiftCov() {
+            this.showShiftCov = !this.showShiftCov
         },
     },
 };

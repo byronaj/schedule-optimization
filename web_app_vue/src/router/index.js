@@ -52,7 +52,7 @@ const routes = [
     name: 'ConstraintsAddViewModify',
     component: () => import('../views/ConstraintsAddViewModify.vue'),
   },
-  {
+  {  // DELETE after API testing is done and code is finished being used to assist in implementing production version
     path: '/coverage-req',
     name: 'ConstraintCoverageModify',
     component: () => import('../views/ConstraintsAddViewModify.vue')
@@ -64,7 +64,7 @@ const router = createRouter({
   routes,
 })
 
-// Probably not going to do multiple user types (or perhaps just do it half-assed)
+// Probably not going to do multiple user types
 // router.beforeEach(async (to, from) => {
 //   // canUserAccess() returns `true` or `false`
 //   const canAccess = await canUserAccess(to)
