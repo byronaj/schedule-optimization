@@ -39,22 +39,6 @@
 						},
 					],
 					resourceAreaWidth: '20%',
-					resources: [
-						{
-							id: 'a',
-							name: 'Employee Name',
-							eventColor: '#511b1b',
-						},
-					],
-					events: [
-						{
-							id: '1',
-							resourceId: 'a',
-							title: 'Day Shift',
-							start: this.currentDate() + 'T10:30:00',
-							end: this.currentDate() + 'T20:30:00',
-						},
-					],
 					eventResize: function (info) {
 						alert(info.event.title + ' end is now ' + info.event.end.toISOString());
 
@@ -176,9 +160,8 @@
 									let ev = {
 										id: (i + 1) + "-" + j,
 										resourceId: (i + 1).toString().padStart(2, '0'),
-										title: evTit[response.data[i].shift_assignments[j].assignment] + ' Shift', //not doing the First/Second/Third Shift
-										//title: cal.getResourceById((i + 1).toString().padStart(2, '0')).extendedProps.name, //name instead
-										extendedProps: { name: cal.getResourceById((i + 1).toString().padStart(2, '0')).extendedProps.name },
+										title: evTit[response.data[i].shift_assignments[j].assignment] + ' Shift',
+										extendedProps: { name: cal.getResourceById((i + 1).toString().padStart(2, '0')).extendedProps.name }, //name of employee for export
 										start: response.data[i].shift_assignments[j].shift_date + 'T' + ttime[0],
 										end: end,
 										borderColor: '#000',

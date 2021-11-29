@@ -37,10 +37,10 @@ export default {
 
       this.showExport = !this.showExport
 
-      if (this.showExport) { //pull events before FullCalendar is hidden
+      if (this.showExport) {
         setTimeout(() => { //because the FullCalendar doesn't open up fast enough
           try {
-            this.$refs.EXC.setEvents(ev);
+            this.$refs.EXC.setEvents(ev); //send events to Export View
           }
           catch { }
         }, 100);

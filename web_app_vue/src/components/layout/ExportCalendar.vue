@@ -36,9 +36,6 @@
 				showModal: false,
 			};
 		},
-		mounted() {
-			window.print();
-		},
 		methods: {
 			toggleShowExport() {
 				this.$parent.exportCalendar();
@@ -52,9 +49,11 @@
 					let d = new Date(ev[i].start)
 					if (d.getTime() < cd.getTime()) //to limit the time it takes to generate
 					{
+						ev[i].setProp( 'title', ev[i].extendedProps.name )
 						cal.addEvent(ev[i])
 					}
 				}
+				window.print();
 			}
 		},
 	};
