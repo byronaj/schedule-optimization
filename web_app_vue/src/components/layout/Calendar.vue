@@ -139,10 +139,10 @@
 							let res = cal.getResourceById(tr[i].id);
 							res.remove();
 						}
-						for (let i = 0; i < response.data.length; i++) {
+						for (let i = 0; i < response.data.length; i++) { //employees start with ID 1
 							//create resource object
 							let res = {
-								id: response.data[i].id.toString(),
+								id: response.data[i].id.toString().padStart(2, '0'), //so that they're in order
 								name: response.data[i].first_name + ' ' + response.data[i].last_name,
 							};
 							this.employee_fte.push(response.data[i].fte)
@@ -167,16 +167,18 @@
 									let ttime = this.getTestTime(response.data[i].shift_assignments[j].assignment, this.employee_fte[i]);
 									let end = response.data[i].shift_assignments[j].shift_date + 'T' + ttime[1]
 
-									if ((""+ttime[1])[0] == "0" && response.data[i].shift_assignments[j].assignment == 3) {
+									if ((""+ttime[1])[0] == "0" && response.data[i].shift_assignments[j].assignment == 3) { //if the ending of a 3rd shift
 										let d = new Date(response.data[i].shift_assignments[j].shift_date);
-										d.setDate(d.getDate() + 1);
+										d.setDate(d.getDate() + 1); //move date to the next day
 										end = d.toISOString().split('T')[0]  + 'T' + ttime[1];
 									}
 
 									let ev = {
-										id: i + "-" + j,
-										resourceId: i.toString(),
-										title: evTit[response.data[i].shift_assignments[j].assignment] + ' Shift',
+										id: (i + 1) + "-" + j,
+										resourceId: (i + 1).toString().padStart(2, '0'),
+										title: evTit[response.data[i].shift_assignments[j].assignment] + ' Shift', //not doing the First/Second/Third Shift
+										//title: cal.getResourceById((i + 1).toString().padStart(2, '0')).extendedProps.name, //name instead
+										extendedProps: { name: cal.getResourceById((i + 1).toString().padStart(2, '0')).extendedProps.name },
 										start: response.data[i].shift_assignments[j].shift_date + 'T' + ttime[0],
 										end: end,
 										borderColor: '#000',
@@ -191,6 +193,11 @@
 						console.log(error);
 					});
 			},
+			getEvents() {
+				let cal = this.$refs.FC.getApi();
+				let ev = cal.getEvents()
+				return ev
+			}
 		},
 	};
 </script>
