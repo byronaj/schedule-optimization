@@ -83,10 +83,10 @@
 				}
 				switch (shift) {
 					case 1:
-						let st = Math.floor(Math.random() * 9) + 1; //shift starts between 1 and 9am
+						let st = Math.floor(Math.random() * 1) + 7; //shift starts between 7
 						let en = Math.round(st + 8 * parseFloat(fte)); //shift ends after 8*fte hours
 						time[0] = st + ':00:00';
-						time[1] = en + ':00:00';
+						time[1] = en + ':30:00'; //30 minutes for lunch
 						if (st < 10) {
 							time[0] = '0' + time[0];
 						}
@@ -95,20 +95,20 @@
 						}
 						break;
 					case 2:
-						st = Math.floor(Math.random() * 6) + 9; //shift starts between 9am and 15 (3pm)
+						st = Math.floor(Math.random() * 1) + 15; //shift starts at 15 (3pm)
 						en = Math.round(st + 8 * parseFloat(fte));
 						time[0] = st + ':00:00';
-						time[1] = en + ':00:00';
+						time[1] = en + ':30:00'; //30 minutes for lunch
 						if (st < 10) {
 							time[0] = '0' + time[0];
 						}
 						break;
 					case 3:
-						st = Math.floor(Math.random() * 4) + 16; //shift starts between 16 (4pm) and 20 (8pm)
+						st = Math.floor(Math.random() * 1) + 23; //shift starts at 23 (11pm)
 						en = Math.round(st + 8 * parseFloat(fte));
 						if (en >= 24) {en -= 24} //if over 24 hours, subtract 24 to go into the next day
 						time[0] = st + ':00:00';
-						time[1] = en + ':00:00';
+						time[1] = en + ':30:00';
 						if (en < 10) {
 							time[1] = '0' + time[1];
 						}
