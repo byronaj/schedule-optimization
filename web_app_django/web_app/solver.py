@@ -1,31 +1,24 @@
+from datetime import date, timedelta
+
 from ortools.sat.python import cp_model
-
-
-# from schedule_information import *
-
-
-# SI = ScheduleInformation(
-#     8,
-#     1,
-#     ['O', 'M', 'A', 'N'],
-#     [(0, 1, 1, 0, 2, 2, 0), (3, 1, 2, 20, 3, 4, 5)],
-#     [(0, 1, 2, 7, 2, 3, 4), (3, 0, 1, 3, 4, 4, 0)],
-#     [(2, 3, 4), (3, 1, 0)]
-# )
 
 
 def negated_bounded_span(workers, start, length):
     # this blocks multiple shifts in a day
     # https://tinyurl.com/ykvk74h7 explanation
     sequence = []
+
     # Left border (start of workers, or workers[start - 1])
     if start > 0:
         sequence.append(workers[start - 1])
+
     for i in range(length):
         sequence.append(workers[start + i].Not())
+
     # Right border (end of workers or workers[start + length])
     if start + length < len(workers):
         sequence.append(workers[start + length])
+
     return sequence
 
 
@@ -105,6 +98,7 @@ def add_soft_sum_constraint(model, workers, hard_min, soft_min, min_cost, soft_m
 
 
 def solve_shift_scheduling(
+        emp_ids,
         num_employees,
         num_weeks,
         shifts,
@@ -147,8 +141,8 @@ def solve_shift_scheduling(
     # ]
 
     # Penalty for exceeding the cover constraint per shift type.
-    # all set to forbidden
-    excess_cover_penalties = (0, 0, 0)
+    excess_cover_penalties = (0, 0, 0)  # all set to forbidden
+    # excess_cover_penalties = (3, 3, 6)  # lower penalty for first and second, higher for third
 
     num_days = num_weeks * 7
     num_shifts = len(shifts)
@@ -267,6 +261,7 @@ def solve_shift_scheduling(
     # Print solution.
     # schedule2d is the array to return employee schedule
     # format has employees as rows and days as columns
+    schedule2d = []
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
         print()
         header = '          '
@@ -278,9 +273,6 @@ def solve_shift_scheduling(
 
         schedule2d = [['V' for _ in range(num_days)] for _ in range(num_employees)]
 
-        # Convert to dict: key = employee id, value = list of shift assignments
-        schedule2d = {e: schedule2d[e] for (e, _) in enumerate(schedule2d)}
-
         for e in range(num_employees):
             schedule = ''
 
@@ -291,6 +283,31 @@ def solve_shift_scheduling(
                         schedule2d[e][d] = shifts[s]
 
             print('worker %i: %s' % (e, schedule))
+
+        # --------------------------------------------------------------------------------------------------------------
+        # Output Formatting
+        # --------------------------------------------------------------------------------------------------------------
+        # Get the nearest date (after current date) that is a Monday
+        next_monday = date.today() + timedelta(days=(0 - date.today().weekday() - 1) % 7 + 1)
+
+        # List of n dates starting from next Monday
+        schedule_dates = [next_monday + timedelta(days=i) for i in range(num_days)]
+
+        # Attach dates and format for output
+        schedule2d = [
+            {
+                'employee': int(e),
+                'shift_assignments': [
+                    {
+                        'shift_date': d,
+                        'assignment': int(s)
+                    }
+                    for d, s in zip(schedule_dates, shift_list)
+                ]
+            }
+            for e, shift_list in zip(emp_ids, schedule2d)
+        ]
+        # --------------------------------------------------------------------------------------------------------------
 
         print()
         print(schedule2d)
@@ -317,27 +334,3 @@ def solve_shift_scheduling(
     print('  - wall time       : %f s' % solver.WallTime())
 
     return schedule2d
-
-
-def main():
-    solve_shift_scheduling(
-        8,
-        3,
-        ['O', 'M', 'A', 'N'],
-        [(0, 1, 1, 0, 2, 2, 0), (3, 1, 2, 20, 3, 4, 5)],
-        [(0, 1, 2, 7, 2, 3, 4), (3, 0, 1, 3, 4, 4, 0)],
-        [(2, 3, 4), (3, 1, 0)],
-        [
-            (2, 3, 1),  # Monday
-            (2, 3, 1),  # Tuesday
-            (2, 2, 2),  # Wednesday
-            (2, 3, 1),  # Thursday
-            (2, 2, 2),  # Friday
-            (1, 2, 3),  # Saturday
-            (1, 3, 1),  # Sunday
-        ]
-    )
-
-
-if __name__ == '__main__':
-    main()

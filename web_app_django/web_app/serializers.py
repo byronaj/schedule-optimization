@@ -6,6 +6,8 @@ from .models import (
     WeeklySum,
     PenalizedTransitions,
     WeeklyCoverDemand,
+    ShiftAssignment,
+    EmployeeSchedule,
 )
 
 
@@ -27,17 +29,41 @@ class EmployeeSerializer(serializers.ModelSerializer):
         )
 
 
-class EmployeeShiftsSerializer(serializers.Serializer):
-    # add fields to create an instance of an employee's schedule
-    # this should result in one dict of all the shifts for an employee
-    pass
+class ShiftAssignmentSerializer(serializers.ModelSerializer):
+
+    # TODO: Added to make shift assignments identifiable and therefore updatable
+    # id = serializers.IntegerField(required=False)
+
+    class Meta:
+        model = ShiftAssignment
+        fields = ['shift_date', 'assignment']
 
 
-class EmployeeScheduleSerializer(serializers.Serializer):
-    employee = EmployeeShiftsSerializer(many=True)
+class EmployeeScheduleSerializer(serializers.ModelSerializer):
+    shift_assignments = ShiftAssignmentSerializer(many=True)
 
-    schedule_start_date = serializers.DateField()
-    schedule_end_date = serializers.DateField()
+    class Meta:
+        model = EmployeeSchedule
+        fields = ['employee', 'shift_assignments']
+
+    def create(self, validated_data):
+        shifts_data = validated_data.pop('shift_assignments')
+        employee_schedule = EmployeeSchedule.objects.create(**validated_data)
+
+        for shift_data in shifts_data:
+            ShiftAssignment.objects.create(employee_schedule=employee_schedule, **shift_data)
+
+        return employee_schedule
+
+    # TODO: Update is not fully implemented yet
+    # def update(self, instance, validated_data):
+    #     shifts_data = validated_data.pop('shift_assignments')
+    #     shifts_data = instance.shift_assignments
+    #     for shift_data in shifts_data:
+    #         shift_data.shift_date = shift_data.shift_date
+    #         shift_data.assignment = shift_data.assignment
+    #         shift_data.save()
+    #     return instance
 
 
 class ContinuousSequenceSerializer(serializers.ModelSerializer):

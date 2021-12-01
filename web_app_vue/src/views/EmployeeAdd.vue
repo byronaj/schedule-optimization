@@ -105,7 +105,7 @@
 	import { toast } from 'bulma-toast';
 
 	export default {
-		name: 'Add',
+		name: 'EmployeeAdd',
 		data() {
 			return {
 				employee: {},

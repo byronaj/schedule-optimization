@@ -49,7 +49,7 @@ With the Django development server running:
 
 A URL to the Vue.js app (http://localhost:8080) will be displayed in the terminal.
 
-### Django REST Framework Browsable API
+### API Endpoints & Django REST Framework Browsable API
 ___
 **Log in:**  
 `http://127.0.0.1:8000/api/v1/token/login`  
@@ -66,13 +66,26 @@ Use the superuser login credentials created with `> py manage.py createsuperuser
 **Employees:**  
 `http://127.0.0.1:8000/api/v1/employees`
 
-**Specific Employee:** (access by id)  
+**Specific Employee:**  
+Access by id.  
 `http://127.0.0.1:8000/api/v1/employees/1`
 
-**Global Constraints:**  
-`http://127.0.0.1:8000/api/v1/globalconstraints`
+**Run schedule solver:**  
+Runs the schedule solver with the current constraints. Always starts on the nearest Monday after the current date.  
+`http://127.0.0.1:8000/api/v1/schedulesolver`
 
-...and so on
+**Shift constraints on a continuous sequence:**  
+`http://127.0.0.1:8000/api/v1/sequences`
+
+**Weekly shift sum constraint:**  
+`http://127.0.0.1:8000/api/v1/weeklysums`
+
+**Penalized shift transition constraint:**  
+`http://127.0.0.1:8000/api/v1/transitions`
+
+**Shift coverage requirements:**  
+A week of daily shift demands, applies to every week in the schedule.  
+`http://127.0.0.1:8000/api/v1/coverages`
 
 ### Django database updates:
 ___

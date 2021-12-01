@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,8 +9,9 @@ from .serializers import (
     ContinuousSequenceSerializer,
     WeeklySumSerializer,
     PenalizedTransitionsSerializer,
-    EmployeeShiftsSerializer,
     WeeklyCoverSerializer,
+    EmployeeScheduleSerializer,
+    ShiftAssignmentSerializer,
 )
 from .models import (
     Employee,
@@ -18,27 +19,18 @@ from .models import (
     WeeklySum,
     PenalizedTransitions,
     WeeklyCoverDemand,
+    EmployeeSchedule,
+    ShiftAssignment,
 )
 
 from . import solver
 
 
-class ReportView(APIView):
+class ScheduleSolverAPIView(APIView):
     """
     API endpoint view for initializing the solver and sending a response that contains the resulting generated schedule.
     """
-
     def get(self, request, *args, **kwargs):
-
-        # Leaving this here for now, but it's not used.
-        # Serialize employee objects into a list of dictionaries
-        employee_serializer = EmployeeSerializer(Employee.objects.all(), many=True)
-        employee_list = employee_serializer.data
-        # [
-        #     {'id': 0, 'first_name': 'first0', 'last_name': 'last0', 'fte': 0.0, 'shift_block': 0, 'is_active': True},
-        #     {'id': 1, 'first_name': 'first1', 'last_name': 'last1', 'fte': 0.0, 'shift_block': 0, 'is_active': True},
-        #     {'id': 2, 'first_name': 'first2', 'last_name': 'last2', 'fte': 0.0, 'shift_block': 0, 'is_active': True}
-        # ]
 
         def serializer_to_tuple_list(serializer_object):
             """
@@ -50,7 +42,7 @@ class ReportView(APIView):
 
         num_employees = Employee.objects.count()
         num_weeks = 3  # TODO: address this later
-        shifts = ['O', 'M', 'A', 'N']  # TODO: this is 'tarded, but w/e, address later
+        shifts = ['0', '1', '2', '3']
 
         cs_constraint_serializer = ContinuousSequenceSerializer(ContinuousSequence.objects.all(), many=True)
         cs_constraint_list = serializer_to_tuple_list(cs_constraint_serializer)
@@ -66,11 +58,16 @@ class ReportView(APIView):
         # returns one dict of coverage demands for three shifts per day, from Monday to Sunday
         coverage = coverage_serializer.data
 
-        # convert to a list of tuples of shifts for each day
-        coverage_tuple = tuple(coverage.values())[1:]
+        # trim off pk and convert to a list of tuples of shifts for each day
+        coverage_tuple = tuple(coverage[0].values())[1:]
         weekly_cover_demands = [tuple(coverage_tuple[i:i + 3]) for i in range(0, len(coverage_tuple), 3)]
 
+        employee_serializer = EmployeeSerializer(Employee.objects.all(), many=True)
+        employees = employee_serializer.data
+        employee_id_list = [list(id_num.values())[0] for id_num in employees]
+
         result = solver.solve_shift_scheduling(
+            employee_id_list,
             num_employees,
             num_weeks,
             shifts,
@@ -80,10 +77,29 @@ class ReportView(APIView):
             weekly_cover_demands
         )
 
-        # Have the generated schedule formatted to be sent back as a response
-        serializer = EmployeeShiftsSerializer(result, many=True)
+        # TODO: this does work for saving the schedule, but it needs to do so only for employees without a pre-existing
+        #  schedule and simply update the records otherwise
+        # for employee_schedule in result:
+        #     try:
+        #         es_serializer = EmployeeScheduleSerializer(data=employee_schedule)
+        #         if es_serializer.is_valid():
+        #             es_serializer.save()
+        #             print('employee schedule validated and saved successfully')
+        #     except Exception as e:
+        #         print(e)
 
-        return Response(serializer.data)
+        response = Response(result, status=status.HTTP_200_OK)
+        return response
+
+
+class EmployeeScheduleViewSet(viewsets.ModelViewSet):
+    serializer_class = EmployeeScheduleSerializer
+    queryset = EmployeeSchedule.objects.all()
+
+
+class ShiftAssignmentViewSet(viewsets.ModelViewSet):
+    serializer_class = ShiftAssignmentSerializer
+    queryset = ShiftAssignment.objects.all()
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
@@ -118,6 +134,7 @@ class WeeklyCoverViewSet(viewsets.ModelViewSet):
 
 
 # A fine work of art courtesy of GitHub Copilot
+# def get_garbage...
 def get_garbage_employees(request):
     """
     Returns a list of employees that are garbage.

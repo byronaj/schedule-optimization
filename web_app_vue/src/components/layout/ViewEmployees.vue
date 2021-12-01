@@ -1,6 +1,6 @@
 <template>
 	<div id="viewemployees">
-		<Modal v-on:close="toggleShowViewEmployees">
+		<Modal v-on:close="toggleShowViewEmployees" v-show="!showEditEmployee">
 			<header class="modal-card-head">
 				<p class="modal-card-title">View Employees</p>
 				<button class="delete" aria-label="close" @click="toggleShowViewEmployees"></button>
@@ -28,7 +28,8 @@
 								<td>{{ employee.shift_block }}</td>
 								<td>{{ employee.is_active }}</td>
 								<td>
-									<router-link :to="{ name: 'EditEmployee', params: { id: employee.id } }" class="button is-info">Edit</router-link>
+									<!--<router-link :to="{ name: 'EditEmployee', params: { id: employee.id } }" class="button is-info">Edit</router-link>-->
+									<button class="button is-info" @click="toggleShowEditEmployee(employee.id)">Edit</button>
 								</td>
 							</tr>
 						</tbody>
@@ -37,18 +38,22 @@
 			</section>
 		</Modal>
 	</div>
+	<EditEmployee :empID="empID_" v-if="showEditEmployee" />
 </template>
 
 <script>
 	import axios from 'axios';
 	import Modal from '@/components/Modal.vue';
+	import EditEmployee from '@/components/layout/EditEmployee.vue'
 
 	export default {
 		name: 'ViewEmployees',
-		components: { Modal },
+		components: { Modal, EditEmployee },
 		data() {
 			return {
 				employees: [],
+				showEditEmployee: false,
+				empID_: -1,
 			};
 		},
 		mounted() {
@@ -69,6 +74,16 @@
 			},
 			toggleShowViewEmployees() {
 				this.$parent.toggleViewEmployees();
+			},
+			toggleShowEditEmployee(num) {
+				this.empID_ = num
+				this.showEditEmployee = !this.showEditEmployee;
+				console.log(num)
+				if (num == -1)
+				{
+					this.employees.splice(0) //clear
+					this.getEmployees() //reload employees with any changes
+				}
 			},
 		},
 	};

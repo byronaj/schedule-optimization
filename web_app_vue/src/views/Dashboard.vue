@@ -3,7 +3,7 @@
 <template>
   <div class="columns">
     <div class="column is-one-fifth">
-      <MiniCal />
+      <MiniCal ref="MiniCal"/>
       <DisplayConstraints />
     </div>
     <div class="column">
@@ -30,7 +30,32 @@ export default {
   name: 'Dashboard',
   methods: {
     exportCalendar() {
+      let ev = null
+      let current = null
+      if (!this.showExport) { //pull events before FullCalendar is hidden
+        ev = this.$refs.FullCalendar.getEvents()
+        current = this.$refs.FullCalendar.getDate();
+      }
+
       this.showExport = !this.showExport
+
+      if (this.showExport) {
+        setTimeout(() => { //because the FullCalendar doesn't open up fast enough
+          try {
+            this.$refs.EXC.setDate(current);
+            this.$refs.EXC.setEvents(ev); //send events to Export View
+          }
+          catch { }
+        }, 100);
+      }
+      
+      setTimeout(() => { //because the FullCalendar doesn't open up fast enough
+        try {
+          let resDate = this.$refs.MiniCal.getDate();
+          this.$refs.FullCalendar.changeDate(resDate); //can be executed only when FullCalendar is showing, so this will execute only when hiding the Export view
+        }
+        catch { }
+      }, 100);
     }
   },
   data() {
