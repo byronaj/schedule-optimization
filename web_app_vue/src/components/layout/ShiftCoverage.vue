@@ -433,6 +433,13 @@ export default {
                         duration: 2000,
                         position: 'bottom-right',
                     });
+                    this.$store.state.globalconstraints[0] = [this.weekly_cover_instance.mon_shift1, this.weekly_cover_instance.mon_shift2, this.weekly_cover_instance.mon_shift3, "Monday"]
+                    this.$store.state.globalconstraints[1] = [this.weekly_cover_instance.tue_shift1, this.weekly_cover_instance.tue_shift2, this.weekly_cover_instance.tue_shift3, "Tuesday"]
+                    this.$store.state.globalconstraints[2] = [this.weekly_cover_instance.wed_shift1, this.weekly_cover_instance.wed_shift2, this.weekly_cover_instance.wed_shift3, "Wednesday"]
+                    this.$store.state.globalconstraints[3] = [this.weekly_cover_instance.thu_shift1, this.weekly_cover_instance.thu_shift2, this.weekly_cover_instance.thu_shift3, "Thursday"]
+                    this.$store.state.globalconstraints[4] = [this.weekly_cover_instance.fri_shift1, this.weekly_cover_instance.fri_shift2, this.weekly_cover_instance.fri_shift3, "Friday"]
+                    this.$store.state.globalconstraints[5] = [this.weekly_cover_instance.sat_shift1, this.weekly_cover_instance.sat_shift2, this.weekly_cover_instance.sat_shift3, "Saturday"]
+                    this.$store.state.globalconstraints[6] = [this.weekly_cover_instance.sun_shift1, this.weekly_cover_instance.sun_shift2, this.weekly_cover_instance.sun_shift3, "Sunday"]
                     this.$parent.toggleShiftCov();
                 })
                 .catch((error) => {
