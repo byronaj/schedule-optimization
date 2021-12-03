@@ -1,6 +1,6 @@
 <template>
 	<div id="constraints">
-		<div id="c_top">Global Constraints</div>
+		<div id="c_top">Shift Coverages</div>
 		<table class="table" style="margin: 0px auto">
 			<tr>
 				<th>Day</th>
