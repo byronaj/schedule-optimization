@@ -1,6 +1,6 @@
 <template>
     <div id="editEmployee">
-        <Modal>
+        <Modal v-on:close="toggleShowEditEmployee" v-show="!showEditEmployee">
             <header class="modal-card-head">
                 <p class="modal-card-title">View Employees</p>
                 <button class="delete" aria-label="close" @click="toggleShowEditEmployee"></button>
@@ -73,32 +73,24 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="columns">
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <button class="button is-success" @click="submitForm">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                    <span>Save</span>
-                                </button>
-                            </div>
-
-                            <div class="control">
-                                <button class="button mgl-small is-outlined" @click="toggleShowEditEmployee">
-                                    <span>Cancel</span>
-                                </button>
-                            </div>
-
-                            <div class="control is-right">
-                                <button class="button is-danger is-outlined" @click="deleteForm">
-                                    <span>Delete</span>
-                                    <span class="icon"><i class="fas fa-times"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
+
+            <footer class="modal-card-foot">
+                <button class="button is-success" @click="submitForm">
+                    <span class="icon"><i class="fas fa-check"></i></span>
+                    <span>Save</span>
+                </button>
+                
+                <button class="button mgl-small is-outlined" @click="toggleShowEditEmployee">
+                    <span>Cancel</span>
+                </button>
+
+                <button class="button is-danger is-outlined" @click="deleteForm">
+                    <span>Delete</span>
+                    <span class="icon"><i class="fas fa-times"></i></span>
+                </button>
+            </footer>
         </Modal>
     </div>
 </template>
