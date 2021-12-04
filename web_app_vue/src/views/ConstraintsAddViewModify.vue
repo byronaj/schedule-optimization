@@ -1,5 +1,5 @@
 <template>
-    <!--
+
     <div class="container is-fluid">
         <nav class="breadcrumb is-small" aria-label="breadcrumbs">
             <ul>
@@ -7,17 +7,14 @@
                 <li class="is-active"><a href="#" aria-current="page">Scheduling Constraints</a></li>
             </ul>
         </nav>
-    </div>
-    -->
 
-    <div class="container is-fluid">
         <div class="columns is-multiline">
-            <div class="column is-10">
-                <p class="title">Scheduling Constraints</p>
+            <div class="column is-centered is-full">
+                <p class="title has-text-centered is-1">Scheduling Constraints</p>
             </div>
 
             <!--  Weekly Staffing Requirements  -->
-            <div class="column is-3">
+            <div class="column is-one-quarter"> <!-- "is-3" -->
                 <nav class="panel is-info">
                     <p class="panel-heading">Shift Coverage Requirements</p>
 
@@ -276,6 +273,7 @@
                     <div class="panel-block">
                         <div class="control">
                             <button class="button is-success is-outlined is-fullwidth" @click="submitShiftCov">
+                                <span class="icon"><i class="fas fa-check"></i></span>
                                 <span><strong>Save Changes</strong></span>
                             </button>
                         </div>
@@ -284,7 +282,7 @@
             </div>
 
             <!--  Penalized Shift Transitions  -->
-            <div class="column is-6">
+            <div class="column is-three-quarter"> <!-- "is-6" -->
                 <nav class="panel is-info">
                     <p class="panel-heading">Penalized Shift Transitions</p>
 
@@ -325,6 +323,7 @@
                                     <div class="control">
                                         <!--  TODO: implement button action  -->
                                         <button class="button is-success is-outlined"> <!-- @click="" -->
+                                            <span class="icon"><i class="fas fa-check"></i></span>
                                             <span>Save Changes</span>
                                         </button>
                                     </div>
@@ -334,7 +333,8 @@
                                     <div class="control">
                                         <!--  TODO: implement button action  -->
                                         <button class="button is-danger is-outlined"> <!-- @click="" -->
-                                            <span>DELETE</span>
+                                            <span>Delete</span>
+                                            <span class="icon"><i class="fas fa-times"></i></span>
                                         </button>
                                     </div>
                                 </div>
@@ -354,7 +354,7 @@
             </div>
 
             <!--  Consecutive Shift Rules  -->
-            <div class="column is-11">
+            <div class="column is-full"> <!-- "is-11" -->
                 <nav class="panel is-info">
                     <p class="panel-heading">Consecutive Shift Rules</p>
 
@@ -392,6 +392,28 @@
                                     <p class="control">
                                         <input class="input has-text-centered has-background-warning-light" style="width: 170px" type="text" v-model="sequence.min_penalty" />
                                     </p>
+
+                                    <div class="control dropdown">
+
+                                        <div class="dropdown-trigger">
+                                            <button class="button has-background-warning-light" aria-haspopup="true" @click="importanceDDClick" aria-controls="dropdown-menu3">
+                                                <span>Importance</span>
+                                                <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
+                                            </button>
+                                        </div>
+
+                                        <div class="dropdown-menu has-background-warning-light" id="dropdown-menu3" role="menu" v-if="importanceDD">
+                                            <div class="dropdown-content has-background-warning-light">
+                                                <option class="dropdown-item" value="3">Low</option>
+                                                <option class="dropdown-item" value="6">Medium</option>
+                                                <option class="dropdown-item" value="20">High</option>
+                                                <hr class="dropdown-divider">
+                                                <option class="dropdown-item" value="0">Mandatory</option>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                     <p class="label has-text-centered">Importance of keeping ABOVE Ideal Min?</p>
                                 </div>
 
@@ -420,6 +442,7 @@
                                     <div class="control">
                                         <!--  TODO: implement button action  -->
                                         <button class="button is-success is-outlined"> <!-- @click="" -->
+                                            <span class="icon"><i class="fas fa-check"></i></span>
                                             <span>Save Changes</span>
                                         </button>
                                     </div>
@@ -429,7 +452,8 @@
                                     <div class="control">
                                         <!--  TODO: implement button action  -->
                                         <button class="button is-danger is-outlined"> <!-- @click="" -->
-                                            <span>DELETE</span>
+                                            <span>Delete</span>
+                                            <span class="icon"><i class="fas fa-times"></i></span>
                                         </button>
                                     </div>
                                 </div>
@@ -449,7 +473,7 @@
             </div>
 
             <!-- Weekly Sum Constraints/Limits -->
-            <div class="column is-11">
+            <div class="column is-full"> <!-- ""is-11" -->
                 <nav class="panel is-info">
                     <p class="panel-heading">Weekly Time Off Limits</p>
 
@@ -515,6 +539,7 @@
                                     <div class="control">
                                         <!--  TODO: implement button action  -->
                                         <button class="button is-success is-outlined"> <!-- @click="" -->
+                                            <span class="icon"><i class="fas fa-check"></i></span>
                                             <span>Save Changes</span>
                                         </button>
                                     </div>
@@ -524,7 +549,8 @@
                                     <div class="control">
                                         <!--  TODO: implement button action  -->
                                         <button class="button is-danger is-outlined"> <!-- @click="" -->
-                                            <span>DELETE</span>
+                                            <span>Delete</span>
+                                            <span class="icon"><i class="fas fa-times"></i></span>
                                         </button>
                                     </div>
                                 </div>
@@ -536,12 +562,13 @@
                         <div class="control">
                             <!--  TODO: implement button action  -->
                             <button class="button is-success is-outlined is-fullwidth"> <!-- @click="" -->
-                                <span><strong>Create New Limit</strong></span>
+                                <span><strong>Create New Weekly Time Off Limit</strong></span>
                             </button>
                         </div>
                     </div>
                 </nav>
             </div>
+
         </div>
     </div>
 </template>
@@ -567,6 +594,9 @@
             this.getTransitions();
         },
         methods: {
+            importanceDDClick() {
+                this.importanceDD = !this.importanceDD
+            },
             getShiftCov() {
                 axios
                     .get(`/api/v1/coverages/1/`)
