@@ -1,57 +1,46 @@
 <template>
-
     <div class="container is-fluid">
         <div class="columns is-multiline">
-            <div class="column is-centered is-full">
-                <p class="title has-text-centered is-1">Scheduling Constraints</p>
+
+            <!--  COLUMN: Title  -->
+            <div class="column is-10 is-offset-1">
+                <p class="title has-text-centered is-1 pt-2">Scheduling Constraints</p>
             </div>
 
-            <!--  Penalized Shift Transitions  -->
+            <!--  COLUMN: Penalized Shift Transitions  -->
             <div class="column is-10 is-offset-1">
-                <nav class="panel is-info">
+                <article class="panel">
                     <p class="panel-heading">Penalized Shift Transitions</p>
 
                     <div class="panel-block">
-                        <p>
-                            Undesirable transitions from shift to another. For example, working a night shift that is directly followed by a day shift. Setting importance to zero prevents the
-                            transition from occurring at all in the schedule.
-                        </p>
+                        <p>Undesirable transitions from shift to another. For example, working a night shift that is directly followed by a day shift. Setting importance to zero prevents the transition from occurring at all in the schedule.</p>
                     </div>
 
-                    <div class="panel-block" v-for="tc in transition_constraints" v-bind:key="tc.id">
+                    <div class="panel-block" v-for="tc in transition_constraints" v-bind:key="tc.id"> <!-- class=" field" -->
                         <div class="field is-grouped">
-                            <div class="field-label is-normal">Transition #{{ tc.id }}</div>
+
+                            <div class="field-label">Transition #{{ tc.id }}</div> <!-- class=" is-normal" -->
 
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input has-text-centered" style="width: 100px" type="text" v-model="tc.previous_shift" />
+                                        <input class="input has-text-centered" type="text" v-model="tc.previous_shift" /> <!-- style="width: 100px" -->
                                     </p>
-                                    <p class="label has-text-centered">From Shift...</p>
+                                    <label class="label has-text-centered">From Shift...</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input has-text-centered" style="width: 100px" type="text" v-model="tc.next_shift" />
+                                        <input class="input has-text-centered" type="text" v-model="tc.next_shift" /> <!-- style="width: 100px" -->
                                     </p>
-                                    <p class="label has-text-centered">...To Shift</p>
+                                    <label class="label has-text-centered">...To Shift</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input has-text-centered has-background-warning-light" style="width: 100px" type="text" v-model="tc.penalty" />
+                                        <input class="input has-text-centered has-background-warning-light" type="text" v-model="tc.penalty" /> <!-- style="width: 100px" -->
                                     </p>
-                                    <p class="label has-text-centered">Importance</p>
-                                </div>
-
-                                <div class="field">
-                                    <div class="control">
-                                        <!--  TODO: implement button action  -->
-                                        <button class="button is-success is-outlined"> <!-- @click="" -->
-                                            <span class="icon"><i class="fas fa-check"></i></span>
-                                            <span>Save Changes</span>
-                                        </button>
-                                    </div>
+                                    <label class="label has-text-centered">Importance</label>
                                 </div>
 
                                 <div class="field">
@@ -63,39 +52,37 @@
                                         </button>
                                     </div>
                                 </div>
+
+
                             </div>
+
                         </div>
+
                     </div>
 
                     <div class="panel-block">
-                        <div class="control">
+                        <div class="control buttons">
                             <!--  TODO: implement button action  -->
-                            <button class="button is-success is-outlined is-fullwidth"> <!-- @click="" -->
+                            <button class="button is-primary is-light is-fullwidth"> <!-- @click="" -->
+                                <span class="icon"><i class="fas fa-plus"></i></span>
                                 <span><strong>Create New Penalized Transition</strong></span>
                             </button>
-                        </div>
-                    </div>
-					<div class="panel-block">
-                        <div class="control">
-                            <button class="button is-link is-outlined is-fullwidth" @click="">
+                            <button class="button is-link is-fullwidth"> <!-- @click="" -->
+                                <span class="icon"><i class="fas fa-undo"></i></span>
                                 <span><strong>Undo Changes</strong></span>
                             </button>
-                        </div>
-                    </div>
-                    <div class="panel-block">
-                        <div class="control">
-                            <button class="button is-success is-outlined is-fullwidth" @click="">
+                            <button class="button is-success is-fullwidth"> <!-- @click="" -->
                                 <span class="icon"><i class="fas fa-check"></i></span>
                                 <span><strong>Save Changes</strong></span>
                             </button>
                         </div>
                     </div>
-                </nav>
+                </article>
             </div>
 
-            <!--  Consecutive Shift Rules  -->
+            <!--  COLUMN: Consecutive Shift Rules  -->
             <div class="column is-10 is-offset-1">
-                <nav class="panel is-info">
+                <article class="panel">
                     <p class="panel-heading">Consecutive Shift Rules</p>
 
                     <div class="panel-block">
@@ -111,21 +98,21 @@
                                     <p class="control">
                                         <input class="input has-text-centered" style="width: 70px" type="text" v-model="sequence.shift_id" />
                                     </p>
-                                    <p class="label has-text-centered">Shift</p>
+                                    <label class="label has-text-centered">Shift</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
                                         <input class="input has-text-centered has-text-danger-dark has-background-danger-light" style="width: 130px" type="text" v-model="sequence.hard_min" />
                                     </p>
-                                    <p class="label has-text-centered">At Least</p>
+                                    <label class="label has-text-centered">At Least</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
                                         <input class="input has-text-centered has-text-link-dark has-background-link-light" style="width: 130px" type="text" v-model="sequence.soft_min" />
                                     </p>
-                                    <p class="label has-text-centered">Ideal Minimum</p>
+                                    <label class="label has-text-centered">Ideal Minimum</label>
                                 </div>
 
                                 <div class="field">
@@ -133,50 +120,39 @@
                                         <input class="input has-text-centered has-background-warning-light" style="width: 170px" type="text" v-model="sequence.min_penalty" />
                                     </p>
 
-                                    <!-- <div class="control dropdown"> -->
+                                    <!-- <div class="control">
+                                        <div class="select is-normal has-background-warning-light">
+                                            <select class="has-text-centered has-background-warning-light">
+                                                    <option class="has-text-info" value="3">Low (3)</option>
+                                                    <option class="has-text-info" value="6">Medium (6)</option>
+                                                    <option class="has-text-info" value="20">High (20)</option>
+                                                    <option class="has-text-danger" value="0">Mandatory (0)</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
 
-                                        <!-- <div class="dropdown-trigger">
-                                            <button class="button has-background-warning-light" @click="importanceDDClick">
-                                                <span>Importance</span>
-                                                <span class="icon is-small"><i class="fas fa-angle-down"></i></span>
-                                            </button>
-                                        </div> -->
-
-                                        <!-- <div class="dropdown-menu has-background-warning-light" role="menu" v-if="importanceDD"> -->
-										<select class="has-background-warning-light">
-                                            <div class="dropdown-content has-background-warning-light">
-                                                <option class="dropdown-item" value="3">Low</option>
-                                                <option class="dropdown-item" value="6">Medium</option>
-                                                <option class="dropdown-item" value="20">High</option>
-                                                <option class="dropdown-item" value="0">Mandatory</option>
-                                            </div>
-										</select>
-                                        <!-- </div> -->
-
-                                    <!-- </div> -->
-
-                                    <p class="label has-text-centered">Importance of keeping ABOVE Ideal Min?</p>
+                                    <label class="label has-text-centered">Importance of keeping ABOVE Ideal Min?</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
                                         <input class="input has-text-centered has-background-warning-light" style="width: 170px" type="text" v-model="sequence.max_penalty" />
                                     </p>
-                                    <p class="label has-text-centered">Importance of keeping BELOW Ideal Max?</p>
+                                    <label class="label has-text-centered">Importance of keeping BELOW Ideal Max?</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
                                         <input class="input has-text-centered has-text-link-dark has-background-link-light" style="width: 130px" type="text" v-model="sequence.soft_max" />
                                     </p>
-                                    <p class="label has-text-centered">Ideal Maximum</p>
+                                    <label class="label has-text-centered">Ideal Maximum</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
                                         <input class="input has-text-centered has-text-danger-dark has-background-danger-light" style="width: 130px" type="text" v-model="sequence.hard_max" />
                                     </p>
-                                    <p class="label has-text-centered">At Most</p>
+                                    <label class="label has-text-centered">At Most</label>
                                 </div>
 
                                 <div class="field">
@@ -193,35 +169,29 @@
                     </div>
 
                     <div class="panel-block">
-                        <div class="control">
+                        <div class="control buttons">
                             <!--  TODO: implement button action  -->
-                            <button class="button is-success is-outlined is-fullwidth"> <!-- @click="" -->
+                            <button class="button is-primary is-light is-fullwidth"> <!-- @click="" -->
+                                <span class="icon"><i class="fas fa-plus"></i></span>
                                 <span><strong>Create New Consecutive Shift Rule</strong></span>
                             </button>
-                        </div>
-                    </div>
-					<div class="panel-block">
-                        <div class="control">
-                            <button class="button is-link is-outlined is-fullwidth" @click="">
+                            <button class="button is-link is-fullwidth"> <!-- @click="" -->
+                                <span class="icon"><i class="fas fa-undo"></i></span>
                                 <span><strong>Undo Changes</strong></span>
                             </button>
-                        </div>
-                    </div>
-                    <div class="panel-block">
-                        <div class="control">
-                            <button class="button is-success is-outlined is-fullwidth" @click="">
+                            <button class="button is-success is-fullwidth"> <!-- @click="" -->
                                 <span class="icon"><i class="fas fa-check"></i></span>
                                 <span><strong>Save Changes</strong></span>
                             </button>
                         </div>
                     </div>
-                </nav>
+                </article>
             </div>
 
-            <!-- Weekly Sum Constraints/Limits -->
+            <!--  COLUMN: Weekly Sum Constraints  -->
             <div class="column is-10 is-offset-1">
-                <nav class="panel is-info">
-                    <p class="panel-heading">Weekly Sum Limits</p>
+                <article class="panel">
+                    <p class="panel-heading">Limits On Number Of Times A Shift Should Be Assigned Each Week</p>
 
                     <div class="panel-block">
                         <p>Limits on the number of shifts of one type per week. For example, at least one day off per week and at most three days off, but ideally two days off.</p>
@@ -234,51 +204,51 @@
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input has-text-centered" style="width: 70px" type="text" v-model="sc.shift_id" />
+                                        <input class="input has-text-centered" style="width: 70px" type="text" v-model="sc.shift_id" /> <!-- style="width: 70px" -->
                                     </p>
-                                    <p class="label has-text-centered">Shift</p>
+                                    <label class="label has-text-centered">Shift</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input has-text-centered has-text-danger-dark has-background-danger-light" style="width: 130px" type="text" v-model="sc.hard_min" />
+                                        <input class="input has-text-centered has-text-danger-dark has-background-danger-light" style="width: 130px" type="text" v-model="sc.hard_min" /> <!-- style="width: 130px" -->
                                     </p>
-                                    <p class="label has-text-centered">At Least</p>
+                                    <label class="label has-text-centered">At Least</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input has-text-centered has-text-link-dark has-background-link-light" style="width: 130px" type="text" v-model="sc.soft_min" />
+                                        <input class="input has-text-centered has-text-link-dark has-background-link-light" style="width: 130px" type="text" v-model="sc.soft_min" /> <!-- style="width: 130px" -->
                                     </p>
-                                    <p class="label has-text-centered">Ideal Minimum</p>
+                                    <label class="label has-text-centered">Ideal Minimum</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input has-text-centered has-background-warning-light" style="width: 170px" type="text" v-model="sc.min_penalty" />
+                                        <input class="input has-text-centered has-background-warning-light" style="width: 170px" type="text" v-model="sc.min_penalty" /> <!-- style="width: 170px" -->
                                     </p>
-                                    <p class="label has-text-centered">Importance of keeping ABOVE Ideal Min?</p>
+                                    <label class="label has-text-centered">Importance of keeping ABOVE Ideal Min?</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input has-text-centered has-background-warning-light" style="width: 170px" type="text" v-model="sc.max_penalty" />
+                                        <input class="input has-text-centered has-background-warning-light" style="width: 170px" type="text" v-model="sc.max_penalty" /> <!-- style="width: 170px" -->
                                     </p>
-                                    <p class="label has-text-centered">Importance of keeping BELOW Ideal Max?</p>
+                                    <label class="label has-text-centered">Importance of keeping BELOW Ideal Max?</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input has-text-centered has-text-link-dark has-background-link-light" style="width: 130px" type="text" v-model="sc.soft_max" />
+                                        <input class="input has-text-centered has-text-link-dark has-background-link-light" style="width: 130px" type="text" v-model="sc.soft_max" /> <!-- style="width: 130px" -->
                                     </p>
-                                    <p class="label has-text-centered">Ideal Maximum</p>
+                                    <label class="label has-text-centered">Ideal Maximum</label>
                                 </div>
 
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input has-text-centered has-text-danger-dark has-background-danger-light" style="width: 130px" type="text" v-model="sc.hard_max" />
+                                        <input class="input has-text-centered has-text-danger-dark has-background-danger-light" style="width: 130px" type="text" v-model="sc.hard_max" /> <!-- style="width: 130px" -->
                                     </p>
-                                    <p class="label has-text-centered">At Most</p>
+                                    <label class="label has-text-centered">At Most</label>
                                 </div>
 
                                 <div class="field">
@@ -295,29 +265,23 @@
                     </div>
 
                     <div class="panel-block">
-                        <div class="control">
+                        <div class="control buttons">
                             <!--  TODO: implement button action  -->
-                            <button class="button is-success is-outlined is-fullwidth"> <!-- @click="" -->
-                                <span><strong>Create New Weekly Sum Limit</strong></span>
+                            <button class="button is-primary is-light is-fullwidth"> <!-- @click="" -->
+                                <span class="icon"><i class="fas fa-plus"></i></span>
+                                <span><strong>Create New Weekly Sum Constraint</strong></span>
                             </button>
-                        </div>
-                    </div>
-					<div class="panel-block">
-                        <div class="control">
-                            <button class="button is-link is-outlined is-fullwidth" @click="">
+                            <button class="button is-info is-fullwidth"> <!-- @click="" -->
+                                <span class="icon"><i class="fas fa-undo"></i></span>
                                 <span><strong>Undo Changes</strong></span>
                             </button>
-                        </div>
-                    </div>
-                    <div class="panel-block">
-                        <div class="control">
-                            <button class="button is-success is-outlined is-fullwidth" @click="">
+                            <button class="button is-success is-fullwidth"> <!-- @click="" -->
                                 <span class="icon"><i class="fas fa-check"></i></span>
                                 <span><strong>Save Changes</strong></span>
                             </button>
                         </div>
                     </div>
-                </nav>
+                </article>
             </div>
 
         </div>
@@ -345,9 +309,6 @@
             this.getTransitions();
         },
         methods: {
-            importanceDDClick() {
-                this.importanceDD = !this.importanceDD
-            },
             getShiftCov() {
                 axios
                     .get(`/api/v1/coverages/1/`)
@@ -371,6 +332,18 @@
                             position: 'bottom-right',
                         });
                         this.$router.push('/constraints-avm');
+                    })
+                    .catch((error) => {
+                        console.log(JSON.stringify(error));
+                    });
+            },
+            getTransitions() {
+                axios
+                    .get(`/api/v1/transitions`)
+                    .then((response) => {
+                        for (let i = 0; i < response.data.length; i++) {
+                            this.transition_constraints.push(response.data[i]);
+                        }
                     })
                     .catch((error) => {
                         console.log(JSON.stringify(error));
@@ -400,18 +373,15 @@
                         console.log(JSON.stringify(error));
                     });
             },
-            getTransitions() {
-                axios
-                    .get(`/api/v1/transitions`)
-                    .then((response) => {
-                        for (let i = 0; i < response.data.length; i++) {
-                            this.transition_constraints.push(response.data[i]);
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(JSON.stringify(error));
-                    });
-            },
+            // deletePenalizedShiftTransition() {
+            // 	const NAME = this.NAME;
+            // },
+            // deleteConsecutiveShiftRule() {
+			// 	const NAME = this.NAME;
+            // },
+            // deleteWeeklySumConstraint() {
+            // 	const NAME = this.NAME;
+            // },
         },
     };
 </script>
