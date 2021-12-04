@@ -11,7 +11,6 @@ result = [[0] * weeks * 7 for _ in range(workers)]
 
 
 def set_stats(result):
-    print('in set stats')
     # set streak to one for all days
     for i in range(workers):
         stats[i][1] = 1
@@ -63,11 +62,6 @@ def set_stats(result):
                         stats[i][7] = streak
                 else:
                     streak = 1
-    for x in range(workers):
-        print()
-        for y in range(num_shifts * 2):
-            print(stats[x][y], end='')
-    print()
 
 
 class test_solver(unittest.TestCase):
@@ -106,7 +100,6 @@ class test_solver(unittest.TestCase):
         for i in range(len(resultu)):
             for key in (resultu[i]):
                 if key == 'shift_assignments':
-                    print(str(resultu[i][key]))
                     # this gets a list of all info for each employee
                     info = str(resultu[i][key])
                     # this is regex that finds the number after the word assignment to get shift info
@@ -115,59 +108,88 @@ class test_solver(unittest.TestCase):
                     for x in range(len(num)):
                         result[i][x] = num[x]
 
-        print(result)
         set_stats(result)
 
     def test_shift_constraint(self):
         for i in range(workers):
-            # switch to assert
             # shift 0
-            self.assertTrue(0 < stats[i][1] < 3)
+            # check if off day falls between 1 and 2 days in a row for each employee
+            self.assertTrue(0 < stats[i][1] < 3,
+                            msg='worker {0} has {1} days off in a row which is not between 1 and 2'.format(i,
+                                                                                                           stats[i][1]))
 
             # shift 3
-            self.assertTrue(0 <= stats[i][7] < 5)
+            # check if night shift falls between 0 and 4 days in a row for each employee
+            self.assertTrue(0 <= stats[i][7] < 5,
+                            msg='worker {0} has {1} days off in a row which is not between 0 and 4'.format(i,
+                                                                                                           stats[i][1]))
 
     def test_week_constraint(self):
         for i in range(weeks * 7):
-            # switch to assert
             # shift 0
-            self.assertTrue(0 < stats[i][0] < 4)
+            # check that each employee has between one and 3 days off each week
+            self.assertTrue(0 < stats[i][0] < 4,
+                            msg='worker {0} has {1} days off which is not between 1 and 4'.format(i, stats[i][0]))
 
             # shift 3
-            self.assertTrue(0 <= stats[i][6] < 5)
+            # check that each employee has less than 5 night shifts a week
+            self.assertTrue(0 <= stats[i][6] < 5,
+                            msg='worker {0} has {1} days off which is not less than 5'.format(i, stats[i][0]))
 
     def test_cover_constraints(self):
         for i in range(weeks * 7):
             for j in range(num_shifts):
+                # repetitive code just make sure each day's coverage matches requirements or more
                 # 'monday coverage tests'
-                self.assertTrue(sCount[0][1] >= 2)
-                self.assertTrue(sCount[0][2] >= 3)
-                self.assertTrue(sCount[0][3] >= 1)
+                self.assertTrue(sCount[0][1] >= 2,
+                                msg='Monday shift 1 coverage is {0} which is not > 1'.format(sCount[0][1]))
+                self.assertTrue(sCount[0][2] >= 3,
+                                msg='Monday shift 2 coverage is {0} which is not > 2'.format(sCount[0][2]))
+                self.assertTrue(sCount[0][3] >= 1,
+                                msg='Monday shift 3 coverage is {0} which is not > 0'.format(sCount[0][3]))
                 # 'tuesday coverage tests'
-                self.assertTrue(sCount[1][1] >= 2)
-                self.assertTrue(sCount[1][2] >= 3)
-                self.assertTrue(sCount[1][3] >= 1)
+                self.assertTrue(sCount[1][1] >= 2,
+                                msg='Tuesday shift 1 coverage is {0} which is not > 1'.format(sCount[1][1]))
+                self.assertTrue(sCount[1][2] >= 3,
+                                msg='Tuesday shift 2 coverage is {0} which is not > 2'.format(sCount[1][2]))
+                self.assertTrue(sCount[1][3] >= 1,
+                                msg='Tuesday shift 3 coverage is {0} which is not > 0'.format(sCount[1][3]))
                 # 'wednesday coverage tests'
-                self.assertTrue(sCount[2][1] >= 2)
-                self.assertTrue(sCount[2][2] >= 2)
-                self.assertTrue(sCount[2][3] >= 2)
+                self.assertTrue(sCount[2][1] >= 2,
+                                msg='Wednesday shift 1 coverage is {0} which is not > 1'.format(sCount[2][1]))
+                self.assertTrue(sCount[2][2] >= 2,
+                                msg='Wednesday shift 2 coverage is {0} which is not > 1'.format(sCount[2][2]))
+                self.assertTrue(sCount[2][3] >= 2,
+                                msg='Wednesday shift 3 coverage is {0} which is not > 1'.format(sCount[2][3]))
                 # 'thursday coverage tests'
-                self.assertTrue(sCount[3][1] >= 2)
-                self.assertTrue(sCount[3][2] >= 3)
-                self.assertTrue(sCount[3][3] >= 1)
+                self.assertTrue(sCount[3][1] >= 2,
+                                msg='Thursday shift 1 coverage is {0} which is not > 1'.format(sCount[3][1]))
+                self.assertTrue(sCount[3][2] >= 3,
+                                msg='Thursday shift 2 coverage is {0} which is not > 2'.format(sCount[3][2]))
+                self.assertTrue(sCount[3][3] >= 1,
+                                msg='Thursday shift 3 coverage is {0} which is not > 0'.format(sCount[3][3]))
                 # 'friday coverage tests'
-                self.assertTrue(sCount[4][1] >= 2)
-                self.assertTrue(sCount[4][2] >= 2)
-                self.assertTrue(sCount[4][3] >= 2)
+                self.assertTrue(sCount[4][1] >= 2,
+                                msg='Friday shift 1 coverage is {0} which is not > 1'.format(sCount[4][1]))
+                self.assertTrue(sCount[4][2] >= 2,
+                                msg='Friday shift 2 coverage is {0} which is not > 1'.format(sCount[4][2]))
+                self.assertTrue(sCount[4][3] >= 2,
+                                msg='Friday shift 3 coverage is {0} which is not > 1'.format(sCount[4][3]))
                 # 'saturday coverage tests'
-                self.assertTrue(sCount[5][1] >= 1)
-                self.assertTrue(sCount[5][2] >= 2)
-                self.assertTrue(sCount[5][3] >= 3)
+                self.assertTrue(sCount[5][1] >= 1,
+                                msg='Saturday shift 1 coverage is {0} which is not > 0'.format(sCount[5][1]))
+                self.assertTrue(sCount[5][2] >= 2,
+                                msg='Saturday shift 2 coverage is {0} which is not > 1'.format(sCount[5][2]))
+                self.assertTrue(sCount[5][3] >= 3,
+                                msg='Saturday shift 3 coverage is {0} which is not > 2'.format(sCount[5][3]))
                 # 'sunday coverage tests'
-                self.assertTrue(sCount[6][1] >= 1)
-                self.assertTrue(sCount[6][2] >= 3)
-                self.assertTrue(sCount[6][3] >= 1)
+                self.assertTrue(sCount[6][1] >= 1,
+                                msg='Sunday shift 1 coverage is {0} which is not > 0'.format(sCount[6][1]))
+                self.assertTrue(sCount[6][2] >= 3,
+                                msg='Sunday shift 2 coverage is {0} which is not > 2'.format(sCount[6][2]))
+                self.assertTrue(sCount[6][3] >= 1,
+                                msg='Sunday shift 3 coverage is {0} which is not > 0'.format(sCount[6][3]))
 
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)
