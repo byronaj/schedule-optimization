@@ -73,14 +73,12 @@ export default {
 				try {
 				this.weekly_cover_instance = response.data
 				this.$store.state.globalconstraints[0] = [response.data.mon_shift1, response.data.mon_shift2, response.data.mon_shift3, "Monday"]
-				console.log(response.data)
 				this.$store.state.globalconstraints[1] = [response.data.tue_shift1, response.data.tue_shift2, response.data.tue_shift3, "Tuesday"]
 				this.$store.state.globalconstraints[2] = [response.data.wed_shift1, response.data.wed_shift2, response.data.wed_shift3, "Wednesday"]
 				this.$store.state.globalconstraints[3] = [response.data.thu_shift1, response.data.thu_shift2, response.data.thu_shift3, "Thursday"]
 				this.$store.state.globalconstraints[4] = [response.data.fri_shift1, response.data.fri_shift2, response.data.fri_shift3, "Friday"]
 				this.$store.state.globalconstraints[5] = [response.data.sat_shift1, response.data.sat_shift2, response.data.sat_shift3, "Saturday"]
 				this.$store.state.globalconstraints[6] = [response.data.sun_shift1, response.data.sun_shift2, response.data.sun_shift3, "Sunday"]
-				console.log(this.$store.state.globalconstraints)
 				}
 				catch (ex) { console.log(ex) }
 

@@ -23,7 +23,11 @@
 				primaryColor: '#511b1b',
 				dateChanged: this.dateChanged,
 			});
-			this.jump(new Date(new Date().setDate(new Date().getDate() + 7)))
+			var d = new Date();
+			d.setDate(d.getDate() + (((1 + 7 - d.getDay()) % 7) || 7));
+			//console.log(d)
+			//this.jump(new Date(new Date().setDate(new Date().getDate() + 7)))
+			this.jump(d)
 		},
 		methods: {
 			dateChanged(date) {
