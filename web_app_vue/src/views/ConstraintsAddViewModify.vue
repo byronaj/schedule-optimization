@@ -7,7 +7,7 @@
             </div>
 
             <!--  Penalized Shift Transitions  -->
-            <div class="column is-full"> <!-- "is-6" -->
+            <div class="column is-10 is-offset-1">
                 <nav class="panel is-info">
                     <p class="panel-heading">Penalized Shift Transitions</p>
 
@@ -75,11 +75,26 @@
                             </button>
                         </div>
                     </div>
+					<div class="panel-block">
+                        <div class="control">
+                            <button class="button is-link is-outlined is-fullwidth" @click="">
+                                <span><strong>Undo Changes</strong></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-block">
+                        <div class="control">
+                            <button class="button is-success is-outlined is-fullwidth" @click="">
+                                <span class="icon"><i class="fas fa-check"></i></span>
+                                <span><strong>Save Changes</strong></span>
+                            </button>
+                        </div>
+                    </div>
                 </nav>
             </div>
 
             <!--  Consecutive Shift Rules  -->
-            <div class="column is-full"> <!-- "is-11" -->
+            <div class="column is-10 is-offset-1">
                 <nav class="panel is-info">
                     <p class="panel-heading">Consecutive Shift Rules</p>
 
@@ -167,16 +182,6 @@
                                 <div class="field">
                                     <div class="control">
                                         <!--  TODO: implement button action  -->
-                                        <button class="button is-success is-outlined"> <!-- @click="" -->
-                                            <span class="icon"><i class="fas fa-check"></i></span>
-                                            <span>Save Changes</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <div class="control">
-                                        <!--  TODO: implement button action  -->
                                         <button class="button is-danger is-outlined"> <!-- @click="" -->
                                             <span>Delete</span>
                                             <span class="icon"><i class="fas fa-times"></i></span>
@@ -195,11 +200,26 @@
                             </button>
                         </div>
                     </div>
+					<div class="panel-block">
+                        <div class="control">
+                            <button class="button is-link is-outlined is-fullwidth" @click="">
+                                <span><strong>Undo Changes</strong></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-block">
+                        <div class="control">
+                            <button class="button is-success is-outlined is-fullwidth" @click="">
+                                <span class="icon"><i class="fas fa-check"></i></span>
+                                <span><strong>Save Changes</strong></span>
+                            </button>
+                        </div>
+                    </div>
                 </nav>
             </div>
 
             <!-- Weekly Sum Constraints/Limits -->
-            <div class="column is-full"> <!-- ""is-11" -->
+            <div class="column is-10 is-offset-1">
                 <nav class="panel is-info">
                     <p class="panel-heading">Weekly Sum Limits</p>
 
@@ -264,16 +284,6 @@
                                 <div class="field">
                                     <div class="control">
                                         <!--  TODO: implement button action  -->
-                                        <button class="button is-success is-outlined"> <!-- @click="" -->
-                                            <span class="icon"><i class="fas fa-check"></i></span>
-                                            <span>Save Changes</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <div class="control">
-                                        <!--  TODO: implement button action  -->
                                         <button class="button is-danger is-outlined"> <!-- @click="" -->
                                             <span>Delete</span>
                                             <span class="icon"><i class="fas fa-times"></i></span>
@@ -289,6 +299,21 @@
                             <!--  TODO: implement button action  -->
                             <button class="button is-success is-outlined is-fullwidth"> <!-- @click="" -->
                                 <span><strong>Create New Weekly Sum Limit</strong></span>
+                            </button>
+                        </div>
+                    </div>
+					<div class="panel-block">
+                        <div class="control">
+                            <button class="button is-link is-outlined is-fullwidth" @click="">
+                                <span><strong>Undo Changes</strong></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-block">
+                        <div class="control">
+                            <button class="button is-success is-outlined is-fullwidth" @click="">
+                                <span class="icon"><i class="fas fa-check"></i></span>
+                                <span><strong>Save Changes</strong></span>
                             </button>
                         </div>
                     </div>
