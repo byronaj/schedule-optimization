@@ -48,7 +48,7 @@
                                 <a class="navbar-link">Constraint Maintenance</a>
                                 <div class="navbar-dropdown has-background-light">
                                     <a class="navbar-item has-text-primary-dark" @click="toggleShiftCov">Shift Coverage</a>
-                                    <a class="navbar-item has-text-info-dark" @click="">Shift Transitions</a>
+                                    <!--<a class="navbar-item has-text-info-dark" @click="">Shift Transitions</a>-->
                                 </div>
                             </div>
 
@@ -56,11 +56,10 @@
                                 <ShiftCoverage />
                             </div>
 
-                            <!-- edit global constraints -->
-                            <a class="navbar-item" @click="toggleEditConstraints">Edit Constraints</a>
+                            <!--<a class="navbar-item" @click="toggleEditConstraints">Edit Constraints</a>
                             <div v-if="showEditConstraints">
                                 <EditConstraints />
-                            </div>
+                            </div>-->
                         </template>
                     </div>
 
