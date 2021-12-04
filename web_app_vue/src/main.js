@@ -13,8 +13,15 @@ import { dom } from '../node_modules/@fortawesome/fontawesome-svg-core'
 dom.watch()
 
 import { library } from '../node_modules/@fortawesome/fontawesome-svg-core'
-import { faUserSecret } from '../node_modules/@fortawesome/free-solid-svg-icons'
+import { fas } from '../node_modules/@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '../node_modules/@fortawesome/vue-fontawesome'
 
-library.add(faUserSecret)
+library.add(fas)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.config.productionTip = false
+
+new Vue({
+	el: '#app',
+	components: { App },
+	template: '<App/>'
+})

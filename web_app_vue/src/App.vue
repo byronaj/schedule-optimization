@@ -4,7 +4,6 @@
 
 		<router-view />
 
-		<font-awesome-icon icon="user-secret" />
 	</div>
 </template>
 
