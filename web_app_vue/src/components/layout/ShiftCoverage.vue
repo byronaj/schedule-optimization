@@ -382,9 +382,17 @@
         </section>
 
         <footer class="modal-card-foot">
-            <button class="button is-success" @click="submitShiftCov">save</button>
-            <button class="button is-warning" @click="getShiftCov">clear changes</button>
-            <button class="button is-danger" aria-label="close" @click="toggleShowModal">cancel</button>
+            <button class="button is-success" @click="submitShiftCov">
+                <span class="icon"><i class="fas fa-check"></i></span>
+                <span>Save</span>
+            </button>
+            <button class="button is-info" @click="getShiftCov">
+                <span>Undo Changes</span>
+            </button>
+            <button class="button is-danger is-outlined" aria-label="close" @click="toggleShowModal">
+                <span>Cancel</span>
+                <span class="icon"><i class="fas fa-times"></i></span>
+            </button>
         </footer>
 
     </Modal>
