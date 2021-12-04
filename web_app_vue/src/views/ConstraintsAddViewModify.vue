@@ -1,13 +1,6 @@
 <template>
 
     <div class="container is-fluid">
-        <nav class="breadcrumb is-small" aria-label="breadcrumbs">
-            <ul>
-                <li><a href="/">Dashboard</a></li>
-                <li class="is-active"><a href="#" aria-current="page">Scheduling Constraints</a></li>
-            </ul>
-        </nav>
-
         <div class="columns is-multiline">
             <div class="column is-centered is-full">
                 <p class="title has-text-centered is-1">Scheduling Constraints</p>
@@ -396,13 +389,13 @@
                                     <div class="control dropdown">
 
                                         <div class="dropdown-trigger">
-                                            <button class="button has-background-warning-light" aria-haspopup="true" @click="importanceDDClick" aria-controls="dropdown-menu3">
+                                            <button class="button has-background-warning-light" @click="importanceDDClick">
                                                 <span>Importance</span>
-                                                <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
+                                                <span class="icon is-small"><i class="fas fa-angle-down"></i></span>
                                             </button>
                                         </div>
 
-                                        <div class="dropdown-menu has-background-warning-light" id="dropdown-menu3" role="menu" v-if="importanceDD">
+                                        <div class="dropdown-menu has-background-warning-light" role="menu" v-if="importanceDD">
                                             <div class="dropdown-content has-background-warning-light">
                                                 <option class="dropdown-item" value="3">Low</option>
                                                 <option class="dropdown-item" value="6">Medium</option>
