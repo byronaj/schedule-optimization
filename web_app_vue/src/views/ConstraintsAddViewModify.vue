@@ -386,26 +386,27 @@
                                         <input class="input has-text-centered has-background-warning-light" style="width: 170px" type="text" v-model="sequence.min_penalty" />
                                     </p>
 
-                                    <div class="control dropdown">
+                                    <!-- <div class="control dropdown"> -->
 
-                                        <div class="dropdown-trigger">
+                                        <!-- <div class="dropdown-trigger">
                                             <button class="button has-background-warning-light" @click="importanceDDClick">
                                                 <span>Importance</span>
                                                 <span class="icon is-small"><i class="fas fa-angle-down"></i></span>
                                             </button>
-                                        </div>
+                                        </div> -->
 
-                                        <div class="dropdown-menu has-background-warning-light" role="menu" v-if="importanceDD">
+                                        <!-- <div class="dropdown-menu has-background-warning-light" role="menu" v-if="importanceDD"> -->
+										<select class="has-background-warning-light">
                                             <div class="dropdown-content has-background-warning-light">
                                                 <option class="dropdown-item" value="3">Low</option>
                                                 <option class="dropdown-item" value="6">Medium</option>
                                                 <option class="dropdown-item" value="20">High</option>
-                                                <hr class="dropdown-divider">
                                                 <option class="dropdown-item" value="0">Mandatory</option>
                                             </div>
-                                        </div>
+										</select>
+                                        <!-- </div> -->
 
-                                    </div>
+                                    <!-- </div> -->
 
                                     <p class="label has-text-centered">Importance of keeping ABOVE Ideal Min?</p>
                                 </div>
