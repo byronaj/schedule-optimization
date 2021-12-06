@@ -7,251 +7,251 @@
 
         <section class="modal-card-body" style="color: black">
             <nav class="panel is-info">
-                    <div class="panel-block">
-                        <div class="columns">
-                            <div class="column">
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label" style="width: 40px">Mon:</label>
+                <div class="panel-block">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-label is-normal">
+                                    <label class="label" style="width: 40px">Mon:</label>
+                                </div>
+
+                                <div class="field-body">
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.mon_shift1" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Day Shift</p>
                                     </div>
 
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.mon_shift1" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Day Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.mon_shift2" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Second Shift</p>
+                                    </div>
 
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.mon_shift2" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Second Shift</p>
-                                        </div>
-
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.mon_shift3" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Night Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.mon_shift3" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Night Shift</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="panel-block">
-                        <div class="columns">
-                            <div class="column">
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label" style="width: 40px">Tue:</label>
+                <div class="panel-block">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-label is-normal">
+                                    <label class="label" style="width: 40px">Tue:</label>
+                                </div>
+
+                                <div class="field-body">
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.tue_shift1" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Day Shift</p>
                                     </div>
 
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.tue_shift1" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Day Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.tue_shift2" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Second Shift</p>
+                                    </div>
 
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.tue_shift2" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Second Shift</p>
-                                        </div>
-
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.tue_shift3" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Night Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.tue_shift3" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Night Shift</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="panel-block">
-                        <div class="columns">
-                            <div class="column">
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label" style="width: 40px">Wed:</label>
+                <div class="panel-block">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-label is-normal">
+                                    <label class="label" style="width: 40px">Wed:</label>
+                                </div>
+
+                                <div class="field-body">
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.wed_shift1" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Day Shift</p>
                                     </div>
 
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.wed_shift1" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Day Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.wed_shift2" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Second Shift</p>
+                                    </div>
 
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.wed_shift2" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Second Shift</p>
-                                        </div>
-
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.wed_shift3" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Night Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.wed_shift3" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Night Shift</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="panel-block">
-                        <div class="columns">
-                            <div class="column">
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label" style="width: 40px">Thu:</label>
+                <div class="panel-block">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-label is-normal">
+                                    <label class="label" style="width: 40px">Thu:</label>
+                                </div>
+
+                                <div class="field-body">
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.thu_shift1" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Day Shift</p>
                                     </div>
 
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.thu_shift1" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Day Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.thu_shift2" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Second Shift</p>
+                                    </div>
 
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.thu_shift2" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Second Shift</p>
-                                        </div>
-
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.thu_shift3" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Night Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.thu_shift3" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Night Shift</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="panel-block">
-                        <div class="columns">
-                            <div class="column">
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label" style="width: 40px">Fri:</label>
+                <div class="panel-block">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-label is-normal">
+                                    <label class="label" style="width: 40px">Fri:</label>
+                                </div>
+
+                                <div class="field-body">
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.fri_shift1" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Day Shift</p>
                                     </div>
 
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.fri_shift1" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Day Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.fri_shift2" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Second Shift</p>
+                                    </div>
 
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.fri_shift2" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Second Shift</p>
-                                        </div>
-
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.fri_shift3" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Night Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.fri_shift3" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Night Shift</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="panel-block">
-                        <div class="columns">
-                            <div class="column">
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label" style="width: 40px">Sat:</label>
+                <div class="panel-block">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-label is-normal">
+                                    <label class="label" style="width: 40px">Sat:</label>
+                                </div>
+
+                                <div class="field-body">
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sat_shift1" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Day Shift</p>
                                     </div>
 
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sat_shift1" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Day Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sat_shift2" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Second Shift</p>
+                                    </div>
 
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sat_shift2" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Second Shift</p>
-                                        </div>
-
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sat_shift3" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Night Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sat_shift3" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Night Shift</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="panel-block">
-                        <div class="columns">
-                            <div class="column">
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label" style="width: 40px">Sun:</label>
+                <div class="panel-block">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-label is-normal">
+                                    <label class="label" style="width: 40px">Sun:</label>
+                                </div>
+
+                                <div class="field-body">
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sun_shift1" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Day Shift</p>
                                     </div>
 
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sun_shift1" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Day Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sun_shift2" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Second Shift</p>
+                                    </div>
 
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sun_shift2" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Second Shift</p>
-                                        </div>
-
-                                        <div class="field">
-                                            <p class="control">
-                                                <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sun_shift3" />
-                                            </p>
-                                            <p class="help is-info has-text-centered">Night Shift</p>
-                                        </div>
+                                    <div class="field">
+                                        <p class="control">
+                                            <input class="input has-text-centered" style="width: 70px" type="text" v-model="weekly_cover_instance.sun_shift3" />
+                                        </p>
+                                        <p class="help is-info has-text-centered">Night Shift</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </nav>
+                </div>
+            </nav>
         </section>
 
         <footer class="modal-card-foot">

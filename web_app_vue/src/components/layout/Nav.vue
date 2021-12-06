@@ -16,15 +16,6 @@
                 <div id="navbar" class="navbar-menu">
                     <div class="navbar-start">
                         <template v-if="$store.state.user.isAuthenticated">
-                            <!-- Temporary view/edit employees access -->
-<!--                            <div class="navbar-item">-->
-<!--                                <router-link class="button is-warning is-outlined" to="/employees">View Employees</router-link>-->
-<!--                            </div>-->
-
-                            <!-- Temporary constraints access -->
-                            <div class="navbar-item">
-                                <router-link class="button is-warning is-outlined" to="/constraints-avm">Constraints</router-link>
-                            </div>
 
                             <!-- Employee Maintenance Dropdown Menu -->
                             <div class="navbar-item has-dropdown is-hoverable">
@@ -43,23 +34,33 @@
                                 <ViewEmployees />
                             </div>
 
-                            <!-- Constraint Maintenance Dropdown Menu -->
-                            <div class="navbar-item has-dropdown is-hoverable">
-                                <a class="navbar-link">Constraint Maintenance</a>
-                                <div class="navbar-dropdown has-background-light">
-                                    <a class="navbar-item has-text-primary-dark" @click="toggleShiftCov">Shift Coverage</a>
-                                    <!--<a class="navbar-item has-text-info-dark" @click="">Shift Transitions</a>-->
-                                </div>
-                            </div>
+                            <!-- Constraint Maintenance -->
+                            <a class="navbar-item" @click="toggleShiftCov">
+                                Shift Coverage
+                            </a>
+                            <router-link class="navbar-item" to="/constraints-avm">
+                                Scheduling Constraints
+                            </router-link>
+
+<!--                            <div class="navbar-item has-dropdown is-hoverable">-->
+<!--                                <a class="navbar-link">Scheduling Options</a>-->
+<!--                                <div class="navbar-dropdown has-background-light">-->
+<!--                                    <a class="navbar-item has-text-primary-dark" @click="toggleShiftCov">-->
+<!--                                        Shift Coverage-->
+<!--                                    </a>-->
+<!--                                    <a class="navbar-item" @click="toggleEditConstraints">-->
+<!--                                        Scheduling Constraints-->
+<!--                                    </a>-->
+<!--                                    <a class="navbar-item has-text-info-dark" @click="">Shift Transitions</a>-->
+<!--                                    <a class="navbar-item has-text-info-dark" @click="">Continuous Sequence</a>-->
+<!--                                    <a class="navbar-item has-text-info-dark" @click="">Weekly Sums</a>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
                             <div v-if="showShiftCov">
                                 <ShiftCoverage />
                             </div>
 
-                            <!--<a class="navbar-item" @click="toggleEditConstraints">Edit Constraints</a>
-                            <div v-if="showEditConstraints">
-                                <EditConstraints />
-                            </div>-->
                         </template>
                     </div>
 
@@ -97,13 +98,13 @@ import Modal from '@/components/Modal.vue';
 import EditConstraints from '@/components/layout/EditConstraints.vue';
 import AddEmployee from '@/components/layout/AddEmployee.vue';
 import ViewEmployees from '@/components/layout/ViewEmployees.vue';
-import Employees from '@/views/Employees.vue';
 import ShiftCoverage from '@/components/layout/ShiftCoverage.vue';
+import ConstraintsAddViewModify from "@/views/ConstraintsAddViewModify";
 
 export default {
     name: 'Nav',
     components: {
-        Employees,
+        ConstraintsAddViewModify,
         Modal,
         AddEmployee,
         EditConstraints,

@@ -135,7 +135,7 @@ class EmployeeSchedule(models.Model):
 
 class ShiftAssignment(models.Model):
     employee_schedule = models.ForeignKey(
-        'web_app.EmployeeSchedule',
+        'EmployeeSchedule',
         related_name='shift_assignments',
         on_delete=models.CASCADE
     )

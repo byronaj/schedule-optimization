@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
+import HomeAuthenticated from '@/views/HomeAuthenticated'
+import HomeUnauthenticated from '@/views/HomeUnauthenticated'
 import Dashboard from '@/views/Dashboard.vue'
 import SignUp from '@/views/SignUp.vue'
 import LogIn from '@/views/LogIn.vue'
@@ -11,7 +13,20 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+  },
+  {
+    path: '/home-postauth',
+    name: 'HomeAuthenticated',
+    component: HomeAuthenticated,
+    meta: {
+      requireLogin: true
+    }
+  },
+  {
+    path: '/home-preauth',
+    name: 'HomeUnauthenticated',
+    component: HomeUnauthenticated
   },
   {
     path: '/sign-up',
@@ -64,7 +79,7 @@ const router = createRouter({
   routes,
 })
 
-// Probably not going to do multiple user types
+// For multiple user types
 // router.beforeEach(async (to, from) => {
 //   // canUserAccess() returns `true` or `false`
 //   const canAccess = await canUserAccess(to)

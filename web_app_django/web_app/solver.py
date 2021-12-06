@@ -108,37 +108,6 @@ def solve_shift_scheduling(
         weekly_cover_demands
 ):
     """Solves the shift scheduling problem."""
-    # # Data
-    # num_employees = SI.employees()
-    # num_weeks = SI.weeks()
-    # # shifts off,morning,afternoon,night
-    # shifts = SI.shifts()
-    #
-    # # Shift constraints on continuous sequence :
-    # #     (shift, hard_min, soft_min, min_penalty,
-    # #             soft_max, hard_max, max_penalty)
-    # shift_constraints = SI.shift_constraints()
-    #
-    # # Weekly sum constraints on shifts days:
-    # #     (shift, hard_min, soft_min, min_penalty,
-    # #             soft_max, hard_max, max_penalty)
-    # weekly_sum_constraints = SI.weekly_constraints()
-    #
-    # # Penalized transitions:
-    # #     (previous_shift, next_shift, penalty (0 means forbidden))
-    # penalized_transitions = SI.penalized_transitions()
-
-    # # daily demands for work shifts (morning, afternoon, night) for each day
-    # # of the week starting on Monday.
-    # weekly_cover_demands = [
-    #     (2, 3, 1),  # Monday
-    #     (2, 3, 1),  # Tuesday
-    #     (2, 2, 2),  # Wednesday
-    #     (2, 3, 1),  # Thursday
-    #     (2, 2, 2),  # Friday
-    #     (1, 2, 3),  # Saturday
-    #     (1, 3, 1),  # Sunday
-    # ]
 
     # Penalty for exceeding the cover constraint per shift type.
     excess_cover_penalties = (0, 0, 0)  # all set to forbidden

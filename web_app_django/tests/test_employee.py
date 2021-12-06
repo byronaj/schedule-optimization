@@ -1,6 +1,7 @@
 from django.test import TestCase
 
-from web_app_django.web_app.models import Employee
+from web_app.models import Employee
+from web_app import solver
 
 
 class TestModels(TestCase):

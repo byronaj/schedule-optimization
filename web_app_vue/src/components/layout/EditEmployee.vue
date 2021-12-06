@@ -96,80 +96,80 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import { toast } from 'bulma-toast';
-    import Modal from '@/components/Modal.vue';
+import axios from 'axios';
+import { toast } from 'bulma-toast';
+import Modal from '@/components/Modal.vue';
 
-    export default {
-        name: 'EditEmployee',
-        components: { Modal },
-        props: { empID: Number },
-        data() {
-            return {
-                employee: {},
-            };
+export default {
+    name: 'EditEmployee',
+    components: { Modal },
+    props: { empID: Number },
+    data() {
+        return {
+            employee: {},
+        };
+    },
+    mounted() {
+        this.getEmployee();
+    },
+    methods: {
+        getEmployee() {
+            const employeeId = this.empID;
+            axios
+                .get(`/api/v1/employees/${employeeId}`)
+                .then((response) => {
+                    this.employee = response.data;
+                })
+                .catch((error) => {
+                    console.log(JSON.stringify(error));
+                });
         },
-        mounted() {
-            this.getEmployee();
+        submitForm() {
+            const employeeId = this.empID;
+            axios
+                .patch(`/api/v1/employees/${employeeId}/`, this.employee)
+                .then((response) => {
+                    toast({
+                        message: 'Changes saved',
+                        type: 'is-success',
+                        dismissible: true,
+                        pauseOnHover: true,
+                        duration: 2000,
+                        position: 'bottom-right',
+                    });
+                    this.cancelForm(); //close Modal
+                })
+                .catch((error) => {
+                    console.log(JSON.stringify(error));
+                });
         },
-        methods: {
-            getEmployee() {
-                const employeeId = this.empID;
-                axios
-                    .get(`/api/v1/employees/${employeeId}`)
-                    .then((response) => {
-                        this.employee = response.data;
-                    })
-                    .catch((error) => {
-                        console.log(JSON.stringify(error));
-                    });
-            },
-            submitForm() {
-                const employeeId = this.empID;
-                axios
-                    .patch(`/api/v1/employees/${employeeId}/`, this.employee)
-                    .then((response) => {
-                        toast({
-                            message: 'Changes saved',
-                            type: 'is-success',
-                            dismissible: true,
-                            pauseOnHover: true,
-                            duration: 2000,
-                            position: 'bottom-right',
-                        });
-                        this.cancelForm(); //close Modal
-                    })
-                    .catch((error) => {
-                        console.log(JSON.stringify(error));
-                    });
-            },
-            cancelForm() {
-                this.toggleShowEditEmployee(); //toggle close Modal
-            },
-            deleteForm() {
-                const employeeId = this.empID;
-                axios
-                    .delete(`/api/v1/employees/${employeeId}/`)
-                    .then((response) => {
-                        toast({
-                            message: 'Employee Deleted',
-                            type: 'is-danger',
-                            dismissible: true,
-                            pauseOnHover: true,
-                            duration: 2000,
-                            position: 'bottom-right',
-                        });
-                        this.cancelForm(); //close Modal
-                    })
-                    .catch((error) => {
-                        console.log(JSON.stringify(error));
-                    });
-            },
-            toggleShowEditEmployee() {
-                this.$parent.toggleShowEditEmployee(-1); //toggle-close Modal from parent Modal
-            },
+        cancelForm() {
+            this.toggleShowEditEmployee(); //toggle close Modal
         },
-    };
+        deleteForm() {
+            const employeeId = this.empID;
+            axios
+                .delete(`/api/v1/employees/${employeeId}/`)
+                .then((response) => {
+                    toast({
+                        message: 'Employee Deleted',
+                        type: 'is-danger',
+                        dismissible: true,
+                        pauseOnHover: true,
+                        duration: 2000,
+                        position: 'bottom-right',
+                    });
+                    this.cancelForm(); //close Modal
+                })
+                .catch((error) => {
+                    console.log(JSON.stringify(error));
+                });
+        },
+        toggleShowEditEmployee() {
+            this.$parent.toggleShowEditEmployee(-1); //toggle-close Modal from parent Modal
+        },
+    },
+};
 </script>
 
 <style></style>
