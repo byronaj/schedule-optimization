@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
-import HomeAuthenticated from '@/views/HomeAuthenticated'
-import HomeUnauthenticated from '@/views/HomeUnauthenticated'
+// import HomeAuthenticated from '@/views/HomeAuthenticated'
+// import HomeUnauthenticated from '@/views/HomeUnauthenticated'
 import Dashboard from '@/views/Dashboard.vue'
 import SignUp from '@/views/SignUp.vue'
 import LogIn from '@/views/LogIn.vue'
@@ -15,19 +15,19 @@ const routes = [
     name: 'Home',
     component: Home,
   },
-  {
-    path: '/home-postauth',
-    name: 'HomeAuthenticated',
-    component: HomeAuthenticated,
-    meta: {
-      requireLogin: true
-    }
-  },
-  {
-    path: '/home-preauth',
-    name: 'HomeUnauthenticated',
-    component: HomeUnauthenticated
-  },
+  // {
+  //   path: '/home-postauth',
+  //   name: 'HomeAuthenticated',
+  //   component: HomeAuthenticated,
+  //   meta: {
+  //     requireLogin: true
+  //   }
+  // },
+  // {
+  //   path: '/home-preauth',
+  //   name: 'HomeUnauthenticated',
+  //   component: HomeUnauthenticated
+  // },
   {
     path: '/sign-up',
     name: 'SignUp',

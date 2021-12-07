@@ -227,9 +227,8 @@ def solve_shift_scheduling(
     solution_printer = cp_model.ObjectiveSolutionPrinter()
     status = solver.Solve(model, solution_printer)
 
-    # Print solution.
+    # Print solution, employees as rows and days as columns
     # schedule2d is the array to return employee schedule
-    # format has employees as rows and days as columns
     schedule2d = []
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
         print()
@@ -277,10 +276,6 @@ def solve_shift_scheduling(
             for e, shift_list in zip(emp_ids, schedule2d)
         ]
         # --------------------------------------------------------------------------------------------------------------
-
-        print()
-        print(schedule2d)
-        print()
 
         print('Penalties:')
         for i, var in enumerate(obj_bool_vars):
