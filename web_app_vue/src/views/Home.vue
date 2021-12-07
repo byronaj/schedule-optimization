@@ -24,21 +24,12 @@
 </template>
 
 <script>
-import HomeAuthenticated from '@/views/HomeAuthenticated';
-import HomeUnauthenticated from '@/views/HomeUnauthenticated';
 import Dashboard from '@/views/Dashboard';
 
 export default {
     name: 'Home',
     components: {
-        HomeAuthenticated,
-        HomeUnauthenticated,
         Dashboard,
-    },
-    data() {
-        return {
-            componentKey: 0,
-        };
     },
 };
 </script>
